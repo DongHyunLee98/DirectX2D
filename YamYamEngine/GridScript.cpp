@@ -5,6 +5,8 @@
 #include "yaApplication.h"
 #include "yaGameObject.h"
 #include "yaRenderer.h"
+#include "yaTime.h"
+#include "Object.h"
 
 extern ya::Application application;
 
@@ -22,6 +24,15 @@ namespace ya
 	}
 	void GridScript::Update()
 	{
+		// 게임오브젝트 몇초뒤 삭제 시스템 테스트
+		//static float chTime = 0.0f;
+		//chTime += Time::DeltaTime();
+
+		//if (chTime > 3.0f)
+		//{
+		//	object::Destroy(GetOwner());
+		//}
+
 		if (mCamera == nullptr)
 			return;
 

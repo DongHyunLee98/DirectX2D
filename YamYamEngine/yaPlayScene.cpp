@@ -8,6 +8,7 @@
 #include "yaSceneManager.h"
 #include "yaInput.h"
 #include "GridScript.h"
+#include "Object.h"
 
 namespace ya
 {
@@ -20,14 +21,19 @@ namespace ya
 	void PlayScene::Initialize()
 	{
 		{
-			GameObject* player = new GameObject();
+			// GameObject* player = new GameObject(); Instatiate를 이용해 구현
+			GameObject* player
+				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
+
 			player->SetName(L"Zelda");
-			AddGameObject(eLayerType::Player, player);
+			// AddGameObject(eLayerType::Player, player); Instatiate를 이용해 구현
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0001f));
-			//player->AddComponent<CameraScript>();
+
+			// Instatiate를 이용해 구현
+			// player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0001f));
+			// player->AddComponent<CameraScript>();
 
 			GameObject* player2 = new GameObject();
 			player2->SetName(L"ZeldaChild");

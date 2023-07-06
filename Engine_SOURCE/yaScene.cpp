@@ -24,6 +24,7 @@ namespace ya
 		}
 	}
 
+
 	void Scene::LateUpdate()
 	{
 		for (Layer& layer : mLayers)
@@ -38,6 +39,15 @@ namespace ya
 			layer.Render();
 		}
 	}
+
+	void Scene::Destroy()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Destory();
+		}
+	}
+
 	void Scene::OnEnter()
 	{
 	}

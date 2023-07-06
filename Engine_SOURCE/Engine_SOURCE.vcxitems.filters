@@ -165,6 +165,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)yaCamera.h">
       <Filter>GameObject\Component\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Object.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)yaMath.cpp">
