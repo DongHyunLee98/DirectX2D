@@ -3,12 +3,6 @@
 
 namespace ya::enums
 {
-	enum class eSceneType
-	{
-		Tilte,
-		Play,
-		End,
-	};
 	enum class eComponentType
 	{
 		None,
@@ -23,6 +17,7 @@ namespace ya::enums
 
 	enum class eLayerType
 	{
+		Grid,
 		Player,
 		Monster,
 		UI,
