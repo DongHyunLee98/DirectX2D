@@ -108,6 +108,20 @@ namespace ya
 			GridScript* gridSc = grid->AddComponent<GridScript>();
 			gridSc->SetCamera(cameraComp);
 		}
+		{
+			GameObject* TestBG
+				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::BackGround);
+			TestBG->SetName(L"TestFloor");
+			// AddGameObject(eLayerType::Player, player); Instatiate를 이용해 구현
+			MeshRenderer* TestBGMr = TestBG->AddComponent<MeshRenderer>();
+			TestBGMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			TestBGMr->SetMaterial(Resources::Find<Material>(L"TestFloor"));
+
+			Transform* TestBGTr = TestBG->GetComponent<Transform>();
+			//titleTr->SetPosition(Vector3(1.0f, 0.95f, 5.0f));
+			TestBGTr->SetScale(Vector3(8.0f, 4.5f, 1.0f));
+			//titleTr->SetScale(Vector3(1600.0f, 900.0f, 1.0f));
+		}
 
 		//GameObject* player2 = new GameObject();
 		//AddGameObject(eLayerType::Player, player2);

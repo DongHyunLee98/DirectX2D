@@ -270,6 +270,30 @@ namespace renderer
 		material = std::make_shared<Material>();
 		material->SetShader(gridShader);
 		Resources::Insert(L"GridMaterial", material);
+
+		// 타이틀배경
+		texture = Resources::Load<Texture>(L"MainMenuTexture", L"..\\Resources\\Texture\\MainMenu.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		// material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"TitleBGMaterial", material);
+
+		// 타이틀버튼
+		texture = Resources::Load<Texture>(L"ContinueTexture", L"..\\Resources\\Texture\\Continue.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		// material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"ContinueMaterial", material);
+
+		// 1스테이지 임시배경
+		texture = Resources::Load<Texture>(L"Floor1", L"..\\Resources\\Texture\\Floor1.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		// material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"TestFloor", material);
 	}
 
 	void Initialize()

@@ -17,9 +17,12 @@ namespace ya::enums
 
 	enum class eLayerType
 	{
+		None = 0,
+		Camera,
+		BackGround,
 		Grid,
-		Player,
 		Monster,
+		Player,
 		UI,
 		End,
 	};
