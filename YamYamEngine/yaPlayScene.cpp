@@ -10,6 +10,7 @@
 #include "dhGridScript.h"
 #include "Object.h"
 #include "yaRenderer.h"
+#include "dhCollider2D.h"
 
 namespace ya
 {
@@ -28,6 +29,17 @@ namespace ya
 
 			player->SetName(L"Zelda");
 			// AddGameObject(eLayerType::Player, player); Instatiate를 이용해 구현
+
+			// player->AddComponent<Collider2D>();
+			Collider2D* cd = player->AddComponent<Collider2D>();
+			//cd->SetCenter(Vector2(0.5f, 0.0f));
+
+			//cd = player->AddComponent<Collider2D>();
+			////cd->SetCenter(Vector2(0.f, 0.0f));
+
+			//std::vector<Collider2D*> comps 
+			//	= player->GetComponents<Collider2D>();
+
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
@@ -36,22 +48,23 @@ namespace ya
 			// player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0001f));
 			// player->AddComponent<CameraScript>();
 
-			GameObject* player2 = new GameObject();
-			player2->SetName(L"ZeldaChild");
-			AddGameObject(eLayerType::Player, player2);
-			MeshRenderer* mr2 = player2->AddComponent<MeshRenderer>();
-			mr2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr2->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			player2->GetComponent<Transform>()->SetPosition(Vector3(2.0f, 0.0f, 1.0001f));
-
-			player2->GetComponent<Transform>()->SetParent(player->GetComponent<Transform>());
-			//player->AddComponent<CameraScript>();
+			// GameObject* player2 = new GameObject();
+			// player2->SetName(L"ZeldaChild");
+			// AddGameObject(eLayerType::Player, player2);
+			// MeshRenderer* mr2 = player2->AddComponent<MeshRenderer>();
+			// mr2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			// mr2->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
+			// player2->GetComponent<Transform>()->SetPosition(Vector3(2.0f, 0.0f, 1.0001f));
+			// 
+			// player2->GetComponent<Transform>()->SetParent(player->GetComponent<Transform>());
+			// 
+			// player->AddComponent<CameraScript>();
 
 			const float pi = 3.141592f;
 			float degree = pi / 2.0f;
 
-			player->GetComponent<Transform>()->SetPosition(Vector3(-3.0f, 0.0f, 1.0001f));
-			player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
+			player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
+			// player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 		}
 
 		{
@@ -65,17 +78,17 @@ namespace ya
 			//player->AddComponent<CameraScript>();
 		}
 
-		{
-			// UI 화면상의 위치 고정
-			GameObject* player = new GameObject();
-			player->SetName(L"Smile");
-			AddGameObject(eLayerType::UI, player);
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
-			player->GetComponent<Transform>()->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
-			//player->AddComponent<CameraScript>();
-		}
+		// 7/12 Collider 작업확인 주석처리
+		//{
+		//	GameObject* player = new GameObject();
+		//	player->SetName(L"Smile");
+		//	AddGameObject(eLayerType::UI, player);
+		//	MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+		//	player->GetComponent<Transform>()->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
+		//	//player->AddComponent<CameraScript>();
+		//}
 
 		//Main Camera
 		Camera* cameraComp = nullptr;
@@ -87,6 +100,7 @@ namespace ya
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
 			camera->AddComponent<CameraScript>(); 
 			renderer::cameras.push_back(cameraComp);
+			renderer::mainCamera = cameraComp;
 		}
 		
 		//UI Camera

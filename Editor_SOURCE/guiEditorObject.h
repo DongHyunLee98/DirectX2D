@@ -1,5 +1,5 @@
 #pragma once
-#include "yaGameObject.h"
+#include "..\\Engine_SOURCE\\yaGameObject.h"
 
 
 namespace gui

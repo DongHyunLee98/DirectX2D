@@ -1,11 +1,13 @@
 #include "guiEditor.h"
-#include "yaMesh.h"
-#include "yaResources.h"
-#include "yaTransform.h"
-#include "yaMeshRenderer.h"
-#include "yaMaterial.h"
+#include "..\\Engine_SOURCE\\yaMesh.h"
+#include "..\\Engine_SOURCE\\yaMesh.h"
+#include "..\\Engine_SOURCE\\yaResources.h"
+#include "..\\Engine_SOURCE\\yaTransform.h"
+#include "..\\Engine_SOURCE\\yaMeshRenderer.h"
+#include "..\\Engine_SOURCE\\yaMaterial.h"
+#include "..\\Engine_SOURCE\\yaRenderer.h"
+
 #include "dhGridScript.h"
-#include "yaRenderer.h"
 
 namespace gui
 {
@@ -84,6 +86,24 @@ namespace gui
 	}
 	void Editor::Release()
 	{
+		for (auto widget : mWidgets)
+		{
+			delete widget;
+			widget = nullptr;
+		}
+
+		for (auto editorObj : mEditorObjects)
+		{
+			delete editorObj;
+			editorObj = nullptr;
+		}
+
+		for (auto debugObj : mDebugOjbects)
+		{
+			delete debugObj;
+			debugObj = nullptr;
+		}
+
 	}
 
 	void Editor::DebugRender(const ya::graphics::DebugMesh& mesh)
@@ -93,7 +113,24 @@ namespace gui
 		// 위치 크기 회전 정보를 받아와서
 		// 해당 게임오브젝트위에 그려주면된다.
 
+		ya::Transform* tr = debugObj->GetComponent<ya::Transform>();
 
+		Vector3 pos = mesh.position;
+		pos.z -= 0.01f;
+
+		tr->SetPosition(pos);
+		tr->SetScale(mesh.scale);
+		tr->SetRotation(mesh.rotation);
+
+		tr->LateUpdate();
+
+		/*ya::MeshRenderer * mr
+			= debugObj->GetComponent<ya::MeshRenderer>();*/
+			// main camera
+		ya::Camera* mainCamara = renderer::mainCamera;
+
+		ya::Camera::SetGpuViewMatrix(mainCamara->GetViewMatrix());
+		ya::Camera::SetGpuProjectionMatrix(mainCamara->GetProjectionMatrix());
 
 		debugObj->Render();
 	}

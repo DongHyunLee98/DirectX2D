@@ -1,6 +1,6 @@
 #pragma once
-#include <yaScript.h>
-#include "yaCamera.h"
+#include "..\\Engine_SOURCE\\yaScript.h"
+#include "..\\Engine_SOURCE\\yaCamera.h"
 
 namespace ya
 {
