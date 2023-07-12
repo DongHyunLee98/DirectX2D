@@ -18,10 +18,10 @@ namespace ya::enums
 
 	enum class eLayerType
 	{
-		None = 0,
+		None = 0, // 충돌과 랜더X
 		Camera,
-		BackGround,
 		Grid,
+		BackGround,
 		Monster,
 		Player,
 		UI,

@@ -8,7 +8,7 @@ namespace ya
 	{
 	public:
 		TitleScene();
-		virtual ~TitleScene();
+		~TitleScene();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
