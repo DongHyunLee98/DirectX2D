@@ -1,4 +1,4 @@
-#include "GridScript.h"
+#include "dhGridScript.h"
 #include "yaConstantBuffer.h"
 #include "yaCamera.h"
 #include "yaTransform.h"

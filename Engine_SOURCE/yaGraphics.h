@@ -6,6 +6,9 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+#include "yaEnums.h"
+#include "yaMath.h"
+
 #define CB_GETBINDSLOT(name) __CBUFFERBINDSLOT__##name##__
 #define CBUFFER(name, slot) static const int CB_GETBINDSLOT(name) = slot; struct alignas(16) name 
 
@@ -87,5 +90,17 @@ namespace ya::graphics
 
 		}
 		virtual ~GpuBuffer() = default;
+	};
+
+	struct DebugMesh
+	{
+		enums::eColliderType type;
+		math::Vector3 position;
+		math::Vector3 rotation;
+		math::Vector3 scale;
+
+		float radius;
+		float duration;
+		float time;
 	};
 }

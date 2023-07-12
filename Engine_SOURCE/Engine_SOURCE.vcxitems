@@ -42,6 +42,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)yaTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)yaTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)yaTransform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhCollider2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhCollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)yaCamera.cpp" />
@@ -67,6 +69,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)yaTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)yaTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)yaTransform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhCollider2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhCollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)yaMath.inl" />
