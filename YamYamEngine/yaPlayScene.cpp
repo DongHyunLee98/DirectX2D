@@ -61,10 +61,11 @@ namespace ya
 			// player->AddComponent<CameraScript>();
 
 			const float pi = 3.141592f;
-			float degree = pi / 2.0f;
+			float degree = pi / 8.0f;
 
+			// 7/13일 Rotate체크, 충돌콜라이더 회전한걸 확인
 			player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
-			// player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
+			player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 		}
 
 		{
@@ -156,18 +157,19 @@ namespace ya
 	void PlayScene::LateUpdate()
 	{
 		// 마우스 좌표계
-		//Vector3 pos(600, 450, 0.0f);
-		//Vector3 pos2(600, 450, 1000.0f);
-		//Viewport viewport;
-		//viewport.width = 1600.0f;
-		//viewport.height = 900.0f;
-		//viewport.x = 0;
-		//viewport.y = 0;
-		//viewport.minDepth = 0.0f;
-		//viewport.maxDepth = 1.0f;
+		Vector3 pos(800, 450, 0.0f);
+		Vector3 pos2(800, 450, 1000.0f);
+		Viewport viewport;
+		viewport.width = 1600.0f;
+		viewport.height = 900.0f;
+		viewport.x = 0;
+		viewport.y = 0;
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
 
-		//pos = viewport.Unproject(pos, Camera::GetProjectionMatrix(), Camera::GetViewMatrix(), Matrix::Identity);
-		//pos2 = viewport.Unproject(pos2, Camera::GetProjectionMatrix(), Camera::GetViewMatrix(), Matrix::Identity);
+		// 콜라이더 충돌체 렌더링할때 카메라에 만든 GetSet GPU프로젝션매트릭스 사용
+		pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
 		Scene::LateUpdate();
 	}
