@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dhPlayerScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="dhGridScript.h" />
     <ClInclude Include="LoadScenes.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dhGridScript.cpp" />
+    <ClCompile Include="dhPlayerScript.cpp" />
     <ClCompile Include="dhTitleScene.cpp" />
     <ClCompile Include="yaCameraScript.cpp" />
     <ClCompile Include="YamYamEngine.cpp" />

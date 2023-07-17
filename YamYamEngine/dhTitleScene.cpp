@@ -45,6 +45,7 @@ namespace ya
 			Camera* cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::BackGround, false);
 			cameraComp->TurnLayerMask(eLayerType::Player, false);
+			cameraComp->TurnLayerMask(eLayerType::Monster, false);
 			//camera->AddComponent<CameraScript>();
 		}
 

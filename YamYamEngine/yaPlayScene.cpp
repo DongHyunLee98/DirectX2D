@@ -11,6 +11,8 @@
 #include "Object.h"
 #include "yaRenderer.h"
 #include "dhCollider2D.h"
+#include "dhPlayerScript.h"
+#include "dhCollisionManager.h"
 
 namespace ya
 {
@@ -22,6 +24,7 @@ namespace ya
 	}
 	void PlayScene::Initialize()
 	{
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		{
 			// GameObject* player = new GameObject(); Instatiate를 이용해 구현
 			GameObject* player
@@ -30,9 +33,12 @@ namespace ya
 			player->SetName(L"Zelda");
 			// AddGameObject(eLayerType::Player, player); Instatiate를 이용해 구현
 
+
+
 			// player->AddComponent<Collider2D>();
 			Collider2D* cd = player->AddComponent<Collider2D>();
 			//cd->SetCenter(Vector2(0.5f, 0.0f));
+			cd->SetSize(Vector2(1.2f, 1.2f));
 
 			//cd = player->AddComponent<Collider2D>();
 			////cd->SetCenter(Vector2(0.f, 0.0f));
@@ -71,12 +77,15 @@ namespace ya
 		{
 			GameObject* player = new GameObject();
 			player->SetName(L"Smile");
-			AddGameObject(eLayerType::Player, player);
+			AddGameObject(eLayerType::Monster, player);
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
 			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 			//player->AddComponent<CameraScript>();
+			Collider2D* cd = player->AddComponent<Collider2D>();
+			//cd->SetSize(Vector2(1.2f, 1.2f));
+			player->AddComponent<PlayerScript>();
 		}
 
 		// 7/12 Collider 작업확인 주석처리
