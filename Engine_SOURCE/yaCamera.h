@@ -48,6 +48,7 @@ namespace ya
 		float GetSize() { return mSize; }
 		Matrix& GetViewMatrix() { return mView; }
 		Matrix& GetProjectionMatrix() { return mProjection; }
+		void SetSize(float size) { mSize = size; }
 
 	private:
 		static Matrix View;

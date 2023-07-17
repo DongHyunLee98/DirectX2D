@@ -10,6 +10,7 @@ namespace ya
 		, mTransform(nullptr)
 		, mSize(Vector2::One)
 		, mCenter(Vector2::Zero)
+		, mType(eColliderType::Rect)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -44,7 +45,10 @@ namespace ya
 		mesh.position = pos; // 겟 포지션과 겟스케일을 위에서 계산
 		mesh.scale = scale;
 		mesh.rotation = tr->GetRotation();
-		mesh.type = eColliderType::Rect;
+
+		// Circle 추가
+		// mesh.type = eColliderType::Rect;
+		mesh.type = eColliderType::Circle;
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}

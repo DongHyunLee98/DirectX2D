@@ -3,7 +3,7 @@
 #include "yaTime.h"
 #include "yaRenderer.h"
 #include "yaSceneManager.h"
-
+#include "dhCollisionManager.h"
 
 namespace ya
 {
@@ -48,6 +48,7 @@ namespace ya
 	void Application::LateUpdate()
 	{
 		SceneManager::LateUpdate();
+		CollisionManager::Update(); // 07/16
 	}
 
 	void Application::Render()

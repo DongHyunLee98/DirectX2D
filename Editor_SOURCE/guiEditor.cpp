@@ -14,23 +14,33 @@ namespace gui
 	using namespace ya::enums;
 	std::vector<Widget*> Editor::mWidgets = {};
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
-	std::vector<DebugOjbect*> Editor::mDebugOjbects = {};
+	std::vector<DebugObject*> Editor::mDebugObjects = {};
 
 	void Editor::Initialize()
 	{
-		mDebugOjbects.resize((UINT)eColliderType::End);
+		mDebugObjects.resize((UINT)eColliderType::End);
 
 		std::shared_ptr<ya::Mesh> mesh
 			= ya::Resources::Find<ya::Mesh>(L"DebugRect");
 		std::shared_ptr<ya::Material> material
 			= ya::Resources::Find<ya::Material>(L"DebugMaterial");
 
-		mDebugOjbects[(UINT)eColliderType::Rect] = new DebugOjbect();
-		mDebugOjbects[(UINT)eColliderType::Rect]->AddComponent<ya::Transform>();
+		// Rect
+		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
+		mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<ya::Transform>();
 		ya::MeshRenderer* mr
-			= mDebugOjbects[(UINT)eColliderType::Rect]->AddComponent<ya::MeshRenderer>();
+			= mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<ya::MeshRenderer>();
 		mr->SetMaterial(material);
 		mr->SetMesh(mesh);
+
+		// Circle
+		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
+		mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<ya::Transform>();
+		mr = mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<ya::MeshRenderer>();
+		mr->SetMaterial(material);
+		mr->SetMesh(mesh);
+
+		mesh = ya::Resources::Find<ya::Mesh>(L"DebugCircle");
 
 
 		EditorObject* grid = new EditorObject();
@@ -95,7 +105,7 @@ namespace gui
 			editorObj = nullptr;
 		}
 
-		for (auto debugObj : mDebugOjbects)
+		for (auto debugObj : mDebugObjects)
 		{
 			delete debugObj;
 			debugObj = nullptr;
@@ -105,7 +115,7 @@ namespace gui
 
 	void Editor::DebugRender(const ya::graphics::DebugMesh& mesh)
 	{
-		DebugOjbect* debugObj = mDebugOjbects[(UINT)mesh.type];
+		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
 
 		// 위치 크기 회전 정보를 받아와서
 		// 해당 게임오브젝트위에 그려주면된다.

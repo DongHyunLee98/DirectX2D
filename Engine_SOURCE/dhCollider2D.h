@@ -25,6 +25,10 @@ namespace ya
 		void SetCenter(Vector2 size) { mCenter = size; }
 		UINT GetColliderID() { return mColliderID; }
 
+		eColliderType GetType() { return mType; }
+		Vector3 GetPosition() { return mPosition; }
+		Vector2 GetSize() { return mSize; }
+
 	private:
 		static UINT mColliderNumber;
 		UINT mColliderID;

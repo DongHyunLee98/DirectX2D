@@ -88,6 +88,7 @@ namespace ya
 				//최초 충돌
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
+				// iter->second
 			}
 			else
 			{
@@ -110,6 +111,16 @@ namespace ya
 
 	bool CollisionManager::Intersect(Collider2D* left, Collider2D* right)
 	{
+		if (left->GetType()  == eColliderType::Circle 
+			&& right->GetType() == eColliderType::Circle)
+		{
+			Vector3 lPos = left->GetPosition();
+			Vector3 rPos = right->GetPosition();
+
+
+			// if로 Circle충돌 조건식 distance길이보다 반지름?
+			// return true;
+		}
 		// 네모 네모 충돌
 		// 분리축 이론
 

@@ -4,11 +4,11 @@
 
 namespace gui
 {
-	class DebugOjbect : public ya::GameObject
+	class DebugObject : public ya::GameObject
 	{
 	public:
-		DebugOjbect();
-		~DebugOjbect();
+		DebugObject();
+		~DebugObject();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
