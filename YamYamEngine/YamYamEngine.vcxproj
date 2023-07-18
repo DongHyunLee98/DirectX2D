@@ -150,6 +150,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dhBossScene.h" />
+    <ClInclude Include="dhCharaScene.h" />
+    <ClInclude Include="dhEndScene.h" />
     <ClInclude Include="dhPlayerScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="dhGridScript.h" />
@@ -159,6 +162,9 @@
     <ClInclude Include="yaPlayScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dhBossScene.cpp" />
+    <ClCompile Include="dhCharaScene.cpp" />
+    <ClCompile Include="dhEndScene.cpp" />
     <ClCompile Include="dhGridScript.cpp" />
     <ClCompile Include="dhPlayerScript.cpp" />
     <ClCompile Include="dhTitleScene.cpp" />

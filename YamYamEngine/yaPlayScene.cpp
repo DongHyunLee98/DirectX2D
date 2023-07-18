@@ -13,6 +13,7 @@
 #include "dhCollider2D.h"
 #include "dhPlayerScript.h"
 #include "dhCollisionManager.h"
+#include "dhEndScene.h"
 
 namespace ya
 {
@@ -160,6 +161,10 @@ namespace ya
 
 	void PlayScene::Update()
 	{
+		if (Input::GetKeyDown(eKeyCode::N))
+		{
+			SceneManager::LoadScene(L"EndScene");
+		}
 		Scene::Update();
 	}
 

@@ -284,6 +284,10 @@ namespace renderer
 		// Grid Buffer
 		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
 		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(TransformCB));
+
+		// Animator Buffer
+		constantBuffer[(UINT)eCBType::Animator] = new ConstantBuffer(eCBType::Animator);
+		constantBuffer[(UINT)eCBType::Animator]->Create(sizeof(AnimatorCB));
 	}
 
 	void LoadShader()

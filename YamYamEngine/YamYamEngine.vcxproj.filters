@@ -17,6 +17,15 @@
     <ClCompile Include="dhPlayerScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
+    <ClCompile Include="dhBossScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhCharaScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhEndScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -37,6 +46,15 @@
     </ClInclude>
     <ClInclude Include="dhPlayerScript.h">
       <Filter>Contents\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="dhBossScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhCharaScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhEndScene.h">
+      <Filter>Contents\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

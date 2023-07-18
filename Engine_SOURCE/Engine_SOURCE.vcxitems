@@ -15,6 +15,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Object.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)yaCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)yaGameObject.h" />
@@ -46,6 +48,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhCollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)yaCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)yaGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)yaApplication.cpp" />

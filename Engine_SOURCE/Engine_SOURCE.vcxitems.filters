@@ -177,6 +177,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhCollisionManager.h">
       <Filter>Scene\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)yaMath.cpp">
@@ -254,6 +256,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhCollisionManager.cpp">
       <Filter>Scene\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)yaMath.inl">
