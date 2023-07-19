@@ -1,11 +1,16 @@
-// SpriteVS, TriangleVS에서 이동
+
+
 cbuffer Transform : register(b0)
 {
-    //float4 Position;
     row_major matrix WorldMatrix;
     row_major matrix ViewMatrix;
     row_major matrix ProjectionMatrix;
 }
+
+
+/// 1
+//
+///
 
 cbuffer Grid : register(b2)
 {
@@ -22,7 +27,6 @@ cbuffer Animator : register(b3)
     float2 AtlasSize;
 }
 
-// SpritePS, TrianglePS에서 이동
 Texture2D albedoTexture : register(t0);
 Texture2D atlasTexture : register(t12);
 

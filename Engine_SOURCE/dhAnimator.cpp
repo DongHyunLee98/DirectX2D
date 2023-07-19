@@ -1,7 +1,7 @@
 #include "dhAnimator.h"
 
 
-namespace ya
+namespace dh
 {
 	Animator::Animator()
 		: Component(eComponentType::Animator)

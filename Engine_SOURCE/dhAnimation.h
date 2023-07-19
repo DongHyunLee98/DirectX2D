@@ -1,8 +1,8 @@
 #pragma once
-#include "yaResource.h"
-#include "yaTexture.h"
+#include "dhResource.h"
+#include "dhTexture.h"
 
-namespace ya
+namespace dh
 {
 	using namespace math;
 	using namespace graphics;

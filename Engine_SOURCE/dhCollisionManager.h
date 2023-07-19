@@ -1,11 +1,11 @@
 #pragma once
 #include "YamYamEngine.h"
 
-namespace ya
+namespace dh
 {
 #define LAYER_MAX (UINT)eLayerType::End 
 	using namespace enums;
-
+	
 	class Collider2D;
 	class CollisionManager
 	{
@@ -30,7 +30,7 @@ namespace ya
 		static void Clear();
 
 	private:
-
+		
 		static std::bitset<LAYER_MAX> mMatrix[LAYER_MAX];
 		static std::map<UINT64, bool> mCollisionMap;
 	};

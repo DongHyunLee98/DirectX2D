@@ -1,11 +1,11 @@
 #pragma once
 #include "..\\Engine_SOURCE\\CommonInclude.h"
 #include "..\\Engine_SOURCE\\YamYamEngine.h"
-#include "..\\Engine_SOURCE\\yaGraphics.h"
+#include "..\\Engine_SOURCE\\dhGraphics.h"
 
 #include "guiWidget.h"
 #include "guiEditorObject.h"
-#include "guiDebugObject.h"
+#include "guiDebugOjbect.h"
 
 namespace gui
 {
@@ -20,11 +20,11 @@ namespace gui
 		static void Render();
 		static void Release();
 
-		static void DebugRender(const ya::graphics::DebugMesh& mesh);
+		static void DebugRender(const dh::graphics::DebugMesh& mesh);
 
 	private:
 		static std::vector<Widget*> mWidgets;
 		static std::vector<EditorObject*> mEditorObjects;
-		static std::vector<DebugObject*> mDebugObjects;
+		static std::vector<DebugOjbect*> mDebugObjects;
 	};
 }

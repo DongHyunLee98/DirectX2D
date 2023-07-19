@@ -1,16 +1,16 @@
 #include "dhGridScript.h"
-#include "yaConstantBuffer.h"
-#include "yaCamera.h"
-#include "yaTransform.h"
-#include "yaApplication.h"
-#include "yaGameObject.h"
-#include "yaRenderer.h"
-#include "yaTime.h"
-#include "Object.h"
+#include "dhConstantBuffer.h"
+#include "dhCamera.h"
+#include "dhTransform.h"
+#include "dhApplication.h"
+#include "dhGameObject.h"
+#include "dhRenderer.h"
+#include "dhTime.h"
+#include "dhObject.h"
 
-extern ya::Application application;
+extern dh::Application application;
 
-namespace ya
+namespace dh
 {
 	GridScript::GridScript()
 		: mCamera(nullptr)
@@ -24,7 +24,6 @@ namespace ya
 	}
 	void GridScript::Update()
 	{
-		// 게임오브젝트 몇초뒤 삭제 시스템 테스트
 		//static float chTime = 0.0f;
 		//chTime += Time::DeltaTime();
 
@@ -38,7 +37,6 @@ namespace ya
 
 
 		GameObject* gameObj = mCamera->GetOwner();
-
 
 		Transform* tr = gameObj->GetComponent<Transform>();
 		Vector3 pos = tr->GetPosition();

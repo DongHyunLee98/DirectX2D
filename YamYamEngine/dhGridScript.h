@@ -1,8 +1,8 @@
 #pragma once
-#include "..\\Engine_SOURCE\\yaScript.h"
-#include "..\\Engine_SOURCE\\yaCamera.h"
+#include "..\\Engine_SOURCE\\dhScript.h"
+#include "..\\Engine_SOURCE\\dhCamera.h"
 
-namespace ya
+namespace dh
 {
 	class GridScript : public Script
 	{

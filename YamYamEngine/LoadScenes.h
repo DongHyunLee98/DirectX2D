@@ -1,9 +1,13 @@
 #pragma once
-#include "..\Engine_SOURCE\yaSceneManager.h"
-#include "dhTitleScene.h"
-#include "dhCharaScene.h"
-#include "yaPlayScene.h"
-#include "dhBossScene.h"
+#include "..\Engine_SOURCE\dhSceneManager.h"
+#include "dhLogoScene.h"
+#include "dhStartScene.h"
+// #include "dhTitleScene.h"
+// #include "dhTutorialScene.h"
+#include "dhMapScene.h"
+#include "dhBossOneScene.h"
+#include "dhWinScene.h"
+// #include "dhBossOneScene.h"
 #include "dhEndScene.h"
 
 #ifdef _DEBUG
@@ -16,18 +20,23 @@
 
 //#include "..\YamYamEngine\\yaPlayScene.h"
 //#include "yaSceneManager.h"
-namespace ya
+namespace dh
 {
 	void InitializeScenes()
 	{
-		//PlayScene* playScene = new PlayScene();
-		// 
-		SceneManager::CreateScene<EndScene>(L"EndScene");
-		SceneManager::CreateScene<BossScene>(L"dhBossScene");
-		SceneManager::CreateScene<PlayScene>(L"PlayScene"); 
-		SceneManager::CreateScene<CharaScene>(L"dhCharaScene");
-		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 
-		// SceneManager::LoadScene(L"TitleScene");
+		//PlayScene* playScene = new PlayScene();
+
+		SceneManager::CreateScene<EndScene>(L"EndScene");
+		// SceneManager::CreateScene<BossTwoScene>(L"BossTwoScene");
+		SceneManager::CreateScene<WinScene>(L"WinScene");
+		SceneManager::CreateScene<BossOneScene>(L"BossOneScene");
+		SceneManager::CreateScene<MapScene>(L"MapScene"); 
+		// SceneManager::CreateScene<TutorialScene>(L"TutorialScene");
+		// SceneManager::CreateScene<TitleScene>(L"TitleScene");
+		SceneManager::CreateScene<StartScene>(L"StartScene");
+		SceneManager::CreateScene<LogoScene>(L"LogoScene");
+
+		//SceneManager::CreateScene<LogoScene>(L"LogoScene");
 	}
 }

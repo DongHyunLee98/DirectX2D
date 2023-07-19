@@ -1,11 +1,11 @@
 #include "dhPlayerScript.h"
-#include "yaCameraScript.h"
-#include "yaTransform.h"
-#include "yaGameObject.h"
-#include "yaTime.h"
-#include "yaInput.h"
+#include "dhCameraScript.h"
+#include "dhTransform.h"
+#include "dhGameObject.h"
+#include "dhTime.h"
+#include "dhInput.h"
 
-namespace ya
+namespace dh
 {
 	void PlayerScript::Update()
 	{

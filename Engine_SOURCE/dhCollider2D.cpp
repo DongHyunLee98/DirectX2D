@@ -1,8 +1,8 @@
 #include "dhCollider2D.h"
-#include "yaGameObject.h"
-#include "yaRenderer.h"
+#include "dhGameObject.h"
+#include "dhRenderer.h"
 
-namespace ya
+namespace dh
 {
 	UINT Collider2D::mColliderNumber = 0;
 	Collider2D::Collider2D()
@@ -10,7 +10,6 @@ namespace ya
 		, mTransform(nullptr)
 		, mSize(Vector2::One)
 		, mCenter(Vector2::Zero)
-		, mType(eColliderType::Rect)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -25,7 +24,7 @@ namespace ya
 
 	void Collider2D::Update()
 	{
-
+		
 	}
 	void Collider2D::LateUpdate()
 	{
@@ -40,21 +39,20 @@ namespace ya
 		pos.y += mCenter.y;
 
 		mPosition = pos;
-
+		
 		graphics::DebugMesh mesh = {};
-		mesh.position = pos; // 겟 포지션과 겟스케일을 위에서 계산
+		mesh.position = pos;
 		mesh.scale = scale;
 		mesh.rotation = tr->GetRotation();
-
-		// Circle 추가
-		// mesh.type = eColliderType::Rect;
-		mesh.type = eColliderType::Circle;
+		mesh.type = eColliderType::Rect;
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}
+
 	void Collider2D::Render()
 	{
-	}void Collider2D::OnCollisionEnter(Collider2D* other)
+	}
+	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetComponents<Script>();

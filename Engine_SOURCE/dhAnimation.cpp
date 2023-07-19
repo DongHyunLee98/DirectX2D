@@ -1,11 +1,11 @@
 #include "dhAnimation.h"
-#include "yaTime.h"
+#include "dhTime.h"
 #include "dhAnimator.h"
 
 
-namespace ya
+namespace dh
 {
-	Animation::Animation()
+	Animation::Animation() 
 		: Resource(enums::eResourceType::Animation)
 		, mAtlas(nullptr)
 		, mAnimator(nullptr)
@@ -50,7 +50,7 @@ namespace ya
 		, Vector2 leftTop
 		, Vector2 size
 		, UINT columnLength
-		, Vector2 offset
+		, Vector2 offset 
 		, float duration)
 	{
 		SetKey(name);
@@ -80,7 +80,7 @@ namespace ya
 
 		// AnimationCB
 
-
+		 
 	}
 	void Animation::Reset()
 	{

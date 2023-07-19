@@ -1,55 +1,46 @@
 #include "guiEditor.h"
-#include "..\\Engine_SOURCE\\yaMesh.h"
-#include "..\\Engine_SOURCE\\yaMesh.h"
-#include "..\\Engine_SOURCE\\yaResources.h"
-#include "..\\Engine_SOURCE\\yaTransform.h"
-#include "..\\Engine_SOURCE\\yaMeshRenderer.h"
-#include "..\\Engine_SOURCE\\yaMaterial.h"
-#include "..\\Engine_SOURCE\\yaRenderer.h"
+#include "..\\Engine_SOURCE\\dhMesh.h"
+#include "..\\Engine_SOURCE\\dhMesh.h"
+#include "..\\Engine_SOURCE\\dhResources.h"
+#include "..\\Engine_SOURCE\\dhTransform.h"
+#include "..\\Engine_SOURCE\\dhMeshRenderer.h"
+#include "..\\Engine_SOURCE\\dhMaterial.h"
+#include "..\\Engine_SOURCE\\dhRenderer.h"
+
 
 #include "dhGridScript.h"
 
 namespace gui
 {
-	using namespace ya::enums;
+	using namespace dh::enums;
 	std::vector<Widget*> Editor::mWidgets = {};
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
-	std::vector<DebugObject*> Editor::mDebugObjects = {};
+	std::vector<DebugOjbect*> Editor::mDebugObjects = {};
 
 	void Editor::Initialize()
 	{
 		mDebugObjects.resize((UINT)eColliderType::End);
 
-		std::shared_ptr<ya::Mesh> mesh
-			= ya::Resources::Find<ya::Mesh>(L"DebugRect");
-		std::shared_ptr<ya::Material> material
-			= ya::Resources::Find<ya::Material>(L"DebugMaterial");
+		std::shared_ptr<dh::Mesh> mesh
+			= dh::Resources::Find<dh::Mesh>(L"DebugRect");
+		std::shared_ptr<dh::Material> material
+			= dh::Resources::Find<dh::Material>(L"DebugMaterial");
 
-		// Rect
-		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
-		mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<ya::Transform>();
-		ya::MeshRenderer* mr
-			= mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<ya::MeshRenderer>();
+		mDebugObjects[(UINT)eColliderType::Rect] = new DebugOjbect();
+		mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<dh::Transform>();
+		dh::MeshRenderer* mr
+			= mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<dh::MeshRenderer>();
 		mr->SetMaterial(material);
 		mr->SetMesh(mesh);
-
-		// Circle
-		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
-		mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<ya::Transform>();
-		mr = mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<ya::MeshRenderer>();
-		mr->SetMaterial(material);
-		mr->SetMesh(mesh);
-
-		mesh = ya::Resources::Find<ya::Mesh>(L"DebugCircle");
 
 
 		EditorObject* grid = new EditorObject();
 		grid->SetName(L"Grid");
 
-		mr = grid->AddComponent<ya::MeshRenderer>();
-		mr->SetMesh(ya::Resources::Find<ya::Mesh>(L"RectMesh"));
-		mr->SetMaterial(ya::Resources::Find<ya::Material>(L"GridMaterial"));
-		ya::GridScript* gridSc = grid->AddComponent<ya::GridScript>();
+		mr = grid->AddComponent<dh::MeshRenderer>();
+		mr->SetMesh(dh::Resources::Find<dh::Mesh>(L"RectMesh"));
+		mr->SetMaterial(dh::Resources::Find<dh::Material>(L"GridMaterial"));
+		dh::GridScript* gridSc = grid->AddComponent<dh::GridScript>();
 		gridSc->SetCamera(renderer::cameras[0]);
 
 		mEditorObjects.push_back(grid);
@@ -79,12 +70,13 @@ namespace gui
 	}
 	void Editor::Render()
 	{
+
 		for (EditorObject* obj : mEditorObjects)
 		{
 			obj->Render();
 		}
 
-		for (const ya::graphics::DebugMesh& mesh 
+		for (const dh::graphics::DebugMesh& mesh 
 			: renderer::debugMeshs)
 		{
 			DebugRender(mesh);
@@ -113,15 +105,14 @@ namespace gui
 
 	}
 
-	void Editor::DebugRender(const ya::graphics::DebugMesh& mesh)
+	void Editor::DebugRender(const dh::graphics::DebugMesh& mesh)
 	{
-		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
+		DebugOjbect* debugObj = mDebugObjects[(UINT)mesh.type];
 
 		// 위치 크기 회전 정보를 받아와서
 		// 해당 게임오브젝트위에 그려주면된다.
-
-		ya::Transform* tr = debugObj->GetComponent<ya::Transform>();
-
+		dh::Transform* tr = debugObj->GetComponent<dh::Transform>();
+		
 		Vector3 pos = mesh.position;
 		pos.z -= 0.01f;
 
@@ -131,13 +122,13 @@ namespace gui
 
 		tr->LateUpdate();
 
-		/*ya::MeshRenderer * mr
+		/*ya::MeshRenderer * mr 
 			= debugObj->GetComponent<ya::MeshRenderer>();*/
-			// main camera
-		ya::Camera* mainCamara = renderer::mainCamera;
+		// main camera
+		dh::Camera* mainCamara = renderer::mainCamera;
 
-		ya::Camera::SetGpuViewMatrix(mainCamara->GetViewMatrix());
-		ya::Camera::SetGpuProjectionMatrix(mainCamara->GetProjectionMatrix());
+		dh::Camera::SetGpuViewMatrix(mainCamara->GetViewMatrix());
+		dh::Camera::SetGpuProjectionMatrix(mainCamara->GetProjectionMatrix());
 
 		debugObj->Render();
 	}

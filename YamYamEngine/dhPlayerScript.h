@@ -1,8 +1,8 @@
 #pragma once
 //#include "yaScript.h"
-#include <yaScript.h>
+#include <dhScript.h>
 
-namespace ya
+namespace dh
 {
 	class PlayerScript : public Script
 	{

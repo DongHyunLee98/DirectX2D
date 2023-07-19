@@ -150,27 +150,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="dhBossScene.h" />
-    <ClInclude Include="dhCharaScene.h" />
-    <ClInclude Include="dhEndScene.h" />
-    <ClInclude Include="dhPlayerScript.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="dhGridScript.h" />
     <ClInclude Include="LoadScenes.h" />
+    <ClInclude Include="dhBossOneScene.h" />
+    <ClInclude Include="dhBossTwoScene.h" />
+    <ClInclude Include="dhCameraScript.h" />
+    <ClInclude Include="dhEndScene.h" />
+    <ClInclude Include="dhGridScript.h" />
+    <ClInclude Include="dhLogoScene.h" />
+    <ClInclude Include="dhMapScene.h" />
+    <ClInclude Include="dhPlayerScript.h" />
+    <ClInclude Include="dhStartScene.h" />
     <ClInclude Include="dhTitleScene.h" />
-    <ClInclude Include="yaCameraScript.h" />
-    <ClInclude Include="yaPlayScene.h" />
+    <ClInclude Include="dhWinScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dhBossScene.cpp" />
-    <ClCompile Include="dhCharaScene.cpp" />
+    <ClCompile Include="dhBossOneScene.cpp" />
+    <ClCompile Include="dhBossTwoScene.cpp" />
+    <ClCompile Include="dhCameraScript.cpp" />
     <ClCompile Include="dhEndScene.cpp" />
     <ClCompile Include="dhGridScript.cpp" />
+    <ClCompile Include="dhLogoScene.cpp" />
+    <ClCompile Include="dhMapScene.cpp" />
     <ClCompile Include="dhPlayerScript.cpp" />
-    <ClCompile Include="dhTitleScene.cpp" />
-    <ClCompile Include="yaCameraScript.cpp" />
     <ClCompile Include="YamYamEngine.cpp" />
-    <ClCompile Include="yaPlayScene.cpp" />
+    <ClCompile Include="dhStartScene.cpp" />
+    <ClCompile Include="dhTitleScene.cpp" />
+    <ClCompile Include="dhWinScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="C:\Users\LDH\Desktop\새 폴더\DirectX2D\Engine_SOURCE\dhMath.inl">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,9 +4,9 @@
 #include "framework.h"
 #include "Editor_Window.h"
 
-#include "..\Engine_SOURCE\yaApplication.h"
-#include "..\Engine_SOURCE\yaRenderer.h"
-#include "..\Engine_SOURCE\yaResources.h"
+#include "..\Engine_SOURCE\dhApplication.h"
+#include "..\Engine_SOURCE\dhRenderer.h"
+#include "..\Engine_SOURCE\dhResources.h"
 #include "LoadScenes.h"
 #include "guiEditor.h"
 
@@ -16,7 +16,7 @@
 #pragma comment(lib, "..\\x64\\Release\\YamYamEngine.lib")
 #endif
 
-ya::Application application;
+dh::Application application;
 
 #define MAX_LOADSTRING 100
 
@@ -79,7 +79,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     renderer::Release();
-    ya::SceneManager::Release();
+    dh::SceneManager::Release();
     gui::Editor::Release();
 
     return (int) msg.wParam;
@@ -106,7 +106,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EDITORWINDOW));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EDITORWINDOW);
+    wcex.lpszMenuName   = nullptr;// MAKEINTRESOURCEW(IDC_EDITORWINDOW);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -140,7 +140,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    application.Initialize();
-   ya::InitializeScenes();
+   dh::InitializeScenes();
    gui::Editor::Initialize();
 
    return TRUE;

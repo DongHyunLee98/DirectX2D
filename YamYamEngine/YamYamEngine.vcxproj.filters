@@ -1,45 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="YamYamEngine.cpp" />
-    <ClCompile Include="yaPlayScene.cpp">
-      <Filter>Contents\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="yaCameraScript.cpp">
+    <ClCompile Include="dhCameraScript.cpp">
       <Filter>Contents\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="dhTitleScene.cpp">
-      <Filter>Contents\Scene</Filter>
     </ClCompile>
     <ClCompile Include="dhGridScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
-    <ClCompile Include="dhPlayerScript.cpp">
-      <Filter>Contents\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="dhBossScene.cpp">
+    <ClCompile Include="dhBossOneScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="dhCharaScene.cpp">
+    <ClCompile Include="dhBossTwoScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
     <ClCompile Include="dhEndScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="dhLogoScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhMapScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="YamYamEngine.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhTitleScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhStartScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhWinScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dhPlayerScript.cpp">
+      <Filter>Contents\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="yaPlayScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="yaCameraScript.h">
+    <ClInclude Include="dhCameraScript.h">
       <Filter>Contents\Script</Filter>
     </ClInclude>
     <ClInclude Include="LoadScenes.h">
       <Filter>Contents\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="dhTitleScene.h">
-      <Filter>Contents\Scene</Filter>
     </ClInclude>
     <ClInclude Include="dhGridScript.h">
       <Filter>Contents\Script</Filter>
@@ -47,13 +52,28 @@
     <ClInclude Include="dhPlayerScript.h">
       <Filter>Contents\Script</Filter>
     </ClInclude>
-    <ClInclude Include="dhBossScene.h">
+    <ClInclude Include="dhBossOneScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="dhCharaScene.h">
+    <ClInclude Include="dhBossTwoScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
     <ClInclude Include="dhEndScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhLogoScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhMapScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhTitleScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhStartScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhWinScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
   </ItemGroup>

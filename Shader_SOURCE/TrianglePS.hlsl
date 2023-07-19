@@ -14,11 +14,7 @@ struct VSOut
     float2 UV : TEXCOORD;
 };
 
-// 글로벌스로 이동(spritePS에도 해당됨)
-// Texture2D albedoTexture : register(t0);
 
-// SamplerState pointSampler : register(s0);
-// SamplerState anisotropicSampler : register(s1);
 
 
 float4 main(VSOut In) : SV_TARGET

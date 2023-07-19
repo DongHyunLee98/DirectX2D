@@ -1,12 +1,12 @@
 #include "dhCollisionManager.h"
-#include "yaGameObject.h"
-#include "yaScene.h"
-#include "yaSceneManager.h"
-#include "yaLayer.h"
+#include "dhGameObject.h"
+#include "dhScene.h"
+#include "dhSceneManager.h"
+#include "dhLayer.h"
 #include "dhCollider2D.h"
 
 
-namespace ya
+namespace dh
 {
 	std::bitset<LAYER_MAX> CollisionManager::mMatrix[LAYER_MAX] = {};
 	std::map<UINT64, bool> CollisionManager::mCollisionMap = {};
@@ -33,7 +33,7 @@ namespace ya
 	{
 		Scene* activeScene = SceneManager::GetActiveScene();
 
-		const std::vector<GameObject*>& lefts
+		const std::vector<GameObject*>& lefts 
 			= activeScene->GetLayer(left).GetGameObjects();
 		const std::vector<GameObject*>& rights
 			= activeScene->GetLayer(right).GetGameObjects();
@@ -88,7 +88,6 @@ namespace ya
 				//최초 충돌
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
-				// iter->second
 			}
 			else
 			{
@@ -109,34 +108,8 @@ namespace ya
 		}
 	}
 
-	// 충돌함수 들어옴
 	bool CollisionManager::Intersect(Collider2D* left, Collider2D* right)
 	{
-		if (left->GetType()  == eColliderType::Circle 
-			&& right->GetType() == eColliderType::Circle)
-		{
-			Vector3 lPos = left->GetPosition();
-			Vector3 rPos = right->GetPosition();
-			
-			// 이 윗부분까지 숙제한부분
-			// if로 Circle충돌 조건식 distance길이보다 반지름?
-			// return true;
-		}
-
-
-		// 07/17 추가될부분
-		// 네모 네모 충돌 -> -0.5 0.5
-		// 분리축 이론
-
-		// To do... (숙제)
-		// 분리축이 어렵다 하시는분들은
-		// 원 - 원 충돌
-
-		// 위치 알아야함
-		// Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
-		// Transform* leftTr = left->GetOwner()->GetComponent<Transform>(); // right
-
-
 		// Rect vs Rect 
 		// 0 --- 1
 		// |     |
@@ -156,11 +129,11 @@ namespace ya
 		Matrix rightMatrix = rightTr->GetMatrix();
 
 		Vector3 Axis[4] = {};
-
+		
 		Vector3 leftScale = Vector3(left->GetSize().x, left->GetSize().y, 1.0f);
 		Matrix finalLeft = Matrix::CreateScale(leftScale);
 		finalLeft *= leftMatrix;
-
+		
 		Vector3 rightScale = Vector3(right->GetSize().x, right->GetSize().y, 1.0f);
 		Matrix finalRight = Matrix::CreateScale(rightScale);
 		finalRight *= rightMatrix;
@@ -198,7 +171,7 @@ namespace ya
 
 		return true;
 	}
-
+	
 	void CollisionManager::SetLayer(eLayerType left, eLayerType right, bool enable)
 	{
 		UINT row = -1;
