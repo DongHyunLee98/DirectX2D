@@ -2,6 +2,7 @@
 #include "dhGameObject.h"
 #include "dhTransform.h"
 #include "dhRenderer.h"
+#include "dhAnimator.h"
 
 namespace dh
 {
@@ -28,6 +29,14 @@ namespace dh
 
 		mMesh->BindBuffer();
 		mMaterial->Binds();
+
+		// 7/20
+		Animator* animator = GetOwner()->GetComponent<Animator>();
+		if (animator)
+		{
+			animator->Binds();
+		}
+
 		mMesh->Render();
 
 		mMaterial->Clear();

@@ -45,7 +45,7 @@ namespace dh
 		}
 		
 		template <typename T>
-		const std::vector<T*>& GetComponents()
+		const std::vector<T*> GetComponents() // >& ¸¦ ¼öÁ¤
 		{
 			std::vector<T*> comps;
 			

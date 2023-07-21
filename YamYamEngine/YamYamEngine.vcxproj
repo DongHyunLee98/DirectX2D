@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dhBossFlowerScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LoadScenes.h" />
     <ClInclude Include="dhBossOneScene.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="dhWinScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dhBossFlowerScript.cpp" />
     <ClCompile Include="dhBossOneScene.cpp" />
     <ClCompile Include="dhBossTwoScene.cpp" />
     <ClCompile Include="dhCameraScript.cpp" />

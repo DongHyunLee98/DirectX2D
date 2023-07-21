@@ -37,6 +37,9 @@
     <ClCompile Include="dhPlayerScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
+    <ClCompile Include="dhBossFlowerScript.cpp">
+      <Filter>Contents\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="dhWinScene.h">
       <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dhBossFlowerScript.h">
+      <Filter>Contents\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

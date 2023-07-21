@@ -1,4 +1,4 @@
-#include "dhPlayerScript.h"
+#include "dhBossFlowerScript.h"
 #include "dhCameraScript.h"
 #include "dhTransform.h"
 #include "dhGameObject.h"
@@ -7,12 +7,12 @@
 
 namespace dh
 {
-	void PlayerScript::Update()
+	void BossFlower::Update()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetPosition();
-
-
+		
+		
 
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
@@ -35,10 +35,5 @@ namespace dh
 			tr->SetPosition(pos);
 		}
 
-	}
-	void PlayerScript::OnCollisionEnter(Collider2D* other)
-	{
-		// if(layerType() == pBullet)
-		// int hp--;
 	}
 }
