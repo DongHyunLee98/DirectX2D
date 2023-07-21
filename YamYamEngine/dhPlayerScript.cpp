@@ -4,11 +4,27 @@
 #include "dhGameObject.h"
 #include "dhTime.h"
 #include "dhInput.h"
+#include "dhAnimator.h"
 
 namespace dh
 {
+	PlayerScript::PlayerScript()
+	{
+	}
+	PlayerScript::~PlayerScript()
+	{
+	}
+	void PlayerScript::Initialize()
+	{
+		
+		Animator* at = GetOwner()->GetComponent<Animator>();
+		if(at != nullptr) // 버그수정 -> 이걸 추가하지 않으면 애니메이션이 없는 스프라이트도 찾다가 튕김
+			at->CompleteEvent(L"Idle") = std::bind(&PlayerScript::Complete, this);
+	}
+
 	void PlayerScript::Update()
 	{
+
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetPosition();
 
@@ -36,9 +52,8 @@ namespace dh
 		}
 
 	}
-	void PlayerScript::OnCollisionEnter(Collider2D* other)
+	void PlayerScript::Complete()
 	{
-		// if(layerType() == pBullet)
-		// int hp--;
+		int a = 0;
 	}
 }

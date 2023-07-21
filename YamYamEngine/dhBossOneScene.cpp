@@ -32,7 +32,7 @@ namespace dh
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
 			playerMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			playerMr->SetMaterial(Resources::Find<Material>(L"Cuphead_Boss_Material"));
-			player->AddComponent<PlayerScript>();
+			// player->AddComponent<PlayerScript>();
 
 			Transform* playerTr = player->GetComponent<Transform>();
 

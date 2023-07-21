@@ -27,6 +27,7 @@ namespace dh
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::NotMonster, true);
 
+		/*
 		{
 			GameObject* zelda = object::Instantiate<GameObject>(Vector3(1.0f, 0.0f, 1.0001f), eLayerType::Monster);
 			zelda->SetName(L"Zelda");
@@ -38,7 +39,7 @@ namespace dh
 			Collider2D* cd = zelda->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(1.0f, 1.0f));
 		}
-		
+		*/
 		{
 			GameObject* mainBG
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.9999f), eLayerType::BackGround);

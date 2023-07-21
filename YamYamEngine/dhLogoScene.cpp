@@ -10,6 +10,8 @@
 #include "dhObject.h"
 #include "dhAnimator.h"
 
+#include "dhPlayerScript.h"
+
 namespace dh
 {
 	LogoScene::LogoScene()
@@ -50,6 +52,7 @@ namespace dh
 			// // camera->AddComponent<CameraScript>();
 		}
 		
+		/*
 		// Logo BG
 		{
 			GameObject* LogoBG
@@ -67,11 +70,11 @@ namespace dh
 			//titleTr->SetScale(Vector3(1600.0f, 900.0f, 1.0f));
 
 		}
-		
-		/*
+		*/
+	
 		// 애니메이션 테스트용 젤다
 		{
-			GameObject* player
+			GameObject* player 
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Zelda");
@@ -81,13 +84,11 @@ namespace dh
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
+			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
 			const float pi = 3.141592f;
 			float degree = pi / 8.0f;
 
-
-			// 아래쪽 애니메이션을 위한 작업
 			player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
 			//player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 
@@ -97,9 +98,25 @@ namespace dh
 			Animator* at = player->AddComponent<Animator>();
 			at->Create(L"Idle", atlas, Vector2(0.0f, 0.0f), Vector2(120.0f, 130.0f), 3);
 
+			//at->CompleteEvent(L"Idle") = std::bind();
+
 			at->PlayAnimation(L"Idle", true);
+			player->AddComponent<PlayerScript>();
 		}
-		*/
+
+		{
+			GameObject* player = new GameObject();
+			player->SetName(L"Smile");
+			AddGameObject(eLayerType::Monster, player);
+			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
+			Collider2D* cd = player->AddComponent<Collider2D>();
+			//cd->SetSize(Vector2(1.2f, 1.2f));
+			//player->AddComponent<PlayerScript>();
+		}
+		
 	}
 
 	void LogoScene::Update()

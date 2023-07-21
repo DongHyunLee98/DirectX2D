@@ -3,7 +3,7 @@
 #include "dhTexture.h"
 #include "dhMaterial.h"
 
-
+// inputLayer - LoadShader - LoadMaterial ( 그전에 PSVS만들고 작업하고 globals와 랜더러헤더에 버퍼추가)
 
 namespace renderer
 {
@@ -66,6 +66,11 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = dh::Resources::Find<Shader>(L"DebugShader");
+		dh::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = dh::Resources::Find<Shader>(L"SpriteAnimationShader");
 		dh::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
@@ -317,6 +322,11 @@ namespace renderer
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		debugShader->SetRSState(eRSType::WireframeNone);
 		dh::Resources::Insert(L"DebugShader", debugShader);
+
+		std::shared_ptr<Shader> spriteAniShader = std::make_shared<Shader>();
+		spriteAniShader->Create(eShaderStage::VS, L"SpriteAnimationVS.hlsl", "main");
+		spriteAniShader->Create(eShaderStage::PS, L"SpriteAnimationPS.hlsl", "main");
+		dh::Resources::Insert(L"SpriteAnimationShader", spriteAniShader);
 	}
 
 	void LoadMaterial()
@@ -503,6 +513,13 @@ namespace renderer
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"End_Material", material);
 		}
+
+		spriteShader
+			= Resources::Find<Shader>(L"SpriteAnimationShader");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"SpriteAnimaionMaterial", material);
 	}
 
 	void Initialize()
