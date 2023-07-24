@@ -11,8 +11,9 @@
 #include "dhObject.h"
 #include "dhRenderer.h"
 #include "dhCollider2D.h"
-#include "dhPlayerScript.h"
 #include "dhCollisionManager.h"
+
+#include "dhPlayerWorldScript.h"
 
 namespace dh
 {
@@ -29,15 +30,20 @@ namespace dh
 
 		/*
 		{
-			GameObject* zelda = object::Instantiate<GameObject>(Vector3(1.0f, 0.0f, 1.0001f), eLayerType::Monster);
-			zelda->SetName(L"Zelda");
-			MeshRenderer* mr = zelda->AddComponent<MeshRenderer>();
+		{
+			GameObject* player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
+			player->SetName(L"Player");
+
+			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			//player->AddComponent<CameraScript>();
-			zelda->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
-			Collider2D* cd = zelda->AddComponent<Collider2D>();
+			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+			Animator* at = player->AddComponent<Animator>();
+
+			player->AddComponent<PlayerScript>();
+
+			Collider2D* cd = player->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(1.0f, 1.0f));
+		}
 		}
 		*/
 		{
@@ -59,20 +65,24 @@ namespace dh
 		{
 			// GameObject* player = new GameObject(); Instatiate를 이용해 구현
 			GameObject* player
-				= object::Instantiate<GameObject>(Vector3(10.0f, 0.0f, 1.0001f), eLayerType::Player);
+				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
 			player->SetName(L"Cuphead_Overload");
+
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
 			playerMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			playerMr->SetMaterial(Resources::Find<Material>(L"Cuphead_Overload_Material"));
-			player->AddComponent<PlayerScript>();
+			// playerMr->SetMaterial(Resources::Find<Material>(L"Cuphead_Overload_Material"));
+			playerMr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+
+			Animator* at = player->AddComponent<Animator>();
+			player->AddComponent<PlayerWorldScript>();
 
 			Transform* playerTr = player->GetComponent<Transform>();
 
-			playerTr->SetScale(Vector3(0.5f, 0.5f, 1.0f));
-			playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
+			playerTr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+			// playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
 
-			Collider2D * cd = player->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(1.0f, 1.0f));
+			Collider2D* cd = player->AddComponent<Collider2D>();
+			cd->SetSize(Vector2(0.5f, 0.5f));
 			// player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.00001f));
 			// AddGameObject(eLayerType::Player, player); Instatiate를 이용해 구현
 
@@ -154,7 +164,7 @@ namespace dh
 			cd->SetSize(Vector2(1.1f, 1.1f));
 
 		}
-		
+
 		//Main Camera
 		Camera* cameraComp = nullptr;
 		{
