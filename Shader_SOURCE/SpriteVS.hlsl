@@ -11,6 +11,7 @@ struct VSIn
 struct VSOut
 {
     float4 Pos : SV_Position;
+    float3 WorldPos : POSITION; // Light 위치를 위한 월드포지션
     float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
@@ -25,6 +26,7 @@ VSOut main(VSIn In)
     float4 proj = mul(view, ProjectionMatrix);
 
     Out.Pos = proj;
+    Out.WorldPos = world.xyz; // Light 위치를 위한 월드포지션
     Out.Color = In.Color;
     Out.UV = In.UV;
     

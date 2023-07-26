@@ -166,16 +166,25 @@ namespace dh
 
 		}
 
-		// Light (test)
+		// Light (test), Direct
 		{
 			GameObject* light = new GameObject();
 			light->SetName(L"Smile");
 			AddGameObject(eLayerType::Light, light);
 			Light* lightComp = light->AddComponent<Light>();
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
 		}
-
+		// Light Point
+		//{
+		//	GameObject* light = new GameObject();
+		//	light->SetName(L"Smile");
+		//	AddGameObject(eLayerType::Light, light);
+		//	Light* lightComp = light->AddComponent<Light>();
+		//	lightComp->SetType(eLightType::Point);
+		//	lightComp->SetColor(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+		//	lightComp->SetRadius(3.0f);
+		//}
 		//Main Camera
 		Camera* cameraComp = nullptr;
 		{
