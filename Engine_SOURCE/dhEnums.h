@@ -13,6 +13,7 @@ namespace dh::enums
 		MeshRenderer,
 		Animator,
 		Script,
+		Light,
 		Camera,
 		End,
 	};
@@ -24,6 +25,7 @@ namespace dh::enums
 		BackGround,
 		Monster,
 		NotMonster,
+		Light,
 		Camera,
 		UI,
 		End = 16,
@@ -45,6 +47,14 @@ namespace dh::enums
 		Circle,
 		Sphere,
 		Cube,
+		End,
+	};
+
+	enum class eLightType
+	{
+		Directional,
+		Point,
+		Spot,
 		End,
 	};
 }

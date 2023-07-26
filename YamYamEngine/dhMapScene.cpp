@@ -14,6 +14,7 @@
 #include "dhCollisionManager.h"
 
 #include "dhPlayerWorldScript.h"
+#include "dhLight.h"
 
 namespace dh
 {
@@ -163,6 +164,16 @@ namespace dh
 			Collider2D* cd = flag->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(1.1f, 1.1f));
 
+		}
+
+		// Light (test)
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Smile");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetColor(Vector4(1.0f, 0.0f, 1.0f, 1.0f));
 		}
 
 		//Main Camera

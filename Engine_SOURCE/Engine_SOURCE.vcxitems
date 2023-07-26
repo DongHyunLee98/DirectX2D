@@ -30,10 +30,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhLight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMaterial.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhStructedBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YamYamEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhRenderer.h" />
@@ -49,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhGameObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimator.cpp" />
@@ -73,6 +76,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhexture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhStructedBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhTransform.cpp" />
   </ItemGroup>

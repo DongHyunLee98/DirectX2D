@@ -80,6 +80,13 @@ namespace dh::graphics
 		End,
 	};
 
+	enum class eSRVType
+	{
+		None,
+		End,
+	};
+
+
 	struct GpuBuffer
 	{
 		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
@@ -104,5 +111,17 @@ namespace dh::graphics
 		float radius;
 		float duration;
 		float time;
+	};
+
+	struct LightAttribute
+	{
+		math::Vector4 color;
+		math::Vector4 position;
+		math::Vector4 direction;
+
+		enums::eLightType type;
+		float radius;
+		float angle;
+		int pad;
 	};
 }

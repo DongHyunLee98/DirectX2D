@@ -5,6 +5,7 @@
 #include "dhShader.h"
 #include "dhConstantBuffer.h"
 #include "dhCamera.h"
+#include "dhLight.h"
 
 using namespace dh::math;
 using namespace dh::graphics;
@@ -47,11 +48,13 @@ namespace renderer
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilStates[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
 
+	extern std::vector<dh::Light*> lights;
 	extern dh::Camera* mainCamera;
 	extern std::vector<dh::Camera*> cameras;
 	extern std::vector<DebugMesh> debugMeshs;
 
 	void Initialize();
+	void BindLights();
 	void Render();
 	void Release();
 

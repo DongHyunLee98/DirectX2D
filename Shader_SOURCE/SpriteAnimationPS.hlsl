@@ -37,5 +37,7 @@ float4 main(VSOut In) : SV_TARGET
         color = atlasTexture.Sample(pointSampler, UV);
     }
     
+    color *= lightsAttribute[0].color; // Light의 영향을 받음
+    
     return color;
 }
