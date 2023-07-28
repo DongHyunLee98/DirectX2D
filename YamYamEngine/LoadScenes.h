@@ -30,12 +30,12 @@ namespace dh
 		SceneManager::CreateScene<EndScene>(L"EndScene");
 		// SceneManager::CreateScene<BossTwoScene>(L"BossTwoScene");
 		SceneManager::CreateScene<WinScene>(L"WinScene");
-		SceneManager::CreateScene<BossOneScene>(L"BossOneScene");
 		// SceneManager::CreateScene<TutorialScene>(L"TutorialScene");
 		// SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<StartScene>(L"StartScene");
-		SceneManager::CreateScene<LogoScene>(L"LogoScene");
 		SceneManager::CreateScene<MapScene>(L"MapScene"); 
+		SceneManager::CreateScene<LogoScene>(L"LogoScene");
+		SceneManager::CreateScene<BossOneScene>(L"BossOneScene");
 
 		//SceneManager::CreateScene<LogoScene>(L"LogoScene");
 	}

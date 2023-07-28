@@ -13,6 +13,8 @@
 #include "dhCollider2D.h"
 #include "dhPlayerScript.h"
 #include "dhCollisionManager.h"
+#include "dhAnimator.h"
+#include "dhPlayerBossScript.h"
 
 namespace dh
 {
@@ -28,11 +30,13 @@ namespace dh
 		{
 			GameObject* player
 				= object::Instantiate<GameObject>(Vector3(-2.0f, -1.0f, 1.0001f), eLayerType::Player);
-			player->SetName(L"PlayerBoss");
+			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
 			playerMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			playerMr->SetMaterial(Resources::Find<Material>(L"Cuphead_Boss_Material"));
-			// player->AddComponent<PlayerScript>();
+			playerMr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+			
+			Animator* at = player->AddComponent<Animator>();
+			player->AddComponent<PlayerBossScript>();
 
 			Transform* playerTr = player->GetComponent<Transform>();
 
@@ -40,8 +44,8 @@ namespace dh
 			// playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
 
 			Collider2D* cd = player->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(0.8f, 0.8f));
-			cd->SetCenter(Vector2(-0.1f, 0.0f));
+			cd->SetSize(Vector2(1.0f, 1.0f));
+			cd->SetCenter(Vector2(0.0f, 0.0f));
 		}
 
 		// Boss
@@ -110,6 +114,16 @@ namespace dh
 			cameraComp->TurnLayerMask(eLayerType::NotMonster, false);
 			cameraComp->TurnLayerMask(eLayerType::BackGround, false);
 			//camera->AddComponent<CameraScript>();
+		}
+
+		// Light (test), Direct
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Smile");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
 		}
 	}
 

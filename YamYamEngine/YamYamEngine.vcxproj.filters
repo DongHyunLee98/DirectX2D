@@ -22,9 +22,6 @@
     <ClCompile Include="dhMapScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="YamYamEngine.cpp">
-      <Filter>Contents\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="dhTitleScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
@@ -42,6 +39,12 @@
     </ClCompile>
     <ClCompile Include="dhPlayerWorldScript.cpp">
       <Filter>Contents\Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="dhPlayerBossScript.cpp">
+      <Filter>Contents\Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="YamYamEngine.cpp">
+      <Filter>Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +89,9 @@
       <Filter>Contents\Script\Player</Filter>
     </ClInclude>
     <ClInclude Include="dhPlayerWorldScript.h">
+      <Filter>Contents\Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="dhPlayerBossScript.h">
       <Filter>Contents\Script\Player</Filter>
     </ClInclude>
   </ItemGroup>
