@@ -198,6 +198,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhLight.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhComputeShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhApplication.cpp">
@@ -239,7 +242,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhTransform.cpp">
       <Filter>GameObject\Component\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)dhexture.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhTexture.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMesh.cpp">
@@ -286,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp">
+      <Filter>Resource\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

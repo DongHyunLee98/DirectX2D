@@ -15,6 +15,7 @@
 
 #include "dhPlayerWorldScript.h"
 #include "dhLight.h"
+#include "dhComputeShader.h"
 
 namespace dh
 {
@@ -29,6 +30,8 @@ namespace dh
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::NotMonster, true);
 
+		ComputeShader* cs = new ComputeShader();
+		cs->Create(L"PaintCS.hlsl", "main");
 		/*
 		{
 		{

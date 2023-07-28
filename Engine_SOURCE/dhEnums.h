@@ -38,6 +38,7 @@ namespace dh::enums
 		Material,
 		Mesh,
 		Animation,
+		ComputeShader,
 		End,
 	};
 
