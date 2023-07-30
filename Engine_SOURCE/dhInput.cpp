@@ -30,7 +30,7 @@ namespace dh
 			mKeys.push_back(keyInfo);
 		}
 	}
-	
+
 	void Input::Update()
 	{
 		if (GetFocus())

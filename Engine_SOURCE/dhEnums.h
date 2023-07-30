@@ -21,6 +21,7 @@ namespace dh::enums
 	enum class eLayerType
 	{
 		Grid,
+		Ground,
 		Player,
 		BackGround,
 		Monster,

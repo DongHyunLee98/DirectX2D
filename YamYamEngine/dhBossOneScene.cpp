@@ -26,10 +26,12 @@ namespace dh
 	}
 	void BossOneScene::Initialize()
 	{
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		// Player
 		{
 			GameObject* player
-				= object::Instantiate<GameObject>(Vector3(-2.0f, -1.0f, 1.0001f), eLayerType::Player);
+				= object::Instantiate<GameObject>(Vector3(-2.0f, -0.9f, 1.0001f), eLayerType::Player);
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
 			playerMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -44,10 +46,20 @@ namespace dh
 			// playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
 
 			Collider2D* cd = player->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(1.0f, 1.0f));
-			cd->SetCenter(Vector2(0.0f, 0.0f));
+			cd->SetSize(Vector2(0.4f, 0.5f));
+			cd->SetCenter(Vector2(0.0f, -0.1f));
 		}
 
+		// Ground
+		{
+			GameObject* ground
+				= object::Instantiate<GameObject>(Vector3(0.0f, -1.5f, 1.0001f), eLayerType::Ground);
+			ground->SetName(L"Ground");
+			Transform* groundTr = ground->GetComponent<Transform>();
+			groundTr->SetScale(Vector3(7.0f, 0.5f, 1.0f));
+			Collider2D* cd = ground->AddComponent<Collider2D>();
+			cd->SetSize(Vector2(1.0f, 1.0f));
+		}
 		// Boss
 		{
 			GameObject* boss
@@ -62,7 +74,7 @@ namespace dh
 
 			Collider2D* cd = boss->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(0.3f, 1.0f));
-			cd->SetCenter(Vector2(0.2f, 0.0f));
+			cd->SetCenter(Vector2(0.2f, 0.25f));
 			//boss->AddComponent<Boss1Script>();
 		}
 
@@ -144,5 +156,15 @@ namespace dh
 	void BossOneScene::Render()
 	{
 		Scene::Render();
+	}
+
+	void BossOneScene::OnEnter()
+	{
+		Scene::OnEnter();
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
+	}
+	void BossOneScene::OnExit()
+	{
+		Scene::OnExit();
 	}
 }
