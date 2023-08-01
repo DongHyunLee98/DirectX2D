@@ -83,7 +83,7 @@ namespace dh
 	void Animation::Binds()
 	{
 		// texture bind
-		mAtlas->BindShader(graphics::eShaderStage::PS, 12);
+		mAtlas->BindShaderResource(graphics::eShaderStage::PS, 12);
 
 		// AnimationCB - 07/20 Ãß°¡
 		renderer::AnimatorCB data = {};

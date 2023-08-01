@@ -201,6 +201,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhComputeShader.h">
       <Filter>Resource\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhApplication.cpp">
@@ -291,6 +294,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp">
       <Filter>Resource\Shader</Filter>
     </ClCompile>
   </ItemGroup>

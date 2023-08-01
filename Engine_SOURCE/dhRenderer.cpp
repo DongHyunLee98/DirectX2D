@@ -3,6 +3,7 @@
 #include "dhTexture.h"
 #include "dhMaterial.h"
 #include "dhStructedBuffer.h"
+#include "dhPaintShader.h"
 
 // inputLayer - LoadShader - LoadMaterial ( 그전에 PSVS만들고 작업하고 globals와 랜더러헤더에 버퍼추가)
 
@@ -321,8 +322,20 @@ namespace renderer
 		spriteAniShader->Create(eShaderStage::VS, L"SpriteAnimationVS.hlsl", "main");
 		spriteAniShader->Create(eShaderStage::PS, L"SpriteAnimationPS.hlsl", "main");
 		dh::Resources::Insert(L"SpriteAnimationShader", spriteAniShader);
+		
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"PaintCS.hlsl", "main");
+		dh::Resources::Insert(L"PaintShader", paintShader);
 	}
 
+	void LoadTexture()
+	{
+		//paint texture
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		dh::Resources::Insert(L"PaintTexuture", uavTexture);
+
+	}
 	void LoadMaterial()
 	{
 		std::shared_ptr<Shader> spriteShader
@@ -337,12 +350,15 @@ namespace renderer
 		material->SetTexture(texture);
 		Resources::Insert(L"SpriteMaterial", material);
 
-		texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		// 임시로 페인트를이용
+		// texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		texture = Resources::Find<Texture>(L"PaintTexuture");
 		material = std::make_shared<Material>();
 		material->SetShader(spriteShader);
 		material->SetTexture(texture);
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"SpriteMaterial02", material);
+		// Resources::Insert(L"PaintMaterial", material);
 
 		std::shared_ptr<Shader> gridShader
 			= Resources::Find<Shader>(L"GridShader");
@@ -353,7 +369,7 @@ namespace renderer
 
 		std::shared_ptr<Shader> debugShader
 			= Resources::Find<Shader>(L"DebugShader");
-
+		
 		material = std::make_shared<Material>();
 		material->SetShader(debugShader);
 		Resources::Insert(L"DebugMaterial", material);
@@ -522,6 +538,7 @@ namespace renderer
 		LoadBuffer();
 		LoadShader();
 		SetupState();
+		LoadTexture();
 		LoadMaterial();
 	}
 

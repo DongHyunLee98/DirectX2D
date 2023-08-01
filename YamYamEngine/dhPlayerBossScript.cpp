@@ -147,16 +147,17 @@ namespace dh
 	{
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
+			dirR = false;
 			pState = PlayerState::Move;
 			at->PlayAnimation(L"Run_Normal_L", true);
-			dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT) && !(Input::GetKey(eKeyCode::X)))
 		{
+			dirR = true;
 			pState = PlayerState::Move;
 			at->PlayAnimation(L"Run_Normal_R", true);
-			dirR = true;
 		}
+
 		else if (Input::GetKey(eKeyCode::UP))
 		{
 			pState = PlayerState::UpDown;
@@ -300,14 +301,15 @@ namespace dh
 
 	void PlayerBossScript::Shoot()
 	{
-		// Attack
-		//if (Input::GetKeyDown(eKeyCode::X))
-		//{
-		//	pState = PlayerState::Idle;
-		//	at->PlayAnimation(L"Idle_Enter", false);
-		//	dirR = true;
-		//}
-		// 이동사격 진입
+		if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			dirR = true;
+		}
+		else if (Input::GetKey(eKeyCode::LEFT))
+		{
+			dirR = false;
+		}
+
 		if (Input::GetKey(eKeyCode::RIGHT) && dirR == true)
 		{
 			// pos.x -= 2.0f * Time::DeltaTime();
@@ -338,6 +340,18 @@ namespace dh
 
 	void PlayerBossScript::MovingShoot()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= 2.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+			dirR = false;
+		}
+		else if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += 2.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+			dirR = true;
+		}
 
 		// 이동사격 탈출 (X키 땜)
 		if (Input::GetKeyUp(eKeyCode::X) && dirR == false)// (Input::GetKeyState(eKeyCode::RIGHT) == eKeyState::Pressed)) // DIR체크
@@ -363,23 +377,19 @@ namespace dh
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_L", true);
 		}
-
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			pos.x -= 2.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
-			dirR = false;
-		}
-		else if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			pos.x += 2.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
-			dirR = true;
-		}
 	}
 
 	void PlayerBossScript::UpDown()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			dirR = false;
+		}
+		else if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			dirR = true;
+		}
+
 		if (Input::GetKeyUp(eKeyCode::UP))
 		{
 			pState = PlayerState::Idle;

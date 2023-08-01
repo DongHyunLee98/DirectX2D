@@ -16,6 +16,9 @@
 #include "dhAnimator.h"
 #include "dhPlayerBossScript.h"
 
+#include "dhPaintShader.h"
+#include "dhConstantBuffer.h"
+
 namespace dh
 {
 	BossOneScene::BossOneScene()
@@ -28,6 +31,24 @@ namespace dh
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
+
+		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexuture");
+		paintShader->SetTarget(paintTexture);
+		paintShader->OnExcute();
+
+		// 변경된 Smile(페인트텍스쳐)
+		{
+			GameObject* paint = new GameObject();
+			paint->SetName(L"paint");
+			AddGameObject(eLayerType::Monster, paint);
+			MeshRenderer* paintMr = paint->AddComponent<MeshRenderer>();
+			paintMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			paintMr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+			paint->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
+			Collider2D* cd = paint->AddComponent<Collider2D>();
+		}			
+
 		// Player
 		{
 			GameObject* player

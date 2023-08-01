@@ -16,6 +16,7 @@
 #include "dhPlayerWorldScript.h"
 #include "dhLight.h"
 #include "dhComputeShader.h"
+#include "dhPaintShader.h"
 
 namespace dh
 {
@@ -34,7 +35,6 @@ namespace dh
 		// cs->Create(L"PaintCS.hlsl", "main");
 		/*
 		{
-		{
 			GameObject* player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
 			player->SetName(L"Player");
 
@@ -47,7 +47,6 @@ namespace dh
 
 			Collider2D* cd = player->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(1.0f, 1.0f));
-		}
 		}
 		*/
 		{

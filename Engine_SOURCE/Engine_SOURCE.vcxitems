@@ -36,6 +36,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhStructedBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YamYamEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhObject.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMeshRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhResources.cpp" />
