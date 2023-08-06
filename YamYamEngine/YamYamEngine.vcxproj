@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="dhBossFlowerScript.h" />
+    <ClInclude Include="dhGroundScript.h" />
     <ClInclude Include="dhPlayerBossScript.h" />
     <ClInclude Include="dhPlayerWorldScript.h" />
     <ClInclude Include="framework.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="dhCameraScript.cpp" />
     <ClCompile Include="dhEndScene.cpp" />
     <ClCompile Include="dhGridScript.cpp" />
+    <ClCompile Include="dhGroundScript.cpp" />
     <ClCompile Include="dhLogoScene.cpp" />
     <ClCompile Include="dhMapScene.cpp" />
     <ClCompile Include="dhPlayerBossScript.cpp" />

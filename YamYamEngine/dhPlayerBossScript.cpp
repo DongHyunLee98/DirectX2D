@@ -7,10 +7,14 @@
 #include "dhAnimator.h"
 #include "dhResources.h"
 
+#include "dhRigidbody.h"
+#include "dhGroundScript.h"
+
 namespace dh
 {
 	PlayerBossScript::PlayerBossScript()
 		: dirR(false)
+		, jumpSwitch(false)
 	{
 	}
 	PlayerBossScript::~PlayerBossScript()
@@ -20,6 +24,10 @@ namespace dh
 	{
 		tr = GetOwner()->GetComponent<Transform>();
 		at = GetOwner()->GetComponent<Animator>();
+		cd = GetOwner()->AddComponent<Collider2D>();
+		rigid = GetOwner()->GetComponent<Rigidbody>();
+		// cd->SetSize(Vector2(0.4f, 0.5f));
+		// cd->SetCenter(Vector2(0.0f, -0.1f));
 
 		// 리소스 불러오기
 		std::shared_ptr<Texture> EnterIdle = Resources::Load<Texture>(L"Idle_Enter_R", L"..\\Resources\\Texture\\PlayerBoss\\EnterIdle\\EnterIdle_R.png");
@@ -93,40 +101,48 @@ namespace dh
 
 	void PlayerBossScript::Update()
 	{
-		pos = tr->GetPosition();
+		// 방향체크
+		if (Input::GetKeyDown(eKeyCode::RIGHT) || Input::GetKey(eKeyCode::RIGHT))
+		{
+			dirR = true;
+		}
+		else if (Input::GetKeyDown(eKeyCode::LEFT) || Input::GetKey(eKeyCode::LEFT))
+		{
+			dirR = false;
+		}
 
 		switch (pState)
 		{
 			// case dh::PlayerOverWorldScript::PlayerState::Idle:
 			// 	break;
-		case PlayerBossScript::PlayerState::Idle:
+		case PlayerState::Idle:
 			Idle();
 			break;
-		case dh::PlayerBossScript::PlayerState::Move:
+		case PlayerState::Move:
 			Move();
 			break;
-		case dh::PlayerBossScript::PlayerState::Enter:
+		case PlayerState::Enter:
 			Enter();
 			break;
-		case dh::PlayerBossScript::PlayerState::Jump:
+		case PlayerState::Jump:
 			Jump();
 			break;
-		case dh::PlayerBossScript::PlayerState::Shoot:
+		case PlayerState::Shoot:
 			Shoot();
 			break;
-		case dh::PlayerBossScript::PlayerState::MovingShoot:
+		case PlayerState::MovingShoot:
 			MovingShoot();
 			break;
-		case dh::PlayerBossScript::PlayerState::UpDown:
+		case PlayerState::UpDown:
 			UpDown();
 			break;
-		case dh::PlayerBossScript::PlayerState::Dash:
+		case PlayerState::Dash:
 			Dash();
 			break;
-		case dh::PlayerBossScript::PlayerState::Ghost:
+		case PlayerState::Ghost:
 			Ghost();
 			break;
-		case dh::PlayerBossScript::PlayerState::Hit:
+		case PlayerState::Hit:
 			Hit();
 			break;
 		default:
@@ -140,24 +156,63 @@ namespace dh
 	}
 	void PlayerBossScript::OnCollisionEnter(Collider2D* other)
 	{
-		// if(other == )
+		Rigidbody* rigid = GetOwner()->GetComponent<Rigidbody>();
+
+		//if (other->GetColliderOwner() == eColliderOwner::Ground)
+		//{
+		//	int a = 0;
+		//	rigid->SetGround(true);
+		//}
+
+		if (other->GetOwner()->GetName() == L"Ground")
+		{
+			int a = 0;
+			rigid->SetGround(true);
+		}
+		gravity = 0.0f;
+	}
+
+	void PlayerBossScript::OnCollisionStay(Collider2D* other)
+	{
+		if (other->GetOwner()->GetName() == L"Ground" && other->GetColliderOwner() == eColliderOwner::Ground)
+		{
+			// int a = 0;
+		}
+		// gravity = 0.0f;
+	}
+
+	void PlayerBossScript::OnCollisionExit(Collider2D* other)
+	{
+		if (other->GetOwner()->GetName() == L"Ground")
+		{
+			rigid->SetGround(false);
+			int a = 0;
+		}
+		int a = 0;
+		gravity = 2.0f;
 	}
 
 	void PlayerBossScript::Idle()
 	{
+		// 중력체크
+		{
+			pos = tr->GetPosition();
+			pos.y -= gravity * Time::DeltaTime();
+			tr->SetPosition(pos);
+		}
+
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			dirR = false;
+			// dirR = false;
 			pState = PlayerState::Move;
 			at->PlayAnimation(L"Run_Normal_L", true);
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT) && !(Input::GetKey(eKeyCode::X)))
 		{
-			dirR = true;
+			// dirR = true;
 			pState = PlayerState::Move;
 			at->PlayAnimation(L"Run_Normal_R", true);
 		}
-
 		else if (Input::GetKey(eKeyCode::UP))
 		{
 			pState = PlayerState::UpDown;
@@ -168,7 +223,6 @@ namespace dh
 			pState = PlayerState::UpDown;
 			at->PlayAnimation(L"Idle_Down_B", true);
 		}
-
 
 		// Jump
 		if (Input::GetKeyDown(eKeyCode::Z))
@@ -201,14 +255,14 @@ namespace dh
 		{
 			pState = PlayerState::Ghost;
 			at->PlayAnimation(L"Ghost_Normal", false);
-			dirR = true;
+			// dirR = true;
 		}
 		// Hit
 		if (Input::GetKeyUp(eKeyCode::H))
 		{
 			pState = PlayerState::Hit;
 			at->PlayAnimation(L"Hit_Air", false);
-			dirR = true;
+			// dirR = true;
 		}
 
 		// 필살기 V
@@ -232,19 +286,24 @@ namespace dh
 			at->PlayAnimation(L"Run_Shooting_L", true);
 		}
 
+		// 중력체크
+		{
+			pos = tr->GetPosition();
+		}
+
+
 		if (Input::GetKeyUp(eKeyCode::LEFT))
 		{
 			pState = PlayerState::Idle;
 			at->PlayAnimation(L"Idle_Enter_L", true);
-			dirR = false;
+			// dirR = false;
 		}
 		else if (Input::GetKeyUp(eKeyCode::RIGHT))
 		{
 			pState = PlayerState::Idle;
 			at->PlayAnimation(L"Idle_Enter_R", true);
-			dirR = true;
+			// dirR = true;
 		}
-
 
 		else if (Input::GetKeyUp(eKeyCode::UP))
 		{
@@ -273,13 +332,13 @@ namespace dh
 		{
 			pos.x -= 2.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			dirR = false;
+			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			pos.x += 2.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			dirR = true;
+			// dirR = true;
 		}
 
 		// Jump
@@ -288,6 +347,8 @@ namespace dh
 			pState = PlayerState::Jump;
 			at->PlayAnimation(L"Jump_Normal", false);
 		}
+
+		tr->SetPosition(pos);
 	}
 
 	void PlayerBossScript::Enter()
@@ -303,11 +364,11 @@ namespace dh
 	{
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			dirR = true;
+			// dirR = true;
 		}
 		else if (Input::GetKey(eKeyCode::LEFT))
 		{
-			dirR = false;
+			// dirR = false;
 		}
 
 		if (Input::GetKey(eKeyCode::RIGHT) && dirR == true)
@@ -344,13 +405,13 @@ namespace dh
 		{
 			pos.x -= 2.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			dirR = false;
+			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			pos.x += 2.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			dirR = true;
+			// dirR = true;
 		}
 
 		// 이동사격 탈출 (X키 땜)
@@ -383,11 +444,11 @@ namespace dh
 	{
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			dirR = false;
+			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			dirR = true;
+			// dirR = true;
 		}
 
 		if (Input::GetKeyUp(eKeyCode::UP))
@@ -404,9 +465,22 @@ namespace dh
 
 	void PlayerBossScript::Jump()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= 2.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+			// dirR = false;
+		}
+		else if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += 2.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+			// dirR = true;
+		}
+
+		jumpSwitch = true;
 		jumpTime += 3.8f * Time::DeltaTime();
 
-		pos.y += 2.0f * Time::DeltaTime();
 		if (jumpTime <= 2.9f)
 		{
 			if (Input::GetKeyDown(eKeyCode::Z))
@@ -418,9 +492,10 @@ namespace dh
 
 		if (jumpTime > 3.0f)
 		{
+			jumpSwitch = false;
 			pState = PlayerState::Idle;
-			at->PlayAnimation(L"Idle_Enter_R", true);
 			jumpTime = 0.0f;
+			at->PlayAnimation(L"Idle_Enter_R", true);
 		}
 		// 점프상태에서 Z키를 다시 누를때 페리
 

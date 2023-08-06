@@ -94,6 +94,9 @@
     <Filter Include="Resource\Animation">
       <UniqueIdentifier>{f894fb39-8b52-43b6-9097-8e339c38a6cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Component\Rigidbody">
+      <UniqueIdentifier>{cceafb99-d28b-4393-9b56-f43bf67b671b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h">
       <Filter>Resource\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhRigidbody.h">
+      <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhApplication.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp">
       <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhRigidbody.cpp">
+      <Filter>GameObject\Component\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

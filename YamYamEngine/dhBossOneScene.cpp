@@ -19,6 +19,8 @@
 #include "dhPaintShader.h"
 #include "dhConstantBuffer.h"
 
+#include "dhGroundScript.h"
+
 namespace dh
 {
 	BossOneScene::BossOneScene()
@@ -52,7 +54,7 @@ namespace dh
 		// Player
 		{
 			GameObject* player
-				= object::Instantiate<GameObject>(Vector3(-2.0f, -0.9f, 1.0001f), eLayerType::Player);
+				= object::Instantiate<GameObject>(Vector3(-2.0f, 1.9f, 1.0001f), eLayerType::Player);
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
 			playerMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -66,20 +68,24 @@ namespace dh
 			playerTr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 			// playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
 
-			Collider2D* cd = player->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(0.4f, 0.5f));
-			cd->SetCenter(Vector2(0.0f, -0.1f));
-		}
+			// PlayerScript로 위치이동
+			// Collider2D* cd = player->AddComponent<Collider2D>();
+			// cd->SetSize(Vector2(0.4f, 0.5f));
+			// cd->SetCenter(Vector2(0.0f, -0.1f));
+		}	
 
 		// Ground
 		{
 			GameObject* ground
 				= object::Instantiate<GameObject>(Vector3(0.0f, -1.5f, 1.0001f), eLayerType::Ground);
 			ground->SetName(L"Ground");
+			ground->AddComponent<GroundScript>();
+
 			Transform* groundTr = ground->GetComponent<Transform>();
 			groundTr->SetScale(Vector3(7.0f, 0.5f, 1.0f));
-			Collider2D* cd = ground->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(1.0f, 1.0f));
+
+			//Collider2D* cd = ground->AddComponent<Collider2D>();
+			//cd->SetSize(Vector2(1.0f, 1.0f));
 		}
 		// Boss
 		{
@@ -156,7 +162,7 @@ namespace dh
 			AddGameObject(eLayerType::Light, light);
 			Light* lightComp = light->AddComponent<Light>();
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
+			lightComp->SetColor(Vector4(0.9f, 0.9f, 0.9f, 1.0f));
 		}
 	}
 

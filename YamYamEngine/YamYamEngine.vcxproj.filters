@@ -46,6 +46,9 @@
     <ClCompile Include="YamYamEngine.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
+    <ClCompile Include="dhGroundScript.cpp">
+      <Filter>Contents\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -93,6 +96,9 @@
     </ClInclude>
     <ClInclude Include="dhPlayerBossScript.h">
       <Filter>Contents\Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="dhGroundScript.h">
+      <Filter>Contents\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

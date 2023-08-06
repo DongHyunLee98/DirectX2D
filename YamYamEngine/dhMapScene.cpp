@@ -197,6 +197,7 @@ namespace dh
 			cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
 			camera->AddComponent<CameraScript>();
+			// camera.SetTarget(player); // 내부에 멤버변수에 받아서 사용 (포지션으로)
 			renderer::cameras.push_back(cameraComp);
 			renderer::mainCamera = cameraComp;
 		}

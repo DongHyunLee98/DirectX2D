@@ -13,6 +13,7 @@ namespace dh::enums
 		MeshRenderer,
 		Animator,
 		Script,
+		Rigidbody,
 		Light,
 		Camera,
 		End,
@@ -49,6 +50,18 @@ namespace dh::enums
 		Circle,
 		Sphere,
 		Cube,
+		End,
+	};
+
+	// Rigid
+	enum class eColliderOwner
+	{
+		None,
+		Player,
+		Monster,
+		Ground,
+		Bullet,
+		UI,
 		End,
 	};
 
