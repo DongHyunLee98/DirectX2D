@@ -25,7 +25,7 @@ namespace dh
 		tr = GetOwner()->GetComponent<Transform>();
 		at = GetOwner()->GetComponent<Animator>();
 		cd = GetOwner()->AddComponent<Collider2D>();
-		rigid = GetOwner()->GetComponent<Rigidbody>();
+		// rigid = GetOwner()->GetComponent<Rigidbody>();
 		// cd->SetSize(Vector2(0.4f, 0.5f));
 		// cd->SetCenter(Vector2(0.0f, -0.1f));
 
@@ -111,6 +111,12 @@ namespace dh
 			dirR = false;
 		}
 
+		if (jumpSwitch == true)
+		{
+			pos.y += 2.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+		}
+
 		switch (pState)
 		{
 			// case dh::PlayerOverWorldScript::PlayerState::Idle:
@@ -156,7 +162,7 @@ namespace dh
 	}
 	void PlayerBossScript::OnCollisionEnter(Collider2D* other)
 	{
-		Rigidbody* rigid = GetOwner()->GetComponent<Rigidbody>();
+		// Rigidbody* rigid = GetOwner()->GetComponent<Rigidbody>();
 
 		//if (other->GetColliderOwner() == eColliderOwner::Ground)
 		//{
@@ -167,9 +173,9 @@ namespace dh
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
 			int a = 0;
-			rigid->SetGround(true);
+			// rigid->SetGround(true);
+			gravity = 0.0f;
 		}
-		gravity = 0.0f;
 	}
 
 	void PlayerBossScript::OnCollisionStay(Collider2D* other)
@@ -185,11 +191,11 @@ namespace dh
 	{
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
-			rigid->SetGround(false);
+			// rigid->SetGround(false);
 			int a = 0;
+			gravity = 2.0f;
 		}
 		int a = 0;
-		gravity = 2.0f;
 	}
 
 	void PlayerBossScript::Idle()
@@ -289,6 +295,8 @@ namespace dh
 		// 중력체크
 		{
 			pos = tr->GetPosition();
+			pos.y -= gravity * Time::DeltaTime();
+			tr->SetPosition(pos);
 		}
 
 

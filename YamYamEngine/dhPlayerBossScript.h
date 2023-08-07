@@ -46,7 +46,7 @@ namespace dh
 		Collider2D* cd;
 		PlayerState pState;
 		Vector3 pos;
-		Rigidbody* rigid;
+		// Rigidbody* rigid;
 
 		// VectorR velocity;
 		bool dirR; // 1¿À¸¥ÂÊ 0¿ÞÂÊ ÃÊ±ê°ª 0(true)

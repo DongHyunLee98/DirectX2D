@@ -43,10 +43,11 @@ namespace dh
 			Collider2D* leftCol = leftObj->GetComponent<Collider2D>();
 			if (leftCol == nullptr)
 				continue;
-			if (leftObj->GetState()
-				!= GameObject::eState::Active)
-				continue;
+			//if (leftObj->GetState()
+			//	!= GameObject::eState::Active)
+			//	continue;
 
+			//
 			for (GameObject* rightObj : rights)
 			{
 				Collider2D* rightCol = rightObj->GetComponent<Collider2D>();
@@ -85,12 +86,16 @@ namespace dh
 			// 충돌
 			if (iter->second == false)
 			{
+				// 충돌관련 추가
+				iter->second = true;
 				//최초 충돌
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
 			}
 			else
 			{
+				// 충돌관련 추가
+				iter->second = true;
 				// 충돌 중
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);
@@ -101,6 +106,8 @@ namespace dh
 			// 충돌 X
 			if (iter->second == true)
 			{
+				// 충돌관련 추가
+				iter->second = false;
 				// 충돌하고 있다가 나갈떄
 				left->OnCollisionExit(right);
 				right->OnCollisionExit(left);

@@ -30,6 +30,8 @@ namespace dh
 		static void Clear();
 
 	private:
+		static bool RectToRect(Collider2D* left, Collider2D* right);
+		static bool CircleToCircle(Collider2D* left, Collider2D* right);
 		
 		static std::bitset<LAYER_MAX> mMatrix[LAYER_MAX];
 		static std::map<UINT64, bool> mCollisionMap;
