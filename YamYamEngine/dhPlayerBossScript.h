@@ -40,6 +40,16 @@ namespace dh
 		virtual void OnCollisionStay(Collider2D* other) override;
 		virtual void OnCollisionExit(Collider2D* other) override;
 
+
+		Transform* GetTransform() { return tr; }
+		Animator* GetAnimator() { return at; }
+		Collider2D* GetCollider() { return cd; }
+
+		void SetAnimator(Animator* mAt) { at = mAt; }
+
+		// void SetCenter(Vector2 size) { mCenter = size; }
+		// UINT GetColliderID() { return mColliderID; }
+
 	private:
 		Animator* at;
 		Transform* tr;

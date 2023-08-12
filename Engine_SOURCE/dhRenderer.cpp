@@ -454,6 +454,14 @@ namespace renderer
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"FlowerBoss_Material", material);
 
+			// 보스앞꽃
+			texture = Resources::Load<Texture>(L"FlowerFront", L"..\\Resources\\Texture\\flowerFront.png");
+			material = std::make_shared<Material>();
+			material->SetShader(spriteShader);
+			material->SetTexture(texture);
+			// material->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert(L"FlowerFront_Material", material);
+
 			// 캐릭터
 			texture = Resources::Load<Texture>(L"Cuphead_Boss", L"..\\Resources\\Texture\\Cuphead_Boss.png");
 			material = std::make_shared<Material>();

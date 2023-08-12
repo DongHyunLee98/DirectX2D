@@ -61,17 +61,15 @@ namespace dh
 			playerMr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 			
 			Animator* at = player->AddComponent<Animator>();
-			player->AddComponent<PlayerBossScript>();
+			PlayerBossScript* pBossScript = player->AddComponent<PlayerBossScript>();
+			// Animator* mAt = player->AddComponent<Animator>();
+			pBossScript->SetAnimator(at);
 
-			Transform* playerTr = player->GetComponent<Transform>();
-
-			playerTr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-			// playerTr->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
-
-			// PlayerScript로 위치이동
-			// Collider2D* cd = player->AddComponent<Collider2D>();
-			// cd->SetSize(Vector2(0.4f, 0.5f));
-			// cd->SetCenter(Vector2(0.0f, -0.1f));
+			Collider2D* playerCd = pBossScript->GetCollider();
+			playerCd->SetSize(Vector2(0.4f, 0.5f));
+			playerCd->SetCenter(Vector2(0.0f, 0.0f));
+			Transform* playerTr = pBossScript->GetTransform();
+			playerTr->SetScale(Vector3(1.3f, 1.3f, 1.0f));
 		}	
 
 		// Ground
@@ -108,7 +106,7 @@ namespace dh
 		// HP
 		{
 			GameObject* hpBar
-				= object::Instantiate<GameObject>(Vector3(-3.2f, -1.8f, 2.0f), eLayerType::BackGround);
+				= object::Instantiate<GameObject>(Vector3(-3.6f, -2.0f, 1.0f), eLayerType::BackGround);
 			hpBar->SetName(L"HP3");
 			MeshRenderer* mr = hpBar->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -127,6 +125,29 @@ namespace dh
 			BossOneMr->SetMaterial(Resources::Find<Material>(L"BossStage1_Material"));
 			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(8.2f, 4.5f, 1.0f));
 		}
+
+		// BG
+		{
+			GameObject* FlowerFrontBG
+				= object::Instantiate<GameObject>(Vector3(0.0f, -1.9f, 1.9f), eLayerType::BackGround);
+			MeshRenderer* FlowerFrontMr = FlowerFrontBG->AddComponent<MeshRenderer>();
+			FlowerFrontMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			FlowerFrontMr->SetMaterial(Resources::Find<Material>(L"FlowerFront_Material"));
+			FlowerFrontBG->GetComponent<Transform>()->SetScale(Vector3(10.0f, 2.0f, 1.0f));
+		}
+		//UI Camera
+		{
+			// GameObject* camera = new GameObject();
+			// AddGameObject(eLayerType::Camera, camera);
+			GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, -10.0f), eLayerType::Camera);
+			// camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
+			Camera* cameraComp = camera->AddComponent<Camera>();
+			cameraComp->TurnLayerMask(eLayerType::Player, false);
+			cameraComp->TurnLayerMask(eLayerType::Monster, false);
+			cameraComp->TurnLayerMask(eLayerType::NotMonster, false);
+			cameraComp->TurnLayerMask(eLayerType::BackGround, false);
+			//camera->AddComponent<CameraScript>();
+		}
 		//Main Camera
 		Camera* cameraComp = nullptr;
 		{
@@ -141,20 +162,6 @@ namespace dh
 			renderer::mainCamera = cameraComp;
 		}
 
-		//UI Camera
-		{
-			// GameObject* camera = new GameObject();
-			// AddGameObject(eLayerType::Camera, camera);
-			GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, -10.0f), eLayerType::Camera);
-			// camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::Player, false);
-			cameraComp->TurnLayerMask(eLayerType::Monster, false);
-			cameraComp->TurnLayerMask(eLayerType::NotMonster, false);
-			cameraComp->TurnLayerMask(eLayerType::BackGround, false);
-			//camera->AddComponent<CameraScript>();
-		}
-
 		// Light (test), Direct
 		{
 			GameObject* light = new GameObject();
@@ -162,7 +169,7 @@ namespace dh
 			AddGameObject(eLayerType::Light, light);
 			Light* lightComp = light->AddComponent<Light>();
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(0.9f, 0.9f, 0.9f, 1.0f));
+			lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 	}
 

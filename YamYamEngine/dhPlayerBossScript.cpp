@@ -25,9 +25,6 @@ namespace dh
 		tr = GetOwner()->GetComponent<Transform>();
 		at = GetOwner()->GetComponent<Animator>();
 		cd = GetOwner()->AddComponent<Collider2D>();
-		// rigid = GetOwner()->GetComponent<Rigidbody>();
-		// cd->SetSize(Vector2(0.4f, 0.5f));
-		// cd->SetCenter(Vector2(0.0f, -0.1f));
 
 		// 리소스 불러오기
 		std::shared_ptr<Texture> EnterIdle = Resources::Load<Texture>(L"Idle_Enter_R", L"..\\Resources\\Texture\\PlayerBoss\\EnterIdle\\EnterIdle_R.png");
@@ -172,7 +169,6 @@ namespace dh
 
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
-			int a = 0;
 			// rigid->SetGround(true);
 			gravity = 0.0f;
 		}
@@ -180,11 +176,6 @@ namespace dh
 
 	void PlayerBossScript::OnCollisionStay(Collider2D* other)
 	{
-		if (other->GetOwner()->GetName() == L"Ground" && other->GetColliderOwner() == eColliderOwner::Ground)
-		{
-			// int a = 0;
-		}
-		// gravity = 0.0f;
 	}
 
 	void PlayerBossScript::OnCollisionExit(Collider2D* other)
