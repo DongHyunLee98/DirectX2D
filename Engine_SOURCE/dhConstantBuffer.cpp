@@ -3,9 +3,6 @@
 
 namespace dh::graphics
 {
-
-
-
 	ConstantBuffer::ConstantBuffer(const eCBType type)
 		: GpuBuffer()
 		, mType(type)
@@ -38,5 +35,4 @@ namespace dh::graphics
 	{
 		dh::graphics::GetDevice()->BindConstantBuffer(stage, mType, buffer.Get());
 	}
-
 }

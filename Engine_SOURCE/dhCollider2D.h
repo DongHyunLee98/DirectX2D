@@ -23,12 +23,8 @@ namespace dh
 		void SetType(eColliderType type) { mType = type; }
 		Vector2 GetSize() { return mSize; }
 		void SetSize(Vector2 size) { mSize = size; }
-		void SetCenter(Vector2 center) { mCenter = center; }
+		void SetCenter(Vector2 size) { mCenter = size; }
 		UINT GetColliderID() { return mColliderID; }
-
-		// RigidBody 정보를 얻기위함
-		eColliderOwner GetColliderOwner() { return mColliderOwner; }
-		void SetColliderOwner(eColliderOwner colOwner) { mColliderOwner = colOwner; }
 
 	private:
 		static UINT mColliderNumber;
@@ -36,14 +32,8 @@ namespace dh
 		eColliderType mType;
 		Transform* mTransform;
 
-		// Rigid정보 얻기위함
-		eColliderOwner mColliderOwner;
-
 		Vector3 mPosition;
 		Vector2 mSize;
 		Vector2 mCenter;
-
-
-		bool mGrounded;
 	};
 }

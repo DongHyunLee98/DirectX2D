@@ -97,6 +97,18 @@
     <Filter Include="GameObject\Component\Rigidbody">
       <UniqueIdentifier>{cceafb99-d28b-4393-9b56-f43bf67b671b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Light">
+      <UniqueIdentifier>{5cfe4346-83aa-4cde-8828-49c58f0faa4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\CS">
+      <UniqueIdentifier>{9f63afae-880a-4037-ac76-8d418244b8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\StructedBuffer">
+      <UniqueIdentifier>{129294b0-c629-4878-b3be-a5b622b177a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\ParticleSystem">
+      <UniqueIdentifier>{0f1e7a49-e322-4461-89ee-aa9ca7c1815b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -195,21 +207,31 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimation.h">
       <Filter>Resource\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)dhStructedBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)dhLight.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)dhComputeShader.h">
-      <Filter>Resource\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h">
-      <Filter>Resource\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)dhRigidbody.h">
       <Filter>GameObject\Component\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhPlayer.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhLight.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhParticleShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhComputeShader.h">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhStructedBuffer.h">
+      <Filter>Graphics\StructedBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhParticleSystem.h">
+      <Filter>GameObject\Component\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhApplication.cpp">
@@ -293,21 +315,31 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhGameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)dhStructedBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp">
-      <Filter>Resource\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp">
-      <Filter>Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhRigidbody.cpp">
       <Filter>GameObject\Component\Rigidbody</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhPlayer.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhParticleShader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhStructedBuffer.cpp">
+      <Filter>Graphics\StructedBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhParticleSystem.cpp">
+      <Filter>GameObject\Component\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)dhMath.inl">

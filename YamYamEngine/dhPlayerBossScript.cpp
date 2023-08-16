@@ -4,17 +4,24 @@
 #include "dhGameObject.h"
 #include "dhTime.h"
 #include "dhInput.h"
-#include "dhAnimator.h"
 #include "dhResources.h"
-
-#include "dhRigidbody.h"
 #include "dhGroundScript.h"
+#include "dhPlayerBullet.h"
+#include "dhRigidbody.h"
+#include "dhObject.h"
 
 namespace dh
 {
 	PlayerBossScript::PlayerBossScript()
-		: dirR(false)
-		, jumpSwitch(false)
+		: dirR(true)
+		, jumpState(false)
+		, jumpTime(0.0f)
+		, attackTime(0.0f)
+		, dashTime(0.0f)
+		, jumpTimeCheck(false)
+		, gravity(-2.0f)
+		, bulletPos(0.0f,0.0f,0.0f)
+		, pos(0.0f,0.0f,0.0f)
 	{
 	}
 	PlayerBossScript::~PlayerBossScript()
@@ -23,7 +30,7 @@ namespace dh
 	void PlayerBossScript::Initialize()
 	{
 		tr = GetOwner()->GetComponent<Transform>();
-		at = GetOwner()->GetComponent<Animator>();
+		at = GetOwner()->AddComponent<Animator>();
 		cd = GetOwner()->AddComponent<Collider2D>();
 
 		// 리소스 불러오기
@@ -47,7 +54,6 @@ namespace dh
 		std::shared_ptr<Texture> ShootLIdle = Resources::Load<Texture>(L"Idle_Shoot_L", L"..\\Resources\\Texture\\PlayerBoss\\Shoot\\Straight\\IdleShootL.png");
 		std::shared_ptr<Texture> ShootUpIdle = Resources::Load<Texture>(L"Idle_Shoot_Up", L"..\\Resources\\Texture\\PlayerBoss\\Shoot\\Up\\IdleUpShoot.png");
 		std::shared_ptr<Texture> ShootDownIdle = Resources::Load<Texture>(L"Idle_Shoot_Down", L"..\\Resources\\Texture\\PlayerBoss\\Shoot\\Down\\IdleShootDown.png");
-		
 		
 		// Run
 		std::shared_ptr<Texture> NormalRunR = Resources::Load<Texture>(L"Run_Normal_R", L"..\\Resources\\Texture\\PlayerBoss\\Run\\Normal\\RunNormalR.png");
@@ -91,9 +97,6 @@ namespace dh
 		// 실행
 		at->PlayAnimation(L"Idle_Enter_R", true);
 		// 그외
-		jumpTime = 0.0f;
-		attackTime = 0.0f;
-		dashTime = 0.0f;
 	}
 
 	void PlayerBossScript::Update()
@@ -108,11 +111,13 @@ namespace dh
 			dirR = false;
 		}
 
-		if (jumpSwitch == true)
+		if (jumpState == true)
 		{
-			pos.y += 2.0f * Time::DeltaTime();
+			pos.y += 2.0f * gravity * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
+		if (jumpTimeCheck == true)
+			jumpTime += 2.0f * Time::DeltaTime();
 
 		switch (pState)
 		{
@@ -159,19 +164,34 @@ namespace dh
 	}
 	void PlayerBossScript::OnCollisionEnter(Collider2D* other)
 	{
-		// Rigidbody* rigid = GetOwner()->GetComponent<Rigidbody>();
-
-		//if (other->GetColliderOwner() == eColliderOwner::Ground)
-		//{
-		//	int a = 0;
-		//	rigid->SetGround(true);
-		//}
-
+		
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
-			// rigid->SetGround(true);
+			if (pState != PlayerState::Idle)
+			{
+				if (dirR = true)
+				{
+					pState = PlayerState::Idle;
+					at->PlayAnimation(L"Idle_Enter_R", true);
+				}
+				else if (dirR = false)
+				{
+					pState = PlayerState::Idle;
+					at->PlayAnimation(L"Idle_Enter_L", true);
+				}
+			}
+
+			// if (other->GetOwner()->GetName() == L"Ground")
+
+			jumpState = false;
 			gravity = 0.0f;
 		}
+		
+		//if (other->GetOwner()->GetName() == L"Ground")
+		//{
+		//	 gravity = 0.0f;
+		//}
+
 	}
 
 	void PlayerBossScript::OnCollisionStay(Collider2D* other)
@@ -182,19 +202,18 @@ namespace dh
 	{
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
-			// rigid->SetGround(false);
-			int a = 0;
-			gravity = 2.0f;
+			jumpState = true;
 		}
-		int a = 0;
 	}
 
 	void PlayerBossScript::Idle()
 	{
+		// cd->SetSize
+		// cd->SetCenter
 		// 중력체크
 		{
 			pos = tr->GetPosition();
-			pos.y -= gravity * Time::DeltaTime();
+			pos.y += gravity * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
 
@@ -224,12 +243,24 @@ namespace dh
 		// Jump
 		if (Input::GetKeyDown(eKeyCode::Z))
 		{
+			gravity = 2.0f;
+			jumpState = true;
+			jumpTimeCheck = true;
 			pState = PlayerState::Jump;
-			at->PlayAnimation(L"Jump_Normal", false);
+			at->PlayAnimation(L"Jump_Normal", true);
 		}
 		// Attack
 		if (Input::GetKey(eKeyCode::X) && dirR == true)
 		{
+			// attackTime += 1.1f * Time::DeltaTime();
+			// if (attackTime >= 1.2f)
+			{
+				// GameObject* bulletObj = object::Instantiate<GameObject>(Vector3(pos.x, pos.y, 1.0001f), eLayerType::PlayerBullet);
+				// PlayerBullet* bulletSetPos = bulletObj->AddComponent<PlayerBullet>();
+				// bulletSetPos->SetPosition(pos);
+				// attackTime = 0.0f;
+			}
+
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_R", true);
 		}
@@ -343,6 +374,8 @@ namespace dh
 		// Jump
 		if (Input::GetKeyDown(eKeyCode::Z))
 		{
+			pos.x += 3.0f * Time::DeltaTime();
+
 			pState = PlayerState::Jump;
 			at->PlayAnimation(L"Jump_Normal", false);
 		}
@@ -464,6 +497,7 @@ namespace dh
 
 	void PlayerBossScript::Jump()
 	{
+		
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			pos.x -= 2.0f * Time::DeltaTime();
@@ -477,27 +511,13 @@ namespace dh
 			// dirR = true;
 		}
 
-		jumpSwitch = true;
-		jumpTime += 3.8f * Time::DeltaTime();
-
-		if (jumpTime <= 2.9f)
+		if (jumpTime >= 1.0f)
 		{
-			if (Input::GetKeyDown(eKeyCode::Z))
-			{
-				pState = PlayerState::Jump;
-				at->PlayAnimation(L"Parry_Normal", false);
-			}
-		}
-
-		if (jumpTime > 3.0f)
-		{
-			jumpSwitch = false;
-			pState = PlayerState::Idle;
+			gravity = -1.0f;
+			jumpState = false;
+			jumpTimeCheck = false;
 			jumpTime = 0.0f;
-			at->PlayAnimation(L"Idle_Enter_R", true);
 		}
-		// 점프상태에서 Z키를 다시 누를때 페리
-
 	}
 
 	void PlayerBossScript::Dash()

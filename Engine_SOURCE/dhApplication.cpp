@@ -58,12 +58,12 @@ namespace dh
 
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
-		
+
 		//SceneManager::Render();
 		renderer::Render();
 		//graphicDevice->Draw();
 
-		
+
 	}
 
 	void Application::Destroy()

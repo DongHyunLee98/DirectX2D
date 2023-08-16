@@ -10,7 +10,7 @@ namespace dh
 	public:
 		Application();
 		~Application();
-		
+
 		void Run();
 
 		void Initialize();

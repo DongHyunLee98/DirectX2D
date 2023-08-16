@@ -29,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhEnums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhGraphicDevice_Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhGraphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhImage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhLight.h" />
@@ -37,6 +38,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhMeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhPaintShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhParticleShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhParticleSystem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhRigidbody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhStructedBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)YamYamEngine.h" />
@@ -55,6 +59,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhGameObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhImage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhAnimation.cpp" />
@@ -73,6 +78,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhMeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhPaintShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhParticleShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhParticleSystem.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhResources.cpp" />

@@ -18,6 +18,8 @@
 #include "dhComputeShader.h"
 #include "dhPaintShader.h"
 
+#include "dhPlayerScript.h"
+
 namespace dh
 {
 	MapScene::MapScene()
@@ -29,7 +31,7 @@ namespace dh
 	void MapScene::Initialize()
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
-		CollisionManager::SetLayer(eLayerType::Player, eLayerType::NotMonster, true);
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::MapObject, true);
 
 		// ComputeShader* cs = new ComputeShader();
 		// cs->Create(L"PaintCS.hlsl", "main");
@@ -121,6 +123,11 @@ namespace dh
 			// player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 		}
 
+
+		// test
+		{
+		}
+
 		// 7/12 Collider 작업확인 주석처리
 		//{
 		//	GameObject* player = new GameObject();
@@ -136,7 +143,7 @@ namespace dh
 		// shop
 		{
 			GameObject* shop
-				= object::Instantiate<GameObject>(Vector3(2.0f, 0.5f, 1.0001f), eLayerType::NotMonster);
+				= object::Instantiate<GameObject>(Vector3(2.0f, 0.5f, 1.0001f), eLayerType::MapObject);
 			shop->SetName(L"shop");
 
 			MeshRenderer* mr = shop->AddComponent<MeshRenderer>();
@@ -151,7 +158,7 @@ namespace dh
 		// flag
 		{
 			GameObject* flag
-				= object::Instantiate<GameObject>(Vector3(0.3f, 0.3f, 1.0001f), eLayerType::NotMonster);
+				= object::Instantiate<GameObject>(Vector3(0.3f, 0.3f, 1.0001f), eLayerType::MapObject);
 			flag->SetName(L"flag");
 
 			MeshRenderer* mr = flag->AddComponent<MeshRenderer>();
@@ -211,7 +218,7 @@ namespace dh
 			Camera* cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::Player, false);
 			cameraComp->TurnLayerMask(eLayerType::Monster, false);
-			cameraComp->TurnLayerMask(eLayerType::NotMonster, false);
+			cameraComp->TurnLayerMask(eLayerType::MapObject, false);
 			cameraComp->TurnLayerMask(eLayerType::BackGround, false);
 			//camera->AddComponent<CameraScript>();
 		}

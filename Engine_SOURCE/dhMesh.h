@@ -11,7 +11,7 @@ namespace dh
 	public:
 		Mesh();
 		~Mesh();
-		
+
 		virtual HRESULT Load(const std::wstring& path) override;
 
 		bool CreateVertexBuffer(void* data, UINT Count);
@@ -19,13 +19,14 @@ namespace dh
 
 		void BindBuffer(); //Buffer 파이프라인에 묶어준다.
 		void Render();
+		void RenderInstanced(UINT startIndexLocation);
 
 		UINT GetIndexCount() { return mIndexCount; }
 
 	private:
 		Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> mIndexBuffer;
-		
+
 		D3D11_BUFFER_DESC mVBDesc;
 		D3D11_BUFFER_DESC mIBDesc;
 

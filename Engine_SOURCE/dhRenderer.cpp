@@ -4,6 +4,7 @@
 #include "dhMaterial.h"
 #include "dhStructedBuffer.h"
 #include "dhPaintShader.h"
+#include "dhParticleShader.h"
 
 // inputLayer - LoadShader - LoadMaterial ( 그전에 PSVS만들고 작업하고 globals와 랜더러헤더에 버퍼추가)
 
@@ -80,6 +81,10 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
+		shader = dh::Resources::Find<Shader>(L"ParticleShader");
+		dh::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
 		
 #pragma endregion
 #pragma region Sampler State
@@ -159,10 +164,10 @@ namespace renderer
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
-		
+
 		//default
 		blendStates[(UINT)eBSType::Default] = nullptr;
-		
+
 		// Alpha Blend
 		blendDesc.AlphaToCoverageEnable = false;
 		blendDesc.IndependentBlendEnable = false;
@@ -192,7 +197,6 @@ namespace renderer
 
 #pragma endregion
 
-
 	}
 
 	void LoadMesh()
@@ -200,6 +204,20 @@ namespace renderer
 		std::vector<Vertex> vertexes = {};
 		std::vector<UINT> indexes = {};
 
+
+		// PointMesh
+		Vertex v = {};
+		v.pos = Vector3(0.0f, 0.0f, 0.0f);
+		vertexes.push_back(v);
+		indexes.push_back(0);
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
+		Resources::Insert(L"PointMesh", mesh);
+
+
+		vertexes.clear();
+		indexes.clear();
 		//RECT
 		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
@@ -219,7 +237,7 @@ namespace renderer
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
 		// Vertex Buffer
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh = std::make_shared<Mesh>();
 		Resources::Insert(L"RectMesh", mesh);
 
 		mesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
@@ -233,7 +251,7 @@ namespace renderer
 		indexes.push_back(3);
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
-	
+
 
 		// Rect Debug Mesh
 		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
@@ -285,26 +303,35 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
 		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(TransformCB));
 
-		// Grid Buffer
+		// Animator Buffer
 		constantBuffer[(UINT)eCBType::Animator] = new ConstantBuffer(eCBType::Animator);
 		constantBuffer[(UINT)eCBType::Animator]->Create(sizeof(AnimatorCB));
 
+		//ParticleCB
+		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
+		constantBuffer[(UINT)eCBType::Particle]->Create(sizeof(ParticleCB));
+
 		// light structed buffer
 		lightsBuffer = new StructedBuffer();
-		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr, true);
 	}
 
 	void LoadShader()
 	{
-		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
-		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
-		dh::Resources::Insert(L"TriangleShader", shader);
+		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
+		triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
+		triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
+		dh::Resources::Insert(L"TriangleShader", triangleShader);
 
 		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
 		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		dh::Resources::Insert(L"SpriteShader", spriteShader);
+
+		std::shared_ptr<Shader> spriteAniShader = std::make_shared<Shader>();
+		spriteAniShader->Create(eShaderStage::VS, L"SpriteAnimationVS.hlsl", "main");
+		spriteAniShader->Create(eShaderStage::PS, L"SpriteAnimationPS.hlsl", "main");
+		dh::Resources::Insert(L"SpriteAnimationShader", spriteAniShader);
 
 		std::shared_ptr<Shader> girdShader = std::make_shared<Shader>();
 		girdShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
@@ -318,14 +345,23 @@ namespace renderer
 		debugShader->SetRSState(eRSType::WireframeNone);
 		dh::Resources::Insert(L"DebugShader", debugShader);
 
-		std::shared_ptr<Shader> spriteAniShader = std::make_shared<Shader>();
-		spriteAniShader->Create(eShaderStage::VS, L"SpriteAnimationVS.hlsl", "main");
-		spriteAniShader->Create(eShaderStage::PS, L"SpriteAnimationPS.hlsl", "main");
-		dh::Resources::Insert(L"SpriteAnimationShader", spriteAniShader);
-		
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"PaintCS.hlsl", "main");
 		dh::Resources::Insert(L"PaintShader", paintShader);
+
+		std::shared_ptr<ParticleShader> psSystemShader = std::make_shared<ParticleShader>();
+		psSystemShader->Create(L"ParticleCS.hlsl", "main");
+		dh::Resources::Insert(L"ParticleSystemShader", psSystemShader);
+
+		std::shared_ptr<Shader> paritcleShader = std::make_shared<Shader>();
+		paritcleShader->Create(eShaderStage::VS, L"ParticleVS.hlsl", "main");
+		paritcleShader->Create(eShaderStage::GS, L"ParticleGS.hlsl", "main");
+		paritcleShader->Create(eShaderStage::PS, L"ParticlePS.hlsl", "main");
+		paritcleShader->SetRSState(eRSType::SolidNone);
+		paritcleShader->SetDSState(eDSType::NoWrite);
+		paritcleShader->SetBSState(eBSType::AlphaBlend);
+		paritcleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+		dh::Resources::Insert(L"ParticleShader", paritcleShader);
 	}
 
 	void LoadTexture()
@@ -335,30 +371,46 @@ namespace renderer
 		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
 		dh::Resources::Insert(L"PaintTexuture", uavTexture);
 
+
+		std::shared_ptr<Texture> particle = std::make_shared<Texture>();
+		Resources::Load<Texture>(L"CartoonSmoke", L"..\\Resources\\particle\\CartoonSmoke.png");
 	}
 	void LoadMaterial()
 	{
-		std::shared_ptr<Shader> spriteShader
+		std::shared_ptr<Shader> shader
 			= Resources::Find<Shader>(L"SpriteShader");
 
 
-		std::shared_ptr<Texture> texture
-			= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+		//std::shared_ptr<Texture> texture
+		//	= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
 
+		//std::shared_ptr<Material> material = std::make_shared<Material>();
+		//material->SetShader(shader);
+		//material->SetTexture(texture);
+		//Resources::Insert(L"SpriteMaterial", material);
+
+		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"BossStage1", L"..\\Resources\\Texture\\BossStage1.png");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->SetShader(spriteShader);
-		material->SetTexture(texture);
-		Resources::Insert(L"SpriteMaterial", material);
-
-		// 임시로 페인트를이용
-		// texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
-		texture = Resources::Find<Texture>(L"PaintTexuture");
-		material = std::make_shared<Material>();
-		material->SetShader(spriteShader);
+		material->SetShader(shader);
 		material->SetTexture(texture);
 		material->SetRenderingMode(eRenderingMode::Transparent);
-		Resources::Insert(L"SpriteMaterial02", material);
-		// Resources::Insert(L"PaintMaterial", material);
+		Resources::Insert(L"BossStage1_Material", material);
+
+		// texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		// texture = Resources::Find<Texture>(L"PaintTexuture");
+		// material = std::make_shared<Material>();
+		// material->SetShader(shader);
+		// material->SetTexture(texture);
+		// material->SetRenderingMode(eRenderingMode::Transparent);
+		// Resources::Insert(L"SpriteMaterial02", material);
+
+		// 애니메이션이 순서상 뒤에있어야한다. (새로운 세이더를 넣기때문)
+		std::shared_ptr<Shader> shaderAnimation
+			= Resources::Find<Shader>(L"SpriteAnimationShader");
+		material = std::make_shared<Material>();
+		material->SetShader(shaderAnimation);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"SpriteAnimaionMaterial", material);
 
 		std::shared_ptr<Shader> gridShader
 			= Resources::Find<Shader>(L"GridShader");
@@ -369,17 +421,16 @@ namespace renderer
 
 		std::shared_ptr<Shader> debugShader
 			= Resources::Find<Shader>(L"DebugShader");
-		
+
 		material = std::make_shared<Material>();
 		material->SetShader(debugShader);
 		Resources::Insert(L"DebugMaterial", material);
-
 
 		// Logo
 		{
 			texture = Resources::Load<Texture>(L"Logo", L"..\\Resources\\Texture\\Logo.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"Logo_Material", material);
@@ -389,14 +440,14 @@ namespace renderer
 		{
 			texture = Resources::Load<Texture>(L"title1", L"..\\Resources\\Texture\\title1.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"title1_Material", material);
 
 			texture = Resources::Load<Texture>(L"title2", L"..\\Resources\\Texture\\title2.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"title2_Material", material);
@@ -406,7 +457,7 @@ namespace renderer
 		{
 			texture = Resources::Load<Texture>(L"world1_large_island_main", L"..\\Resources\\Texture\\world1_large_island_main.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"world1_large_island_main_Material", material);
@@ -414,7 +465,7 @@ namespace renderer
 			// 플레이어
 			texture = Resources::Load<Texture>(L"Cuphead_Overload", L"..\\Resources\\Texture\\Cuphead_Overload.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"Cuphead_Overload_Material", material);
@@ -422,7 +473,7 @@ namespace renderer
 			// 샵
 			texture = Resources::Load<Texture>(L"Shop", L"..\\Resources\\Texture\\Shop.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"Shop_Material", material);
@@ -430,7 +481,7 @@ namespace renderer
 			// 플래그
 			texture = Resources::Load<Texture>(L"Flag1", L"..\\Resources\\Texture\\Flag1.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"Flag1_Material", material);
@@ -439,33 +490,33 @@ namespace renderer
 		// Boss1
 		{
 			// 배경
-			texture = Resources::Load<Texture>(L"BossStage1", L"..\\Resources\\Texture\\BossStage1.png");
-			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
-			material->SetTexture(texture);
-			// material->SetRenderingMode(eRenderingMode::Transparent);
-			Resources::Insert(L"BossStage1_Material", material);
-
-			// 보스
-			texture = Resources::Load<Texture>(L"FlowerBoss", L"..\\Resources\\Texture\\FlowerBoss.png");
-			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
-			material->SetTexture(texture);
-			// material->SetRenderingMode(eRenderingMode::Transparent);
-			Resources::Insert(L"FlowerBoss_Material", material);
+			//texture = Resources::Load<Texture>(L"BossStage1", L"..\\Resources\\Texture\\BossStage1.png");
+			//material = std::make_shared<Material>();
+			//material->SetShader(shader);
+			//material->SetTexture(texture);
+			//// material->SetRenderingMode(eRenderingMode::Transparent);
+			//Resources::Insert(L"BossStage1_Material", material);
 
 			// 보스앞꽃
 			texture = Resources::Load<Texture>(L"FlowerFront", L"..\\Resources\\Texture\\flowerFront.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert(L"FlowerFront_Material", material);
+
+			// 보스
+			texture = Resources::Load<Texture>(L"FlowerBoss", L"..\\Resources\\Texture\\FlowerBoss.png");
+			material = std::make_shared<Material>();
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
-			Resources::Insert(L"FlowerFront_Material", material);
+			Resources::Insert(L"FlowerBoss_Material", material);
 
 			// 캐릭터
 			texture = Resources::Load<Texture>(L"Cuphead_Boss", L"..\\Resources\\Texture\\Cuphead_Boss.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"Cuphead_Boss_Material", material);
@@ -473,7 +524,7 @@ namespace renderer
 			// 체력(UI)
 			texture = Resources::Load<Texture>(L"HP3", L"..\\Resources\\Texture\\HP3.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"HP3_Material", material);
@@ -484,7 +535,7 @@ namespace renderer
 			// 뒷배경
 			texture = Resources::Load<Texture>(L"winscreen_bg", L"..\\Resources\\Texture\\winscreen_bg.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"winscreen_bg_Material", material);
@@ -492,7 +543,7 @@ namespace renderer
 			// 보드
 			texture = Resources::Load<Texture>(L"winscreen_board", L"..\\Resources\\Texture\\winscreen_board.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"winscreen_board_Material", material);
@@ -500,7 +551,7 @@ namespace renderer
 			// 별
 			texture = Resources::Load<Texture>(L"winscreen_stars", L"..\\Resources\\Texture\\winscreen_star.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"winscreen_star_Material", material);
@@ -508,7 +559,7 @@ namespace renderer
 			// 결과 글자
 			texture = Resources::Load<Texture>(L"winscreen_results_title", L"..\\Resources\\Texture\\winscreen_results_title.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"winscreen_results_title_Material", material);
@@ -516,7 +567,7 @@ namespace renderer
 			// 결과 캐릭터
 			texture = Resources::Load<Texture>(L"winscreen_ch", L"..\\Resources\\Texture\\winscreen_ch.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"winscreen_ch_Material", material);
@@ -526,18 +577,23 @@ namespace renderer
 		{
 			texture = Resources::Load<Texture>(L"End", L"..\\Resources\\Texture\\End.png");
 			material = std::make_shared<Material>();
-			material->SetShader(spriteShader);
+			material->SetShader(shader);
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"End_Material", material);
 		}
 
-		spriteShader
-			= Resources::Find<Shader>(L"SpriteAnimationShader");
+		// 파티클
+		shader
+			= Resources::Find<Shader>(L"ParticleShader");
 		material = std::make_shared<Material>();
-		material->SetShader(spriteShader);
+		material->SetShader(shader);
 		material->SetRenderingMode(eRenderingMode::Transparent);
-		Resources::Insert(L"SpriteAnimaionMaterial", material);
+
+		std::shared_ptr<Texture> particleTexx
+			= Resources::Find<Texture>(L"CartoonSmoke");
+		material->SetTexture(particleTexx);
+		Resources::Insert(L"ParticleMaterial", material);
 	}
 
 	void Initialize()
@@ -565,13 +621,14 @@ namespace renderer
 		}
 
 		lightsBuffer->SetData(lightsAttributes.data(), lightsAttributes.size());
-		lightsBuffer->Bind(eShaderStage::VS, 13);
-		lightsBuffer->Bind(eShaderStage::PS, 13);
+		lightsBuffer->BindSRV(eShaderStage::VS, 13);
+		lightsBuffer->BindSRV(eShaderStage::PS, 13);
 	}
 
 	void Render()
 	{
 		BindLights();
+
 		for (Camera* cam : cameras)
 		{
 			if (cam == nullptr)
@@ -586,7 +643,7 @@ namespace renderer
 
 	void Release()
 	{
-		for ( ConstantBuffer* buff : constantBuffer )
+		for (ConstantBuffer* buff : constantBuffer)
 		{
 			if (buff == nullptr)
 				continue;
@@ -594,8 +651,9 @@ namespace renderer
 			delete buff;
 			buff = nullptr;
 		}
-	delete lightsBuffer;
-	lightsBuffer = nullptr;
+
+		delete lightsBuffer;
+		lightsBuffer = nullptr;
 	}
 
 }

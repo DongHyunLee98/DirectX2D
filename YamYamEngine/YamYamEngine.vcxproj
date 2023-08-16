@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -150,9 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="dhBossFlowerScript.h" />
+    <ClInclude Include="dhCagneyBossScript.h" />
     <ClInclude Include="dhGroundScript.h" />
     <ClInclude Include="dhPlayerBossScript.h" />
+    <ClInclude Include="dhPlayerBullet.h" />
     <ClInclude Include="dhPlayerWorldScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LoadScenes.h" />
@@ -169,7 +170,7 @@
     <ClInclude Include="dhWinScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dhBossFlowerScript.cpp" />
+    <ClCompile Include="dhCagneyBossScript.cpp" />
     <ClCompile Include="dhBossOneScene.cpp" />
     <ClCompile Include="dhBossTwoScene.cpp" />
     <ClCompile Include="dhCameraScript.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="dhLogoScene.cpp" />
     <ClCompile Include="dhMapScene.cpp" />
     <ClCompile Include="dhPlayerBossScript.cpp" />
+    <ClCompile Include="dhPlayerBullet.cpp" />
     <ClCompile Include="dhPlayerScript.cpp" />
     <ClCompile Include="dhPlayerWorldScript.cpp" />
     <ClCompile Include="YamYamEngine.cpp" />

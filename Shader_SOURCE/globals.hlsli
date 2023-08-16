@@ -8,6 +8,7 @@ cbuffer Transform : register(b0)
 }
 
 
+
 /// 1
 //
 ///
@@ -26,8 +27,17 @@ cbuffer Animator : register(b3)
     float2 SpriteOffset;
     float2 AtlasSize;
     uint animationType;
-    float3 pad; // 마지막패딩은 없어도 무방
+    float3 pad;
 }
+
+cbuffer ParticleSystem : register(b4)
+{
+    uint elementCount;
+    float elapsedTime;
+    int padd;
+    int padd2;
+}
+
 
 Texture2D albedoTexture : register(t0);
 Texture2D atlasTexture : register(t12);
@@ -44,7 +54,24 @@ struct LightAttribute
     int pad;
 };
 
+struct Particle
+{
+    float4 position;
+    float4 direction;
+    
+    float endTime;
+    float time;
+    float speed;
+    uint active;
+};
+
+struct ParticleShared
+{
+    uint ActiveSharedCount;
+};
+
 StructuredBuffer<LightAttribute> lightsAttribute : register(t13);
+StructuredBuffer<Particle> particles : register(t14);
 
 SamplerState pointSampler : register(s0);
 SamplerState anisotropicSampler : register(s1);

@@ -17,7 +17,7 @@ struct VSOut
 
 VSOut main(VSIn In)
 {
-    VSOut Out = (VSOut)0.0f;
+    VSOut Out = (VSOut) 0.0f;
     
     Out.Pos = float4(In.Pos, 1.0f);
     //Out.Pos.x += 0.4f; //inputPosX; -> 상수버퍼를 통해서 이데이터가 넘와야한다.

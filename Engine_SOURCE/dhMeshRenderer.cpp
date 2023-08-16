@@ -30,7 +30,6 @@ namespace dh
 		mMesh->BindBuffer();
 		mMaterial->Binds();
 
-		// 7/20
 		Animator* animator = GetOwner()->GetComponent<Animator>();
 		if (animator)
 		{

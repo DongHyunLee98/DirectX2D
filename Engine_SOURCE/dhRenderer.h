@@ -30,7 +30,7 @@ namespace renderer
 		Vector4 CameraPosition;
 		Vector2 CameraScale;
 		Vector2 Resolution;
-	}; 
+	};
 
 	CBUFFER(AnimatorCB, CBSLOT_ANIMATION2D)
 	{
@@ -39,6 +39,14 @@ namespace renderer
 		Vector2 spriteOffset;
 		Vector2 atlasSize;
 		UINT animationType;
+	};
+
+	CBUFFER(ParticleCB, CBSLOT_PARTICLE)
+	{
+		UINT elementCount;
+		float elpasedTime;
+		int padd;
+		int padd2;
 	};
 
 	extern dh::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End];

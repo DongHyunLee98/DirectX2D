@@ -15,27 +15,27 @@ namespace dh
 		virtual void Render() override;
 
 		void SetMass(float mass) { mMass = mass; }
-		void AddForce(Vector2 force);
+		void AddForce(Vector3 force);
 		void SetGround(bool ground) { mbGround = ground; }
-		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
-		Vector2 GetVelocity() { return mVelocity; }
+		void SetVelocity(Vector3 velocity) { mVelocity = velocity; }
+		Vector3 GetVelocity() { return mVelocity; }
+		Vector3 GetForce() { return mForce; }
+
+		bool GetGround() { return mbGround; }
+
+		void ForceReset() { mForce = Vector3::Zero; }
 
 	private:
 		float mMass;
-		Vector2 mForce;
-		Vector2 mAccelation;
-		Vector2 mVelocity;
-		Vector2 mLimitedVelocity;
+		Vector3 mForce;
+		Vector3 mAccelation;
+		Vector3 mVelocity;
+		Vector3 mLimitedVelocity;
 
-		Vector2 mGravity;
+		Vector3 mGravity;
 		float mFriction;
 		bool mbGround;
 
 		float mGravityAccel;
-
-		/*float mStaticFriction;
-		float mKineticFriction;*/
-		//float mCoefficientFriction;
-		//float mNormalForce;
 	};
 }

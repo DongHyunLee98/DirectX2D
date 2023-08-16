@@ -27,18 +27,17 @@ float4 main(VSOut In) : SV_TARGET
     
     if (animationType == 1)
     {
-        float2 diff = (AtlasSize - SpriteSize) / 2.0f;
-        float2 UV = (SpriteLeftTop - diff - SpriteOffset)
-                + (AtlasSize * In.UV);
+        // 상수버퍼 애니메이터 BInds
+        //float2 diff = (AtlasSize - SpriteSize) / 2.0f;
+        //float2 UV = (SpriteLeftTop - diff - SpriteOffset)
+        //        + (AtlasSize * In.UV);
     
-        if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
-            || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
-            discard;
+        //if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
+        //    || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
+        //    discard;
         
-        color = atlasTexture.Sample(pointSampler, UV);
+        color = atlasTexture.Sample(anisotropicSampler, In.UV);
     }
-    
-    // color *= lightsAttribute[0].color; // Light의 영향을 받음
     
     float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);
     
@@ -49,5 +48,8 @@ float4 main(VSOut In) : SV_TARGET
     
     color *= lightColor;
     
+    if (color.a <= 0.0f)
+        discard;
+        
     return color;
 }

@@ -13,7 +13,7 @@ namespace dh
 			OrthoGraphic,
 			None,
 		};
-		
+
 		static Matrix& GetGpuViewMatrix() { return View; }
 		static void SetGpuViewMatrix(Matrix view) { View = view; }
 		static Matrix& GetGpuProjectionMatrix() { return Projection; }

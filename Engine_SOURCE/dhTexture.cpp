@@ -5,7 +5,7 @@ namespace dh::graphics
 {
 	Texture::Texture()
 		: Resource(enums::eResourceType::Texture)
-		, mImage {}
+		, mImage{}
 		, mTexture(nullptr)
 		, mSRV(nullptr)
 		, mDesc{}
@@ -15,6 +15,7 @@ namespace dh::graphics
 	Texture::~Texture()
 	{
 	}
+
 	bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlag)
 	{
 		if (mTexture == nullptr)
@@ -35,7 +36,6 @@ namespace dh::graphics
 
 			mWidth = width;
 			mHeight = height;
-
 
 			if (!GetDevice()->CreateTexture2D(&mDesc, nullptr, mTexture.GetAddressOf()))
 				return false;

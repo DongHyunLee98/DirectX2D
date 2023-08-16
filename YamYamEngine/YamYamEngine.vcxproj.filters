@@ -31,9 +31,6 @@
     <ClCompile Include="dhWinScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="dhBossFlowerScript.cpp">
-      <Filter>Contents\Script</Filter>
-    </ClCompile>
     <ClCompile Include="dhPlayerScript.cpp">
       <Filter>Contents\Script\Player</Filter>
     </ClCompile>
@@ -49,6 +46,10 @@
     <ClCompile Include="dhGroundScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
+    <ClCompile Include="dhCagneyBossScript.cpp">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="dhPlayerBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -85,9 +86,6 @@
     <ClInclude Include="dhWinScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="dhBossFlowerScript.h">
-      <Filter>Contents\Script</Filter>
-    </ClInclude>
     <ClInclude Include="dhPlayerScript.h">
       <Filter>Contents\Script\Player</Filter>
     </ClInclude>
@@ -100,6 +98,10 @@
     <ClInclude Include="dhGroundScript.h">
       <Filter>Contents\Script</Filter>
     </ClInclude>
+    <ClInclude Include="dhCagneyBossScript.h">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="dhPlayerBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -116,6 +118,9 @@
     </Filter>
     <Filter Include="Contents\Script\Player">
       <UniqueIdentifier>{cff8896c-4b12-46ac-8df6-726e1bfaa67a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Boss">
+      <UniqueIdentifier>{35165448-5380-40f4-a5ba-2189039b0c3f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

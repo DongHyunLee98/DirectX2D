@@ -13,8 +13,8 @@ namespace dh
 {
 	bool CompareZSort(GameObject* a, GameObject* b)
 	{
-		if (a->GetComponent<Transform>()->GetPosition().z 
-			< b->GetComponent<Transform>()->GetPosition().z)
+		if (a->GetComponent<Transform>()->GetPosition().z
+			<= b->GetComponent<Transform>()->GetPosition().z)
 			return false;
 
 		return true;
@@ -46,7 +46,7 @@ namespace dh
 
 	void Camera::Initialize()
 	{
-		
+
 	}
 
 	void Camera::Update()
@@ -238,7 +238,7 @@ namespace dh
 
 	void Camera::EnableDepthStencilState()
 	{
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState 
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState
 			= renderer::depthStencilStates[(UINT)eDSType::Less];
 		GetDevice()->BindDepthStencilState(dsState.Get());
 	}

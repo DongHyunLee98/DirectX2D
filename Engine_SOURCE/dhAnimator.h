@@ -53,11 +53,14 @@ namespace dh
 		std::function<void()>& CompleteEvent(const std::wstring key);
 		std::function<void()>& EndEvent(const std::wstring key);
 
+		// 폴더에 들어있는 스프라이트들을 이용해서 애니메이션 제작해주는 함수
+		void CreateAnimations(const std::wstring& path, Vector2 offset, float duration);
+
 	private:
 		std::map<std::wstring, Animation*> mAnimations;
 		std::map<std::wstring, Events*> mEvents;
 		Animation* mActiveAnimation;
-
+		// Image* mSpriteSheet;
 
 
 		bool mbLoop;

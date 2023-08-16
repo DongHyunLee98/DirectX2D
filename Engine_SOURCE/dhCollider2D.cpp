@@ -30,6 +30,10 @@ namespace dh
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 
+
+		// 충돌체의 크기와 위치 값을 각각 가져온다.
+		// 또한 가져온 값에 충돌체 멤버 값을 곱하거나 더해줘서
+		// 멤버 만으로도 컨트롤할 수 있도록 해준다.
 		Vector3 scale = tr->GetScale();
 		scale.x *= mSize.x;
 		scale.y *= mSize.y;
@@ -39,7 +43,7 @@ namespace dh
 		pos.y += mCenter.y;
 
 		mPosition = pos;
-		
+
 		graphics::DebugMesh mesh = {};
 		mesh.position = pos;
 		mesh.scale = scale;

@@ -1,10 +1,10 @@
 #pragma once
 #include <dhScript.h>
-#include <dhAnimator.h>
+#include "dhAnimator.h"
+// #include "dhRigidbody.h"
 
 namespace dh
 {
-	// class Rigidbody;
 	class PlayerBossScript : public Script
 	{
 	public:
@@ -45,10 +45,15 @@ namespace dh
 		Animator* GetAnimator() { return at; }
 		Collider2D* GetCollider() { return cd; }
 
+		void ChangeState(PlayerState state) { mCurState = state; }
+
 		void SetAnimator(Animator* mAt) { at = mAt; }
 
 		// void SetCenter(Vector2 size) { mCenter = size; }
 		// UINT GetColliderID() { return mColliderID; }
+		bool GetDir() { return dirR; }
+
+		Vector3 GetPosition() { return pos; }
 
 	private:
 		Animator* at;
@@ -56,16 +61,23 @@ namespace dh
 		Collider2D* cd;
 		PlayerState pState;
 		Vector3 pos;
-		// Rigidbody* rigid;
+		// Rigidbody* mRigidbody;
 
-		// VectorR velocity;
+		PlayerState mCurState;
+
 		bool dirR; // 1¿À¸¥ÂÊ 0¿ÞÂÊ ÃÊ±ê°ª 0(true)
-		float jumpTime;
-		float attackTime;
-		float dashTime;
-		bool jumpSwitch;
+		// VectorR velocity;
 
-		float gravity = 2.0f;
+		bool jumpState;
+		bool jumpTimeCheck;
+		float jumpTime;
+		
+		float attackTime;
+
+		float dashTime;
+
+		float gravity;
+		Vector3 bulletPos;
 
 	private:
 		void Idle();

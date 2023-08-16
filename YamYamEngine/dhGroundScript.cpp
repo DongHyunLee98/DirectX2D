@@ -6,7 +6,6 @@ namespace dh
 {
 	void GroundScript::Initialize()
 	{
-
 		Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
 	}
 	void GroundScript::Update()

@@ -24,7 +24,7 @@ namespace dh
 	bool Shader::Create(const eShaderStage stage
 		, const std::wstring& fileName
 		, const std::string& funcName)
-    {
+	{
 		std::filesystem::path shaderPath
 			= std::filesystem::current_path().parent_path();
 		shaderPath += L"\\Shader_SOURCE\\";
@@ -39,30 +39,38 @@ namespace dh
 			GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
 				, mVSBlob->GetBufferSize(), mVS.GetAddressOf());
 		}
+		else if (stage == eShaderStage::GS)
+		{
+			GetDevice()->CompileFromfile(fullPath, funcName, "gs_5_0", mGSBlob.GetAddressOf());
+			GetDevice()->CreateGeometryShader(mGSBlob->GetBufferPointer()
+				, mGSBlob->GetBufferSize(), mGS.GetAddressOf());
+		}
+
 		else if (stage == eShaderStage::PS)
 		{
 			GetDevice()->CompileFromfile(fullPath, funcName, "ps_5_0", mPSBlob.GetAddressOf());
 			GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
 				, mPSBlob->GetBufferSize(), mPS.GetAddressOf());
 		}
-		
+
 
 		return true;;
-    }
+	}
 	void Shader::Binds()
 	{
 		GetDevice()->BindPrimitiveTopology(mTopology);
 		GetDevice()->BindInputLayout(mInputLayout);
 
 		GetDevice()->BindVertexShader(mVS.Get());
+		GetDevice()->BindGeometryShader(mGS.Get());
 		GetDevice()->BindPixelShader(mPS.Get());
 
 		Microsoft::WRL::ComPtr<ID3D11RasterizerState> rsState = renderer::rasterizerStates[(UINT)mRSType];
-		//Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState = renderer::depthStencilStates[(UINT)mDSType];
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState = renderer::depthStencilStates[(UINT)mDSType];
 		Microsoft::WRL::ComPtr<ID3D11BlendState> bsState = renderer::blendStates[(UINT)mBSType];
 
 		GetDevice()->BindRasterizeState(rsState.Get());
-		//GetDevice()->BindDepthStencilState(dsState.Get());
+		GetDevice()->BindDepthStencilState(dsState.Get());
 		GetDevice()->BindBlendState(bsState.Get());
 	}
 }

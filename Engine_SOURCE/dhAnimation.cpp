@@ -6,7 +6,7 @@
 
 namespace dh
 {
-	Animation::Animation() 
+	Animation::Animation()
 		: Resource(enums::eResourceType::Animation)
 		, mAtlas(nullptr)
 		, mAnimator(nullptr)
@@ -23,7 +23,6 @@ namespace dh
 	}
 	void Animation::Update()
 	{
-
 	}
 	void Animation::LateUpdate()
 	{
@@ -52,11 +51,12 @@ namespace dh
 		, Vector2 leftTop
 		, Vector2 size
 		, UINT columnLength
-		, Vector2 offset 
+		, Vector2 offset
 		, float duration)
 	{
 		SetKey(name);
 		mAtlas = atlas;
+
 
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();
@@ -66,13 +66,10 @@ namespace dh
 			Sprite sprite = {};
 			sprite.leftTop.x = leftTop.x + (i * size.x) / width;
 			sprite.leftTop.y = leftTop.y / height;
-			// sprite.size = size;
-			// sprite.offset = offset;
 			sprite.size.x = size.x / width;
 			sprite.size.y = size.y / height;
 			sprite.offset = offset;
 			sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
-
 			sprite.duration = duration;
 
 			mSprites.push_back(sprite);
@@ -85,7 +82,7 @@ namespace dh
 		// texture bind
 		mAtlas->BindShaderResource(graphics::eShaderStage::PS, 12);
 
-		// AnimationCB - 07/20 Ãß°¡
+		// AnimationCB
 		renderer::AnimatorCB data = {};
 
 		data.spriteLeftTop = mSprites[mIndex].leftTop;

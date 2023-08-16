@@ -86,32 +86,30 @@ namespace dh
 			// 충돌
 			if (iter->second == false)
 			{
-				// 충돌관련 추가
-				iter->second = true;
 				//최초 충돌
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
 			}
 			else
 			{
-				// 충돌관련 추가
-				iter->second = true;
 				// 충돌 중
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);
 			}
+			// 충돌관련 추가
+			iter->second = true;
 		}
 		else
 		{
 			// 충돌 X
 			if (iter->second == true)
 			{
-				// 충돌관련 추가
-				iter->second = false;
 				// 충돌하고 있다가 나갈떄
 				left->OnCollisionExit(right);
 				right->OnCollisionExit(left);
 			}
+			// 충돌관련 추가
+			iter->second = false;
 		}
 	}
 

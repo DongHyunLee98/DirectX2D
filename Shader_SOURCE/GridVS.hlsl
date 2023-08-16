@@ -13,7 +13,7 @@ struct VSOut
     float2 GridPos : POSITION;
 };
 
-VSOut main(VSIn In) 
+VSOut main(VSIn In)
 {
     VSOut Out = (VSOut) 0.0f;
     float2 gridPos = float2(0.0f, 0.0f);

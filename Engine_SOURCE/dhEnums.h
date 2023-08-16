@@ -23,10 +23,12 @@ namespace dh::enums
 	{
 		Grid,
 		Ground,
-		Player,
 		BackGround,
+		Player,
 		Monster,
-		NotMonster,
+		PlayerBullet,
+		MonsterBullet,
+		MapObject,
 		Light,
 		Camera,
 		UI,
@@ -50,18 +52,6 @@ namespace dh::enums
 		Circle,
 		Sphere,
 		Cube,
-		End,
-	};
-
-	// Rigid
-	enum class eColliderOwner
-	{
-		None,
-		Player,
-		Monster,
-		Ground,
-		Bullet,
-		UI,
 		End,
 	};
 
