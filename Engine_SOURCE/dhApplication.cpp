@@ -4,6 +4,8 @@
 #include "dhRenderer.h"
 #include "dhSceneManager.h"
 #include "dhCollisionManager.h"
+#include "dhFmod.h"
+#include "dhFontWrapper.h"
 
 
 namespace dh
@@ -34,6 +36,8 @@ namespace dh
 	{
 		Time::Initiailize();
 		Input::Initialize();
+		Fmod::Initialize();
+		FontWrapper::Initialize();
 
 		renderer::Initialize();
 		SceneManager::Initialize();
@@ -54,10 +58,10 @@ namespace dh
 
 	void Application::Render()
 	{
-		Time::Render();
 
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
+		Time::Render();
 
 		//SceneManager::Render();
 		renderer::Render();

@@ -109,6 +109,12 @@
     <Filter Include="GameObject\Component\ParticleSystem">
       <UniqueIdentifier>{0f1e7a49-e322-4461-89ee-aa9ca7c1815b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{68a1fea6-a6e2-4f7e-bfb8-a28d4b3a00a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{906181a0-2de7-4417-8f1e-e3a47ac57d17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -232,6 +238,21 @@
       <Filter>GameObject\Component\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)dhImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioClip.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioListener.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioSource.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhFmod.h">
+      <Filter>Font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhFontWrapper.h">
+      <Filter>Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhApplication.cpp">
@@ -340,6 +361,21 @@
       <Filter>GameObject\Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)dhImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioClip.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioListener.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioSource.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhFmod.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhFontWrapper.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)dhMath.inl">

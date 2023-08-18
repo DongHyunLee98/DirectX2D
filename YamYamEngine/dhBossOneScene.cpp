@@ -20,9 +20,14 @@
 
 #include "dhPaintShader.h"
 #include "dhConstantBuffer.h"
+#include "dhParticleSystem.h"
 
 #include "dhGroundScript.h"
 #include "dhPlayer.h"
+
+#include "dhAudioListener.h"
+#include "dhAudioClip.h"
+#include "dhAudioSource.h"
 
 namespace dh
 {
@@ -52,8 +57,16 @@ namespace dh
 		//	paintMr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
 		//	paint->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 1.0f, 1.0f));
 		//	Collider2D* cd = paint->AddComponent<Collider2D>();
-		//}			
-
+		//}	
+		// Particle
+		{
+			GameObject* particleObj = new GameObject();
+			particleObj->SetName(L"Particle");
+			AddGameObject(eLayerType::BackGround, particleObj);
+			ParticleSystem* mr = particleObj->AddComponent<ParticleSystem>();
+			particleObj->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
+			particleObj->GetComponent<Transform>()->SetScale(Vector3(0.2f, 0.2f, 0.2f));
+		}
 		// Player
 		{
 			
@@ -136,6 +149,14 @@ namespace dh
 			BossOneMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			BossOneMr->SetMaterial(Resources::Find<Material>(L"BossStage1_Material"));
 			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(8.2f, 4.5f, 1.0f));
+
+			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -9.0f));
+			//player->GetComponent<Transform>()->SetScale(Vector3(50.2f, 50.2f, 50.2f));
+			Collider2D* cd = player->AddComponent<Collider2D>();
+
+			AudioSource* as = BossOneBG->AddComponent<AudioSource>();
+			as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
+			as->Play();
 		}
 
 		// BG
@@ -159,6 +180,8 @@ namespace dh
 			camera->AddComponent<CameraScript>();
 			renderer::cameras.push_back(cameraComp);
 			renderer::mainCamera = cameraComp;
+
+			camera->AddComponent<AudioListener>();
 		}
 		/*
 		//UI Camera

@@ -43,7 +43,7 @@ namespace dh
 			, Vector2 size
 			, UINT columnLength
 			, Vector2 offset = Vector2::Zero
-			, float duration = 0.1f);
+			, float duration = 1.0f);
 		Animation* FindAnimation(const std::wstring& name);
 		Events* FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop);

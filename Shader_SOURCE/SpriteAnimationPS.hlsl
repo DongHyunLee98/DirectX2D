@@ -28,15 +28,15 @@ float4 main(VSOut In) : SV_TARGET
     if (animationType == 1)
     {
         // 상수버퍼 애니메이터 BInds
-        //float2 diff = (AtlasSize - SpriteSize) / 2.0f;
-        //float2 UV = (SpriteLeftTop - diff - SpriteOffset)
-        //        + (AtlasSize * In.UV);
+        float2 diff = (AtlasSize - SpriteSize) / 2.0f;
+        float2 UV = (SpriteLeftTop - diff - SpriteOffset)
+                + (AtlasSize * In.UV);
     
-        //if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
-        //    || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
-        //    discard;
+        if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
+            || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
+            discard;
         
-        color = atlasTexture.Sample(anisotropicSampler, In.UV);
+        color = atlasTexture.Sample(anisotropicSampler, UV); // In.UV로 기존들어오는것 확인가능
     }
     
     float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);

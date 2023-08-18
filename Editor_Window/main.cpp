@@ -7,6 +7,8 @@
 #include "..\Engine_SOURCE\dhApplication.h"
 #include "..\Engine_SOURCE\dhRenderer.h"
 #include "..\Engine_SOURCE\dhResources.h"
+#include "..\Engine_SOURCE\dhFmod.h"
+#include "..\Engine_SOURCE\dhFontWrapper.h"
 #include "LoadScenes.h"
 #include "guiEditor.h"
 
@@ -80,6 +82,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     renderer::Release();
     dh::SceneManager::Release();
+    dh::Fmod::Release();
+    dh::FontWrapper::Release();
     gui::Editor::Release();
 
     return (int) msg.wParam;

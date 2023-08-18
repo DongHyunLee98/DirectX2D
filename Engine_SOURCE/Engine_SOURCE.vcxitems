@@ -17,10 +17,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhAnimator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhCollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhComputeShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhFmod.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dhFontWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)dhComponent.h" />
@@ -57,7 +62,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)dhTransform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioListener.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhComputeShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhFmod.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)dhFontWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhImage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)dhLight.cpp" />

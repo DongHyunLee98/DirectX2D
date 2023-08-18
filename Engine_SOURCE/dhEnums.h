@@ -16,6 +16,8 @@ namespace dh::enums
 		Rigidbody,
 		Light,
 		Camera,
+		AudioListener,
+		AudioSource,
 		End,
 	};
 
@@ -43,6 +45,7 @@ namespace dh::enums
 		Mesh,
 		Animation,
 		ComputeShader,
+		AudioClip,
 		End,
 	};
 

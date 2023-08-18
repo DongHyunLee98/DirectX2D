@@ -45,8 +45,13 @@ namespace renderer
 	{
 		UINT elementCount;
 		float elpasedTime;
+		float deltaTime;
 		int padd;
-		int padd2;
+	};
+
+	CBUFFER(NoiseCB, CBSLOT_NOISE)
+	{
+		Vector4 size;
 	};
 
 	extern dh::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End];

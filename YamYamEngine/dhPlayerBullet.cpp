@@ -25,8 +25,10 @@ namespace dh
 		mTrans = GetOwner()->GetComponent<Transform>();
 		
 
-		PlayerBossScript* playerObj = GetOwner()->AddComponent<PlayerBossScript>();
-		pos = playerObj->GetPosition();
+		// PlayerBossScript* playerObj = GetOwner()->AddComponent<PlayerBossScript>();
+		// pos = playerObj->GetPosition();
+		// player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
+		// this->GetOwner()->SetState(eState::Active);
 	}
 	void PlayerBullet::Update()
 	{
