@@ -69,10 +69,11 @@ namespace dh
 			sprite.size.x = size.x / width;
 			sprite.size.y = size.y / height;
 			sprite.offset = offset;
+
 			// 큰 이미지용
 			if(width >= 10000.0f)
 				sprite.atlasSize = Vector2(800.0f / width, 700.0f / height);
-			else if(width < 9999.0f)
+			else
 				sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
 
 			sprite.duration = duration;

@@ -32,6 +32,7 @@ float4 main(VSOut In) : SV_TARGET
         float2 UV = (SpriteLeftTop - diff - SpriteOffset)
                 + (AtlasSize * In.UV);
     
+        // 이게없으면 UV넘어간 1.0뒤의 반복되는 이미지도 보임
         if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
             || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
             discard;

@@ -150,13 +150,9 @@ namespace dh
 			BossOneMr->SetMaterial(Resources::Find<Material>(L"BossStage1_Material"));
 			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(8.2f, 4.5f, 1.0f));
 
-			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -9.0f));
-			//player->GetComponent<Transform>()->SetScale(Vector3(50.2f, 50.2f, 50.2f));
-			Collider2D* cd = player->AddComponent<Collider2D>();
-
-			AudioSource* as = BossOneBG->AddComponent<AudioSource>();
-			as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
-			as->Play();
+			// AudioSource* as = BossOneBG->AddComponent<AudioSource>();
+			// as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
+			// as->Play();
 		}
 
 		// BG
@@ -181,7 +177,7 @@ namespace dh
 			renderer::cameras.push_back(cameraComp);
 			renderer::mainCamera = cameraComp;
 
-			camera->AddComponent<AudioListener>();
+			// camera->AddComponent<AudioListener>();
 		}
 		/*
 		//UI Camera
