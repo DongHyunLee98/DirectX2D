@@ -361,6 +361,11 @@ inline Vector2 Vector2::Cross(const Vector2& V) const noexcept
     return result;
 }
 
+inline static float Dot(Vector2& v1, Vector2& v2)
+{
+    return v1.x * v2.x + v1.y * v2.y;
+}
+
 inline void Vector2::Normalize() noexcept
 {
     using namespace DirectX;

@@ -1,10 +1,11 @@
 #pragma once
 #include <dhScript.h>
 #include "dhAnimator.h"
-// #include "dhRigidbody.h"
+#include "dhRigidbody.h"
 
 namespace dh
 {
+	class RigidBody;
 	class PlayerBossScript : public Script
 	{
 	public:
@@ -55,13 +56,15 @@ namespace dh
 
 		Vector3 GetPosition() { return pos; }
 
+		void CreateDevide();
+
 	private:
 		Animator* at;
 		Transform* tr;
 		Collider2D* cd;
 		PlayerState pState;
 		Vector3 pos;
-		// Rigidbody* mRigidbody;
+		Rigidbody* mRigidbody;
 
 		PlayerState mCurState;
 
@@ -76,7 +79,6 @@ namespace dh
 
 		float dashTime;
 
-		float gravity;
 		Vector3 bulletPos;
 
 	private:

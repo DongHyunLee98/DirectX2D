@@ -1,10 +1,10 @@
 #pragma once
-#include "..\\Engine_SOURCE\\yaGameObject.h"
+#include "..\\Engine_SOURCE\\dhGameObject.h"
 
 
 namespace gui
 {
-	class DebugObject : public ya::GameObject
+	class DebugObject : public dh::GameObject
 	{
 	public:
 		DebugObject();

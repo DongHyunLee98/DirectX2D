@@ -242,6 +242,10 @@ namespace renderer
 
 		mesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
 
+		// ====== 인덱스 버퍼 만들기
+		// 1. 인덱스 버퍼로 그려낼 정점의 순서를 정수형 배열에 넣어 지정한다.
+		// 단, 넣는 순서는 반드시 '시계 방향'으로 넣어야한다.
+		// 반시계 방향으로 순서를 지정하면 뒷면으로 인식하여 그려내지 않게 된다.
 		indexes.push_back(0);
 		indexes.push_back(1);
 		indexes.push_back(2);
@@ -251,8 +255,8 @@ namespace renderer
 		indexes.push_back(3);
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
-
-
+	
+		// 리소스 류는 shared_ptr로 관리되기 때문에 new 연산자 대신 std::make_shared<>를 사용한다
 		// Rect Debug Mesh
 		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
 		Resources::Insert(L"DebugRect", rectDebug);
@@ -295,6 +299,7 @@ namespace renderer
 
 	void LoadBuffer()
 	{
+		// 상수버퍼 생성하는 부분
 		// Constant Buffer
 		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
@@ -314,6 +319,10 @@ namespace renderer
 		//NoiseCB
 		constantBuffer[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
 		constantBuffer[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
+
+		// Collision Buffer
+		constantBuffer[(UINT)eCBType::Collision] = new ConstantBuffer(eCBType::Collision);
+		constantBuffer[(UINT)eCBType::Collision]->Create(sizeof(ColliderCB));
 
 		// light structed buffer
 		lightsBuffer = new StructedBuffer();
@@ -397,6 +406,12 @@ namespace renderer
 		//material->SetShader(shader);
 		//material->SetTexture(texture);
 		//Resources::Insert(L"SpriteMaterial", material);
+
+	// +.+.+.+. 참고
+	// 1. 기본적으로 전부 다 불투명으로 한다. (UI 제외)
+	// 2. 출력이 안될 시 반투명으로 바꾼다.
+	// 3. 반투명으로 바꾼 게 안나온다면 둘 다 반투명일시 하나를 Grid 레이어로 넣는다
+	// 4. UI는 항상 투명으로 해두기(안보인다면 안보이는 녀석을 반투명으로 보낸다)
 
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"BossStage1", L"..\\Resources\\Texture\\BossStage1.png");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
@@ -617,6 +632,7 @@ namespace renderer
 		//Resources::Insert(L"ParticleMaterial", material);
 	}
 
+	// 정점 내부 정보에 uv좌표 정보까지 넣어준다. 
 	void Initialize()
 	{
 		LoadMesh();
@@ -675,6 +691,8 @@ namespace renderer
 		BindNoiseTexture();
 		BindLights();
 
+		// 렌더링은 카메라를 통해 이뤄지므로, 여러 대의 카메라들을 순회하며
+		// 카메라 클래스의 렌더 함수를 호출한다.
 		for (Camera* cam : cameras)
 		{
 			if (cam == nullptr)
@@ -683,6 +701,11 @@ namespace renderer
 			cam->Render();
 		}
 
+		// 중간에 카메라가 추가될수있는 경우도 있을 것이다.특별한 효과가 잠깐 나왔다가 사라지는 경우가 있기 때문
+		// 그래서 카메라에 의한 물체를 렌더링 한 후에 카메라를 clear해서 지워주고,
+		// 매 프레임마다 호출되는 카메라의 lateupdate에선 다시 카메라를 등록해주고, 또 Render함수가 호출되면서
+		// 등록된 카메라로 렌더링을 하고, 등록했던 카메라를 다시 지워주고.. 이런식으로 반복되게끔 해준다.
+		// (알아서 동적할당 되게끔) 
 		cameras.clear();
 		lights.clear();
 	}

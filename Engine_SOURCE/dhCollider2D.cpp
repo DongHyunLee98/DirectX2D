@@ -10,6 +10,7 @@ namespace dh
 		, mTransform(nullptr)
 		, mSize(Vector2::One)
 		, mCenter(Vector2::Zero)
+		// , mType(eColliderType::Rect)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -28,6 +29,9 @@ namespace dh
 	}
 	void Collider2D::LateUpdate()
 	{
+		// collCheck가 0아래로 내려갈때 오류체크
+		assert(0 <= mCollCheck);
+
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 
 
@@ -49,6 +53,7 @@ namespace dh
 		mesh.scale = scale;
 		mesh.rotation = tr->GetRotation();
 		mesh.type = eColliderType::Rect;
+		mesh.collCheck = mCollCheck;
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}
@@ -58,6 +63,7 @@ namespace dh
 	}
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
+		mCollCheck++;
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetComponents<Script>();
 
@@ -78,6 +84,7 @@ namespace dh
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
+		--mCollCheck;
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetComponents<Script>();
 

@@ -54,6 +54,12 @@ namespace renderer
 		Vector4 size;
 	};
 
+	CBUFFER(ColliderCB, CBSLOT_COLLISION)
+	{
+		int collCheck;
+		int padd[3];
+	};
+
 	extern dh::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End];
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[];

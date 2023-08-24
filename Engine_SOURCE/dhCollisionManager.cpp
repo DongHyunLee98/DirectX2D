@@ -43,9 +43,9 @@ namespace dh
 			Collider2D* leftCol = leftObj->GetComponent<Collider2D>();
 			if (leftCol == nullptr)
 				continue;
-			//if (leftObj->GetState()
-			//	!= GameObject::eState::Active)
-			//	continue;
+			if (leftObj->GetState()
+				!= GameObject::eState::Active)
+				continue;
 
 			//
 			for (GameObject* rightObj : rights)

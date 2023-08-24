@@ -19,7 +19,6 @@ namespace dh
 		, attackTime(0.0f)
 		, dashTime(0.0f)
 		, jumpTimeCheck(false)
-		, gravity(-2.0f)
 		, bulletPos(0.0f,0.0f,0.0f)
 		, pos(0.0f,0.0f,0.0f)
 	{
@@ -32,6 +31,7 @@ namespace dh
 		tr = GetOwner()->GetComponent<Transform>();
 		at = GetOwner()->AddComponent<Animator>();
 		cd = GetOwner()->AddComponent<Collider2D>();
+		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
 
 		// 리소스 불러오기
 		std::shared_ptr<Texture> EnterIdle = Resources::Load<Texture>(L"Idle_Enter_R", L"..\\Resources\\Texture\\PlayerBoss\\EnterIdle\\EnterIdle_R.png");
@@ -65,10 +65,10 @@ namespace dh
 		// std::shared_ptr<Texture> EnterIdle = Resources::Load<Texture>(L"Run_Shooting_Diagonal_R", L"..\\Resources\\Texture\\PlayerBoss\\IRun\\Shooting\\Straight\\RunShootR.png");
 
 		// 리소스 애니메이션으로 생성
-		at->Create(L"Idle_Enter_R", EnterIdle, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8);
-		at->Create(L"Idle_Enter_L", EnterIdleL, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8);
+		at->Create(L"Idle_Enter_R", EnterIdle, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8, 0.08f);
+		at->Create(L"Idle_Enter_L", EnterIdleL, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8, 0.08f);
 		at->Create(L"Hit_Air", AirHit, Vector2(0.0f, 0.0f), Vector2(125.0f, 188.0f), 6);
-		at->Create(L"Jump_Normal", NormalJump, Vector2(0.0f, 0.0f), Vector2(88.0f, 109.0f), 8);
+		at->Create(L"Jump_Normal", NormalJump, Vector2(0.0f, 0.0f), Vector2(88.0f, 109.0f), 8, 0.06f);
 		at->Create(L"Dash_Air", AirDash, Vector2(150.0f, 0.0f), Vector2(446.0f, 126.0f), 6);
 		at->Create(L"Ghost_Normal", NormalGhost, Vector2(0.0f, 0.0f), Vector2(140.0f, 208.0f), 24);
 		at->Create(L"Parry_Normal", NormalParry, Vector2(0.0f, 0.0f), Vector2(137.0f, 146.0f), 8);
@@ -81,18 +81,18 @@ namespace dh
 		at->Create(L"Idle_Down_B", DownIdle, Vector2(0.0f, 0.0f), Vector2(99.0f, 168.0f), 5);
 
 		// IdleShoot
-		at->Create(L"Idle_Shoot_R", ShootRIdle, Vector2(0.0f, 0.0f), Vector2(127.0f, 157.0f), 3);
-		at->Create(L"Idle_Shoot_L", ShootLIdle, Vector2(0.0f, 0.0f), Vector2(127.0f, 157.0f), 3);
+		at->Create(L"Idle_Shoot_R", ShootRIdle, Vector2(0.0f, 0.0f), Vector2(127.0f, 157.0f), 3, 0.07f);
+		at->Create(L"Idle_Shoot_L", ShootLIdle, Vector2(0.0f, 0.0f), Vector2(127.0f, 157.0f), 3, 0.07f);
 		at->Create(L"Idle_Shoot_Up", ShootUpIdle, Vector2(0.0f, 0.0f), Vector2(108.0f, 172.0f), 3);
 		at->Create(L"Idle_Shoot_Down", ShootDownIdle, Vector2(0.0f, 0.0f), Vector2(101.0f, 169.0f), 3);
 
 		// NormalRun
-		at->Create(L"Run_Normal_R", NormalRunR, Vector2(0.0f, 0.0f), Vector2(135.0f, 162.0f), 16);
-		at->Create(L"Run_Normal_L", NormalRunL, Vector2(0.0f, 0.0f), Vector2(135.0f, 162.0f), 16);
+		at->Create(L"Run_Normal_R", NormalRunR, Vector2(0.0f, 0.0f), Vector2(135.0f, 162.0f), 16, 0.07f);
+		at->Create(L"Run_Normal_L", NormalRunL, Vector2(0.0f, 0.0f), Vector2(135.0f, 162.0f), 16, 0.07f);
 
 		// ShootingRun
-		at->Create(L"Run_Shooting_R", ShootingRunR, Vector2(0.0f, 0.0f), Vector2(144.0f, 157.0f), 16);
-		at->Create(L"Run_Shooting_L", ShootingRunL, Vector2(0.0f, 0.0f), Vector2(144.0f, 157.0f), 16);
+		at->Create(L"Run_Shooting_R", ShootingRunR, Vector2(0.0f, 0.0f), Vector2(144.0f, 157.0f), 16, 0.07f);
+		at->Create(L"Run_Shooting_L", ShootingRunL, Vector2(0.0f, 0.0f), Vector2(144.0f, 157.0f), 16, 0.07f);
 
 		// 실행
 		at->PlayAnimation(L"Idle_Enter_R", true);
@@ -111,13 +111,7 @@ namespace dh
 			dirR = false;
 		}
 
-		if (jumpState == true)
-		{
-			pos.y += 2.0f * gravity * Time::DeltaTime();
-			tr->SetPosition(pos);
-		}
-		if (jumpTimeCheck == true)
-			jumpTime += 2.0f * Time::DeltaTime();
+		// pos = tr->GetPosition();
 
 		switch (pState)
 		{
@@ -164,34 +158,10 @@ namespace dh
 	}
 	void PlayerBossScript::OnCollisionEnter(Collider2D* other)
 	{
-		
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
-			if (pState != PlayerState::Idle)
-			{
-				if (dirR = true)
-				{
-					pState = PlayerState::Idle;
-					at->PlayAnimation(L"Idle_Enter_R", true);
-				}
-				else if (dirR = false)
-				{
-					pState = PlayerState::Idle;
-					at->PlayAnimation(L"Idle_Enter_L", true);
-				}
-			}
-
-			// if (other->GetOwner()->GetName() == L"Ground")
-
-			jumpState = false;
-			gravity = 0.0f;
+			mRigidbody->SetGround(true);
 		}
-		
-		//if (other->GetOwner()->GetName() == L"Ground")
-		//{
-		//	 gravity = 0.0f;
-		//}
-
 	}
 
 	void PlayerBossScript::OnCollisionStay(Collider2D* other)
@@ -200,23 +170,11 @@ namespace dh
 
 	void PlayerBossScript::OnCollisionExit(Collider2D* other)
 	{
-		if (other->GetOwner()->GetName() == L"Ground")
-		{
-			jumpState = true;
-		}
+
 	}
 
 	void PlayerBossScript::Idle()
 	{
-		// cd->SetSize
-		// cd->SetCenter
-		// 중력체크
-		{
-			pos = tr->GetPosition();
-			pos.y += gravity * Time::DeltaTime();
-			tr->SetPosition(pos);
-		}
-
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			// dirR = false;
@@ -243,11 +201,13 @@ namespace dh
 		// Jump
 		if (Input::GetKeyDown(eKeyCode::Z))
 		{
-			gravity = 2.0f;
-			jumpState = true;
-			jumpTimeCheck = true;
-			pState = PlayerState::Jump;
-			at->PlayAnimation(L"Jump_Normal", true);
+				Vector2 velocity = mRigidbody->GetVelocity();
+				velocity.y += 2.3f;
+				mRigidbody->SetVelocity(velocity);
+				mRigidbody->SetGround(false);
+
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal", true);
 		}
 		// Attack
 		if (Input::GetKey(eKeyCode::X) && dirR == true)
@@ -317,7 +277,6 @@ namespace dh
 		// 중력체크
 		{
 			pos = tr->GetPosition();
-			pos.y -= gravity * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
 
@@ -501,22 +460,30 @@ namespace dh
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			pos.x -= 2.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
+			// tr->SetPosition(pos);
 			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			pos.x += 2.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
+			// tr->SetPosition(pos);
 			// dirR = true;
 		}
 
-		if (jumpTime >= 1.0f)
+		pos = tr->GetPosition();
+		if (mRigidbody->GetGround() == true)
 		{
-			gravity = -1.0f;
-			jumpState = false;
-			jumpTimeCheck = false;
-			jumpTime = 0.0f;
+			mRigidbody->SetVelocity(Vector2::Zero);
+			mRigidbody->SetGround(true);
+			pState = PlayerState::Idle;
+			if (dirR == 0)
+			{
+				at->PlayAnimation(L"Idle_Enter_L", true);
+			}
+			if (dirR == 1)
+			{
+				at->PlayAnimation(L"Idle_Enter_R", true);
+			}
 		}
 	}
 
@@ -553,5 +520,9 @@ namespace dh
 		}
 	}
 
+	void CreateDevide()
+	{
+		GameObject* bullet = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.00001f), eLayerType::PlayerBullet);
 
+	}
 }

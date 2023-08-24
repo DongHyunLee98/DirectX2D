@@ -51,8 +51,8 @@ namespace dh
 		, Vector2 leftTop
 		, Vector2 size
 		, UINT columnLength
-		, Vector2 offset
-		, float duration)
+		, float duration
+		, Vector2 offset)
 	{
 		SetKey(name);
 		mAtlas = atlas;
@@ -73,6 +73,8 @@ namespace dh
 			// 큰 이미지용
 			if(width >= 10000.0f)
 				sprite.atlasSize = Vector2(800.0f / width, 700.0f / height);
+			else if(width < 10000.0f && height > 500.0f)
+				sprite.atlasSize = Vector2(600.0f / width, 650.0f / height);
 			else
 				sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
 

@@ -70,7 +70,7 @@ namespace dh
 		// Player
 		{
 			
-			Player* player = object::Instantiate<Player>(Vector3(-2.0f, 0.5f, 1.0001f), eLayerType::Player);
+			Player* player = object::Instantiate<Player>(Vector3(-2.0f, 2.5f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();

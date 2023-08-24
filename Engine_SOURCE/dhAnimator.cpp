@@ -55,8 +55,8 @@ namespace dh
 		, Vector2 leftTop
 		, Vector2 size
 		, UINT columnLength
-		, Vector2 offset
-		, float duration)
+		, float duration
+		, Vector2 offset)
 	{
 		Animation* animation = FindAnimation(name);
 		if (nullptr != animation)
@@ -70,8 +70,8 @@ namespace dh
 			, leftTop
 			, size
 			, columnLength
-			, offset
-			, duration);
+			, duration
+			, offset);
 
 		mAnimations.insert(std::make_pair(name, animation));
 

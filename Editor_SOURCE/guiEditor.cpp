@@ -15,7 +15,7 @@ namespace gui
 	using namespace dh::enums;
 	std::vector<Widget*> Editor::mWidgets = {};
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
-	std::vector<DebugOjbect*> Editor::mDebugObjects = {};
+	std::vector<DebugObject*> Editor::mDebugObjects = {};
 
 	void Editor::Initialize()
 	{
@@ -26,7 +26,7 @@ namespace gui
 		std::shared_ptr<dh::Material> material
 			= dh::Resources::Find<dh::Material>(L"DebugMaterial");
 
-		mDebugObjects[(UINT)eColliderType::Rect] = new DebugOjbect();
+		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
 		mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<dh::Transform>();
 		dh::MeshRenderer* mr
 			= mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<dh::MeshRenderer>();
@@ -107,7 +107,7 @@ namespace gui
 
 	void Editor::DebugRender(const dh::graphics::DebugMesh& mesh)
 	{
-		DebugOjbect* debugObj = mDebugObjects[(UINT)mesh.type];
+		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
 
 		// 위치 크기 회전 정보를 받아와서
 		// 해당 게임오브젝트위에 그려주면된다.
@@ -121,6 +121,17 @@ namespace gui
 		tr->SetRotation(mesh.rotation);
 
 		tr->LateUpdate();
+
+		// 카메라마다 행렬이 다를 것이다. 우리가 필요한 건 메인카메라의 행렬이라
+		// 아래처럼 메인카메라의 행렬을 갖고 온다. (디버그 물체가 카메라가 움직일 때 같이 움직여야하므로)
+
+		// 바인딩 하는 거 만들기
+		renderer::ColliderCB colCB = {};
+		colCB.collCheck = mesh.collCheck;
+
+		ConstantBuffer* cb = renderer::constantBuffer[(UINT)eCBType::Collision];
+		cb->SetData(&colCB); // 월드 행렬 정보를 상수 버퍼에 넣어준다.
+		cb->Bind(eShaderStage::PS); // 상수 버퍼는 어느 쉐이더 단계이든 바인딩할 수 있다는게 장점이다. 
 
 		/*ya::MeshRenderer * mr 
 			= debugObj->GetComponent<ya::MeshRenderer>();*/

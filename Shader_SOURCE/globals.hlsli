@@ -11,7 +11,7 @@ cbuffer Transform : register(b0)
 
 /// 1
 //
-///
+/// 16바이트 단위로 정렬
 
 cbuffer Grid : register(b2)
 {
@@ -43,8 +43,14 @@ cbuffer Noise : register(b5)
     float4 noiseTextureSize;
 }
 
-Texture2D albedoTexture : register(t0);
-Texture2D atlasTexture : register(t12);
+cbuffer Collider : register(b6)
+{
+    int collCheck;
+    int padd[3];
+}
+
+Texture2D albedoTexture : register(t0); // 기본 이미지 사용 슬롯
+Texture2D atlasTexture : register(t12); // 애니메이션에서 12번으로 텍스처를 바인딩 해줌 
 Texture2D noiseTexture : register(t15);
 
 struct LightAttribute
