@@ -29,9 +29,13 @@
 #include "dhAudioClip.h"
 #include "dhAudioSource.h"
 
+#include "dhTime.h"
+
 namespace dh
 {
 	BossOneScene::BossOneScene()
+		: EnterCheckTime(0.0f)
+		, EnterCheck(false)
 	{
 	}
 	BossOneScene::~BossOneScene()
@@ -70,7 +74,7 @@ namespace dh
 		// Player
 		{
 			
-			Player* player = object::Instantiate<Player>(Vector3(-2.0f, 2.5f, 1.0001f), eLayerType::Player);
+			Player* player = object::Instantiate<Player>(Vector3(-2.5f, 5.0f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
@@ -96,7 +100,7 @@ namespace dh
 		// Boss
 		{			
 			GameObject* bossObj
-				= object::Instantiate<GameObject>(Vector3(2.0f, 0.0f, 1.0001f), eLayerType::Monster);
+				= object::Instantiate<GameObject>(Vector3(1.5f, 0.1f, 1.001f), eLayerType::Monster);
 			bossObj->SetName(L"CagneyBoss");
 			MeshRenderer* bossMr = bossObj->AddComponent<MeshRenderer>();
 			bossMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -108,22 +112,22 @@ namespace dh
 			bossScript->GetAnimator();
 		
 			Collider2D* bossCollider = bossScript->GetCollider();
-			// bossCollider->SetSize(Vector2(0.3f, 1.0f));
-			// bossCollider->SetCenter(Vector2(0.2f, 0.25f));
+			bossCollider->SetSize(Vector2(0.4f, 1.0f));
+			bossCollider->SetCenter(Vector2(0.5f, 0.0f));
 			Transform* bossTr = bossScript->GetTransform();
-			bossTr->SetScale(Vector3(2.0f, 3.0f, 1.0f)); 
+			bossTr->SetScale(Vector3(4.0f, 4.0f, 1.0f)); 
 			
 		}
 
 		// Ground
 		{
 			GameObject* ground
-				= object::Instantiate<GameObject>(Vector3(0.0f, -1.5f, 1.0001f), eLayerType::Ground);
+				= object::Instantiate<GameObject>(Vector3(0.0f, -1.5f, 1.001f), eLayerType::Ground);
 			ground->SetName(L"Ground");
 			ground->AddComponent<GroundScript>();
 
 			Transform* groundTr = ground->GetComponent<Transform>();
-			groundTr->SetScale(Vector3(7.0f, 0.5f, 1.0f));
+			groundTr->SetScale(Vector3(8.0f, 0.5f, 1.0f));
 
 			//Collider2D* cd = ground->AddComponent<Collider2D>();
 			//cd->SetSize(Vector2(1.0f, 1.0f));
@@ -144,11 +148,11 @@ namespace dh
 		// BG
 		{
 			GameObject* BossOneBG
-				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 2.0f), eLayerType::BackGround);
+				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.999f), eLayerType::BackGround);
 			MeshRenderer* BossOneMr = BossOneBG->AddComponent<MeshRenderer>();
 			BossOneMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			BossOneMr->SetMaterial(Resources::Find<Material>(L"BossStage1_Material"));
-			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(8.2f, 4.5f, 1.0f));
+			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(7.99f, 4.5f, 1.0f));
 
 			// AudioSource* as = BossOneBG->AddComponent<AudioSource>();
 			// as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
@@ -158,11 +162,32 @@ namespace dh
 		// BG
 		{
 			GameObject* FlowerFrontBG
-				= object::Instantiate<GameObject>(Vector3(0.0f, -1.9f, 1.9f), eLayerType::BackGround);
+				= object::Instantiate<GameObject>(Vector3(0.0f, -1.9f, 1.00002f), eLayerType::BackGround);
 			MeshRenderer* FlowerFrontMr = FlowerFrontBG->AddComponent<MeshRenderer>();
 			FlowerFrontMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			FlowerFrontMr->SetMaterial(Resources::Find<Material>(L"FlowerFront_Material"));
 			FlowerFrontBG->GetComponent<Transform>()->SetScale(Vector3(10.0f, 2.0f, 1.0f));
+		}
+
+		// Enter Spot Object
+		{
+			EnterSpotObj
+				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.999f), eLayerType::BackGround);
+			EnterSpotObj->SetName(L"EnterSpot");
+			MeshRenderer* mrEnterSpot = EnterSpotObj->AddComponent<MeshRenderer>();
+			mrEnterSpot->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mrEnterSpot->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+			Animator* EnterAnim = EnterSpotObj->AddComponent<Animator>();
+
+			// std::shared_ptr<Texture> enterAnimSpot = Resources::Load<Texture>(L"EnterAnimSpot", L"..\\Resources\\Texture\\EnterSpot\\EnterSpotAnim.png");
+			// EnterAnim->Create(L"EnterAnimSpot", enterAnimSpot, Vector2(0.0f, 0.0f), Vector2(508.0f, 207.0f), 17, 0.08f);
+			std::shared_ptr<Texture> enterAnimSpot = Resources::Load<Texture>(L"EnterAnimSpot", L"..\\Resources\\Texture\\EnterSpot\\EnterSpotAnim.png");
+			EnterAnim->Create(L"EnterAnimSpot", enterAnimSpot, Vector2(0.0f, 0.0f), Vector2(508.0f, 207.0f), 17, 0.07f);
+			EnterAnim->PlayAnimation(L"EnterAnimSpot", false);
+
+			Transform* EnterSpotTrans = EnterSpotObj->GetComponent<Transform>();
+			EnterSpotTrans->SetScale(Vector3(8.0f, 4.5f, 1.0f));
+
 		}
 
 		//Main Camera
@@ -179,21 +204,20 @@ namespace dh
 
 			// camera->AddComponent<AudioListener>();
 		}
-		/*
+		
 		//UI Camera
 		{
 			// GameObject* camera = new GameObject();
 			// AddGameObject(eLayerType::Camera, camera);
-			GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, -10.0f), eLayerType::Camera);
+			//GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, -10.0f), eLayerType::Camera);
 			// camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = camera->AddComponent<Camera>();
+			//Camera* cameraComp = camera->AddComponent<Camera>();
 			//cameraComp->TurnLayerMask(eLayerType::Player, false);
 			//cameraComp->TurnLayerMask(eLayerType::Monster, false);
 			//cameraComp->TurnLayerMask(eLayerType::NotMonster, false);
 			//cameraComp->TurnLayerMask(eLayerType::BackGround, false);
 			//camera->AddComponent<CameraScript>();
 		}
-		*/
 		// Light (test), Direct
 		{
 			GameObject* light = new GameObject();
@@ -201,7 +225,7 @@ namespace dh
 			AddGameObject(eLayerType::Light, light);
 			Light* lightComp = light->AddComponent<Light>();
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
 		}
 	}
 
@@ -211,6 +235,14 @@ namespace dh
 		{
 			SceneManager::LoadScene(L"WinScene");
 		}
+		if(EnterCheck == false)
+			EnterCheckTime += 1.2f * Time::DeltaTime();
+		if (EnterCheckTime > 4.0f)
+		{
+			EnterCheck = true;
+			object::Destroy(EnterSpotObj);
+		}
+
 		Scene::Update();
 	}
 

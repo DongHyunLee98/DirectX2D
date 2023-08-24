@@ -71,10 +71,12 @@ namespace dh
 			sprite.offset = offset;
 
 			// 큰 이미지용
-			if(width >= 10000.0f)
+			if(width >= 10000.0f && height > 700.0f)
 				sprite.atlasSize = Vector2(800.0f / width, 700.0f / height);
-			else if(width < 10000.0f && height > 500.0f)
-				sprite.atlasSize = Vector2(600.0f / width, 650.0f / height);
+			else if(width >= 8000 && width < 10000.0f && height > 400.0f && height <= 700.0f)
+				sprite.atlasSize = Vector2(650.0f / width, 650.0f / height);
+			else if (width > 8500 && width <= 8800 && height < 300.0f)
+				sprite.atlasSize = Vector2(350.0f / width, 200.0f / height);
 			else
 				sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
 

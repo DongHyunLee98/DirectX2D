@@ -37,7 +37,8 @@ namespace dh
 		std::shared_ptr<Texture> EnterIdle = Resources::Load<Texture>(L"Idle_Enter_R", L"..\\Resources\\Texture\\PlayerBoss\\EnterIdle\\EnterIdle_R.png");
 		std::shared_ptr<Texture> EnterIdleL = Resources::Load<Texture>(L"Idle_Enter_L", L"..\\Resources\\Texture\\PlayerBoss\\EnterIdle\\EnterIdle_L.png");
 		std::shared_ptr<Texture> AirHit = Resources::Load<Texture>(L"Hit_Air", L"..\\Resources\\Texture\\PlayerBoss\\AirHit\\HitAir.png");
-		std::shared_ptr<Texture> NormalJump = Resources::Load<Texture>(L"Jump_Normal", L"..\\Resources\\Texture\\PlayerBoss\\CupheadJump\\Jump.png");
+		std::shared_ptr<Texture> NormalJumpR = Resources::Load<Texture>(L"Jump_Normal_R", L"..\\Resources\\Texture\\PlayerBoss\\CupheadJump\\Jump_R.png");
+		std::shared_ptr<Texture> NormalJumpL = Resources::Load<Texture>(L"Jump_Normal_L", L"..\\Resources\\Texture\\PlayerBoss\\CupheadJump\\Jump_L.png");
 		std::shared_ptr<Texture> AirDash = Resources::Load<Texture>(L"Dash_Air", L"..\\Resources\\Texture\\PlayerBoss\\DashAir\\DashAir.png");
 		std::shared_ptr<Texture> NormalGhost = Resources::Load<Texture>(L"Ghost_Normal", L"..\\Resources\\Texture\\PlayerBoss\\Ghost\\Ghost.png");
 		std::shared_ptr<Texture> NormalParry = Resources::Load<Texture>(L"Parry_Normal", L"..\\Resources\\Texture\\PlayerBoss\\HandParry\\Parry.png");
@@ -68,7 +69,8 @@ namespace dh
 		at->Create(L"Idle_Enter_R", EnterIdle, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8, 0.08f);
 		at->Create(L"Idle_Enter_L", EnterIdleL, Vector2(0.0f, 0.0f), Vector2(98.0f, 155.0f), 8, 0.08f);
 		at->Create(L"Hit_Air", AirHit, Vector2(0.0f, 0.0f), Vector2(125.0f, 188.0f), 6);
-		at->Create(L"Jump_Normal", NormalJump, Vector2(0.0f, 0.0f), Vector2(88.0f, 109.0f), 8, 0.06f);
+		at->Create(L"Jump_Normal_R", NormalJumpR, Vector2(0.0f, 0.0f), Vector2(88.0f, 109.0f), 8, 0.06f);
+		at->Create(L"Jump_Normal_L", NormalJumpL, Vector2(0.0f, 0.0f), Vector2(88.0f, 109.0f), 8, 0.06f);
 		at->Create(L"Dash_Air", AirDash, Vector2(150.0f, 0.0f), Vector2(446.0f, 126.0f), 6);
 		at->Create(L"Ghost_Normal", NormalGhost, Vector2(0.0f, 0.0f), Vector2(140.0f, 208.0f), 24);
 		at->Create(L"Parry_Normal", NormalParry, Vector2(0.0f, 0.0f), Vector2(137.0f, 146.0f), 8);
@@ -202,12 +204,20 @@ namespace dh
 		if (Input::GetKeyDown(eKeyCode::Z))
 		{
 				Vector2 velocity = mRigidbody->GetVelocity();
-				velocity.y += 2.3f;
+				velocity.y += 6.0f;
 				mRigidbody->SetVelocity(velocity);
 				mRigidbody->SetGround(false);
 
-				pState = PlayerState::Jump;
-				at->PlayAnimation(L"Jump_Normal", true);
+				if (dirR == true)
+				{
+					pState = PlayerState::Jump;
+					at->PlayAnimation(L"Jump_Normal_R", true);
+				}
+				else if (dirR == false)
+				{
+					pState = PlayerState::Jump;
+					at->PlayAnimation(L"Jump_Normal_L", true);
+				}
 		}
 		// Attack
 		if (Input::GetKey(eKeyCode::X) && dirR == true)
@@ -229,6 +239,7 @@ namespace dh
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_L", true);
 		}
+
 		// Dash
 		if (Input::GetKey(eKeyCode::SPACE))
 		{
@@ -280,6 +291,26 @@ namespace dh
 			tr->SetPosition(pos);
 		}
 
+		// Jump
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.y += 2.3f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+
+			if (dirR == true)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_R", true);
+			}
+			else if (dirR == false)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_L", true);
+			}
+		}
+
 
 		if (Input::GetKeyUp(eKeyCode::LEFT))
 		{
@@ -319,13 +350,13 @@ namespace dh
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			pos.x -= 2.0f * Time::DeltaTime();
+			pos.x -= 2.5f * Time::DeltaTime();
 			tr->SetPosition(pos);
 			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			pos.x += 2.0f * Time::DeltaTime();
+			pos.x += 2.5f * Time::DeltaTime();
 			tr->SetPosition(pos);
 			// dirR = true;
 		}
@@ -388,22 +419,63 @@ namespace dh
 			at->PlayAnimation(L"Idle_Enter_L", true);
 		}
 
+		// Jump
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.y += 2.3f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+
+			if (dirR == true)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_R", true);
+			}
+			else if (dirR == false)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_L", true);
+			}
+		}
+
 	}
 
 	void PlayerBossScript::MovingShoot()
 	{
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			pos.x -= 2.0f * Time::DeltaTime();
+			pos.x -= 2.5f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			// dirR = false;
+			dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			pos.x += 2.0f * Time::DeltaTime();
+			pos.x += 2.5f * Time::DeltaTime();
 			tr->SetPosition(pos);
-			// dirR = true;
+			dirR = true;
 		}
+
+		// Jump
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.y += 2.3f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+
+			if (dirR == true)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_R", true);
+			}
+			else if (dirR == false)
+			{
+				pState = PlayerState::Jump;
+				at->PlayAnimation(L"Jump_Normal_L", true);
+			}
+		}
+
 
 		// 이동사격 탈출 (X키 땜)
 		if (Input::GetKeyUp(eKeyCode::X) && dirR == false)// (Input::GetKeyState(eKeyCode::RIGHT) == eKeyState::Pressed)) // DIR체크
@@ -470,7 +542,13 @@ namespace dh
 			// dirR = true;
 		}
 
-		pos = tr->GetPosition();
+
+		// 이동체크
+		{
+			pos = tr->GetPosition();
+			tr->SetPosition(pos);
+		}
+
 		if (mRigidbody->GetGround() == true)
 		{
 			mRigidbody->SetVelocity(Vector2::Zero);

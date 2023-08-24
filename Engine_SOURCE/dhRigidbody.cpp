@@ -16,7 +16,7 @@ namespace dh
 		//mLimitedVelocity.x = 200.0f;
 		//mLimitedVelocity.y = 1000.0f;
 		mbGround = false;
-		mGravity = Vector2(0.0f, -7.0f);
+		mGravity = Vector2(0.0f, -12.0f);
 		//mFriction = 0.0f;
 	}
 

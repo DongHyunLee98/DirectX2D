@@ -18,6 +18,8 @@ namespace dh
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 	private:
-		class Player* player;
+		GameObject* EnterSpotObj;
+		float EnterCheckTime;
+		bool EnterCheck;
 	};
 }

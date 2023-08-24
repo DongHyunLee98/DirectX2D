@@ -40,7 +40,7 @@ float4 main(VSOut In) : SV_TARGET
         color = atlasTexture.Sample(anisotropicSampler, UV); // In.UV로 기존들어오는것 확인가능
     }
     
-    float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);
+    float4 lightColor = float4(0.4f, 0.4f, 0.4f, 1.0f);
     
     for (int i = 0; i < 2; i++)
     {

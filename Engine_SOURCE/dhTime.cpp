@@ -35,7 +35,7 @@ namespace dh
 	void Time::Render()
 	{
 		mSecond += mDeltaTime;
-		wchar_t szFloat[50] = L"BIN"; // 폰트사용 예시
+		wchar_t szFloat[50] = L"";// L"BIN"; // 폰트사용 예시
 		if (mSecond > 1.0f)
 		{
 			HWND hWnd = application.GetHwnd();
@@ -49,6 +49,6 @@ namespace dh
 			//TextOut(hdc, 0, 0, szFloat, 20);
 			mSecond = 0.0f;
 		}
-		FontWrapper::DrawFont(szFloat, 10.f, 30.f, 20, FONT_RGBA(255, 0, 255, 255)); // 폰트사용
+		// FontWrapper::DrawFont(szFloat, 10.f, 30.f, 20, FONT_RGBA(255, 0, 255, 255)); // 폰트사용
 	}
 }

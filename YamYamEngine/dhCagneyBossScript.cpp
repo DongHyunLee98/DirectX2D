@@ -26,12 +26,12 @@ namespace dh
 
 		std::shared_ptr<Texture> animEnterWait = Resources::Load<Texture>(L"EnterAnimWait", L"..\\Resources\\Texture\\CagneyCarnation\\Enter\\EnterWait.png");
 		std::shared_ptr<Texture> animEnter = Resources::Load<Texture>(L"EnterAnim", L"..\\Resources\\Texture\\CagneyCarnation\\Enter\\EnterAnim.png");
-		std::shared_ptr<Texture> animIdle = Resources::Load<Texture>(L"IdleAnim", L"..\\Resources\\Texture\\CagneyCarnation\\Idle\\Idle_01.png");
+		std::shared_ptr<Texture> animIdle = Resources::Load<Texture>(L"IdleAnim", L"..\\Resources\\Texture\\CagneyCarnation\\Idle\\IdleAnim.png");
 		
 		// 府家胶 局聪皋捞记栏肺 积己
-		mAnim->Create(L"EnterAnim", animEnter, Vector2(0.0f, 0.0f), Vector2(814.0f, 720.0f), 20);
-		mAnim->Create(L"EnterAnimWait", animEnter, Vector2(0.0f, 0.0f), Vector2(814.0f, 720.0f), 2);
-		mAnim->Create(L"IdleAnim", animIdle, Vector2(0.0f, 0.0f), Vector2(510.0f, 616.0f), 1);
+		mAnim->Create(L"EnterAnim", animEnter, Vector2(0.0f, 0.0f), Vector2(814.0f, 720.0f), 20, 0.08f);
+		mAnim->Create(L"EnterAnimWait", animEnter, Vector2(0.0f, 0.0f), Vector2(814.0f, 720.0f), 2, 0.1f);
+		mAnim->Create(L"IdleAnim", animIdle, Vector2(0.0f, 0.0f), Vector2(540.0f, 673.0f), 17, 0.07f);
 		
 		// 角青
 		mAnim->PlayAnimation(L"EnterAnimWait", true);
@@ -104,11 +104,12 @@ namespace dh
 		if(enterIdleSwitch)
 			enterWaitTimer += Time::DeltaTime();
 
-		if (enterWaitTimer >= 2.0f)
+		if (enterWaitTimer >= 1.5f)
 		{
 			enterIdleSwitch = false;
 			enterWaitTimer = 0.0f;
-			mTrans->SetPosition(Vector3(2.3f, 0.0f, 1.0001f));
+			mTrans->SetPosition(Vector3(2.0f, 0.0f, 1.001f));
+			mTrans->SetScale(Vector3(3.2f, 3.2f, 1.0f));
 			mState = CagneyState::Idle;
 			mAnim->PlayAnimation(L"IdleAnim", true);
 		}
