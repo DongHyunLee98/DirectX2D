@@ -133,4 +133,22 @@ namespace dh
 	void CagneyBossScript::UpSeed()
 	{
 	}
+	void CagneyBossScript::Dead()
+	{
+		/*
+		GameObject* KnockOutObj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.999f), eLayerType::BackGround);
+		KnockOutObj->SetName(L"KnockOutObj");
+		MeshRenderer* KnockOutMr = KnockOutObj->AddComponent<MeshRenderer>();
+		KnockOutMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		KnockOutMr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+		Animator* KnockAnim = KnockOutObj->AddComponent<Animator>();
+
+		std::shared_ptr<Texture> knockOutAnim = Resources::Load<Texture>(L"KnockoutAnim", L"..\\Resources\\Texture\\AKNOCKOUT\\KnockoutAnim.png");
+		KnockAnim->Create(L"KnockoutAnim", knockOutAnim, Vector2(0.0f, 0.0f), Vector2(512.0f, 288.0f), 26, 0.07f);
+		KnockAnim->PlayAnimation(L"KnockoutAnim", false);
+
+		Transform* KnockOutTrans = KnockOutObj->GetComponent<Transform>();
+		KnockOutTrans->SetScale(Vector3(8.0f, 4.5f, 1.0f));
+		*/
+	}
 }

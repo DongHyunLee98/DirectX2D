@@ -113,7 +113,7 @@ namespace dh
 			dirR = false;
 		}
 
-		// pos = tr->GetPosition();
+		pos = tr->GetPosition();
 
 		switch (pState)
 		{
@@ -210,13 +210,13 @@ namespace dh
 
 				if (dirR == true)
 				{
-					pState = PlayerState::Jump;
 					at->PlayAnimation(L"Jump_Normal_R", true);
+					pState = PlayerState::Jump;
 				}
 				else if (dirR == false)
 				{
-					pState = PlayerState::Jump;
 					at->PlayAnimation(L"Jump_Normal_L", true);
+					pState = PlayerState::Jump;
 				}
 		}
 		// Attack
@@ -287,31 +287,37 @@ namespace dh
 
 		// 중력체크
 		{
-			pos = tr->GetPosition();
-			tr->SetPosition(pos);
+			// pos = tr->GetPosition();
+			// tr->SetPosition(pos);
 		}
-
+		
 		// Jump
 		if (Input::GetKeyDown(eKeyCode::Z))
 		{
 			Vector2 velocity = mRigidbody->GetVelocity();
-			velocity.y += 2.3f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
 
 			if (dirR == true)
 			{
-				pState = PlayerState::Jump;
+				velocity.y += 6.0f;
+				velocity.x += 2.0f;
+				mRigidbody->SetVelocity(velocity);
+				mRigidbody->SetGround(false);
+
 				at->PlayAnimation(L"Jump_Normal_R", true);
+				pState = PlayerState::Jump;
 			}
 			else if (dirR == false)
 			{
-				pState = PlayerState::Jump;
+				velocity.y += 6.0f;
+				velocity.x -= 2.0f;
+				mRigidbody->SetVelocity(velocity);
+				mRigidbody->SetGround(false);
+
 				at->PlayAnimation(L"Jump_Normal_L", true);
+				pState = PlayerState::Jump;
 			}
 		}
-
-
+		
 		if (Input::GetKeyUp(eKeyCode::LEFT))
 		{
 			pState = PlayerState::Idle;
@@ -359,15 +365,6 @@ namespace dh
 			pos.x += 2.5f * Time::DeltaTime();
 			tr->SetPosition(pos);
 			// dirR = true;
-		}
-
-		// Jump
-		if (Input::GetKeyDown(eKeyCode::Z))
-		{
-			pos.x += 3.0f * Time::DeltaTime();
-
-			pState = PlayerState::Jump;
-			at->PlayAnimation(L"Jump_Normal", false);
 		}
 
 		tr->SetPosition(pos);
@@ -531,22 +528,26 @@ namespace dh
 		
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			pos.x -= 2.0f * Time::DeltaTime();
+			//velocity.x -= 0.01f;
+			//mRigidbody->SetVelocity(velocity);			
+			// pos.x -= 2.0f * Time::DeltaTime();
 			// tr->SetPosition(pos);
 			// dirR = false;
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			pos.x += 2.0f * Time::DeltaTime();
+			//velocity.x += 0.01f;
+			//mRigidbody->SetVelocity(velocity);
+			// pos.x += 2.0f * Time::DeltaTime();
 			// tr->SetPosition(pos);
-			// dirR = true;
+			//dirR = true;
 		}
 
 
 		// 이동체크
 		{
-			pos = tr->GetPosition();
-			tr->SetPosition(pos);
+			// pos = tr->GetPosition();
+			// tr->SetPosition(pos);
 		}
 
 		if (mRigidbody->GetGround() == true)

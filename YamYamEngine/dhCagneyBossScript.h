@@ -17,6 +17,7 @@ namespace dh
 			Seed,
 			TwoPhase,
 			UpSeed,
+			Dead,
 		};
 
 		CagneyBossScript();
@@ -60,5 +61,6 @@ namespace dh
 		void Seed();
 		void TwoPhase();
 		void UpSeed();
+		void Dead();
 	};
 }

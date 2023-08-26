@@ -74,7 +74,7 @@ namespace dh
 		// Player
 		{
 			
-			Player* player = object::Instantiate<Player>(Vector3(-2.5f, 5.0f, 1.0001f), eLayerType::Player);
+			Player* player = object::Instantiate<Player>(Vector3(-2.5f, 6.0f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
@@ -153,12 +153,13 @@ namespace dh
 			BossOneMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			BossOneMr->SetMaterial(Resources::Find<Material>(L"BossStage1_Material"));
 			BossOneBG->GetComponent<Transform>()->SetScale(Vector3(7.99f, 4.5f, 1.0f));
+			// BossOneBG->GetComponent<Transform>()->SetScale(Vector3(16.0f, 9.0f, 1.0f));
 
 			// AudioSource* as = BossOneBG->AddComponent<AudioSource>();
 			// as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
 			// as->Play();
 		}
-
+		
 		// BG
 		{
 			GameObject* FlowerFrontBG
@@ -168,7 +169,7 @@ namespace dh
 			FlowerFrontMr->SetMaterial(Resources::Find<Material>(L"FlowerFront_Material"));
 			FlowerFrontBG->GetComponent<Transform>()->SetScale(Vector3(10.0f, 2.0f, 1.0f));
 		}
-
+		
 		// Enter Spot Object
 		{
 			EnterSpotObj
@@ -179,10 +180,8 @@ namespace dh
 			mrEnterSpot->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 			Animator* EnterAnim = EnterSpotObj->AddComponent<Animator>();
 
-			// std::shared_ptr<Texture> enterAnimSpot = Resources::Load<Texture>(L"EnterAnimSpot", L"..\\Resources\\Texture\\EnterSpot\\EnterSpotAnim.png");
-			// EnterAnim->Create(L"EnterAnimSpot", enterAnimSpot, Vector2(0.0f, 0.0f), Vector2(508.0f, 207.0f), 17, 0.08f);
 			std::shared_ptr<Texture> enterAnimSpot = Resources::Load<Texture>(L"EnterAnimSpot", L"..\\Resources\\Texture\\EnterSpot\\EnterSpotAnim.png");
-			EnterAnim->Create(L"EnterAnimSpot", enterAnimSpot, Vector2(0.0f, 0.0f), Vector2(508.0f, 207.0f), 17, 0.07f);
+			EnterAnim->Create(L"EnterAnimSpot", enterAnimSpot, Vector2(0.0f, 0.0f), Vector2(508.0f, 287.0f), 17, 0.07f);
 			EnterAnim->PlayAnimation(L"EnterAnimSpot", false);
 
 			Transform* EnterSpotTrans = EnterSpotObj->GetComponent<Transform>();
