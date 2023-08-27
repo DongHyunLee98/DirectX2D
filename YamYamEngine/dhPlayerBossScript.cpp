@@ -172,7 +172,10 @@ namespace dh
 
 	void PlayerBossScript::OnCollisionExit(Collider2D* other)
 	{
-
+		if (other->GetOwner()->GetName() == L"Ground")
+		{
+			mRigidbody->SetGround(false);
+		}
 	}
 
 	void PlayerBossScript::Idle()
