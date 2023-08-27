@@ -9,6 +9,8 @@
 #include "dhPlayerBullet.h"
 #include "dhRigidbody.h"
 #include "dhObject.h"
+#include "dhMeshRenderer.h"
+#include "dhMesh.h"
 
 namespace dh
 {
@@ -21,6 +23,11 @@ namespace dh
 		, jumpTimeCheck(false)
 		, bulletPos(0.0f,0.0f,0.0f)
 		, pos(0.0f,0.0f,0.0f)
+		, mBulletTime(0.0f)
+		, bulletCoolDown(false)
+		, mBulletAttackCool(0.0f)
+		, getVelocityCount(0.0f)
+		, VelocityGetSwitch(false)
 	{
 	}
 	PlayerBossScript::~PlayerBossScript()
@@ -115,6 +122,19 @@ namespace dh
 
 		pos = tr->GetPosition();
 
+		if (mBullet != nullptr)
+		{
+			mBulletTime += 1.0f * Time::DeltaTime();
+
+			if (mBulletTime >= 0.5f)
+			{
+				mBulletTime = 0.0f;
+				// object::Destroy(mBullet);
+				SetBullet(nullptr);
+				SetBulletScript(nullptr);
+			}
+		}
+
 		switch (pState)
 		{
 			// case dh::PlayerOverWorldScript::PlayerState::Idle:
@@ -153,6 +173,30 @@ namespace dh
 			break;
 		}
 
+		if (pState == PlayerState::Shoot)
+		{
+			if (bulletCoolDown == false)
+			{
+				CreateBullet();
+				bulletCoolDown = true;
+			}
+			if (bulletCoolDown == true)
+			{
+				mBulletAttackCool += 2.0f * Time::DeltaTime();
+				
+				if (mBulletAttackCool >= 0.5f)
+				{
+					bulletCoolDown = false;
+					mBulletAttackCool = 0.0f;
+				}
+			}
+		}
+		
+		if (VelocityGetSwitch == true)
+		{
+			getVelocityCount += 2.0f * Time::DeltaTime();
+		}
+
 	}
 	void PlayerBossScript::Complete()
 	{
@@ -163,6 +207,16 @@ namespace dh
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
 			mRigidbody->SetGround(true);
+			mRigidbody->SetVelocity(Vector2::Zero);
+		}
+
+		if (other->GetOwner()->GetName() == L"Platform1" && getVelocityCount >= 1.5f)
+		{
+			mRigidbody->SetGround(true);
+			mRigidbody->SetVelocity(Vector2::Zero);
+			VelocityGetSwitch = false;
+			getVelocityCount = 0.0f;
+
 		}
 	}
 
@@ -174,6 +228,14 @@ namespace dh
 	{
 		if (other->GetOwner()->GetName() == L"Ground")
 		{
+			getVelocityCount = 0.5f;
+			VelocityGetSwitch = true;
+			mRigidbody->SetGround(false);
+		}
+
+		if (other->GetOwner()->GetName() == L"Platform1")
+		{
+			VelocityGetSwitch = true;
 			mRigidbody->SetGround(false);
 		}
 	}
@@ -225,20 +287,14 @@ namespace dh
 		// Attack
 		if (Input::GetKey(eKeyCode::X) && dirR == true)
 		{
-			// attackTime += 1.1f * Time::DeltaTime();
-			// if (attackTime >= 1.2f)
-			{
-				// GameObject* bulletObj = object::Instantiate<GameObject>(Vector3(pos.x, pos.y, 1.0001f), eLayerType::PlayerBullet);
-				// PlayerBullet* bulletSetPos = bulletObj->AddComponent<PlayerBullet>();
-				// bulletSetPos->SetPosition(pos);
-				// attackTime = 0.0f;
-			}
-
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_R", true);
 		}
 		else if (Input::GetKey(eKeyCode::X) && dirR == false)
 		{
+			if (mBullet == nullptr)
+				CreateBullet();
+
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_L", true);
 		}
@@ -302,7 +358,7 @@ namespace dh
 			if (dirR == true)
 			{
 				velocity.y += 6.0f;
-				velocity.x += 2.0f;
+				// velocity.x += 2.0f;
 				mRigidbody->SetVelocity(velocity);
 				mRigidbody->SetGround(false);
 
@@ -312,7 +368,7 @@ namespace dh
 			else if (dirR == false)
 			{
 				velocity.y += 6.0f;
-				velocity.x -= 2.0f;
+				// velocity.x -= 2.0f;
 				mRigidbody->SetVelocity(velocity);
 				mRigidbody->SetGround(false);
 
@@ -528,35 +584,25 @@ namespace dh
 
 	void PlayerBossScript::Jump()
 	{
-		
+		Vector2 velocity = mRigidbody->GetVelocity();
 		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			//velocity.x -= 0.01f;
-			//mRigidbody->SetVelocity(velocity);			
-			// pos.x -= 2.0f * Time::DeltaTime();
-			// tr->SetPosition(pos);
-			// dirR = false;
-		}
-		else if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			//velocity.x += 0.01f;
-			//mRigidbody->SetVelocity(velocity);
-			// pos.x += 2.0f * Time::DeltaTime();
-			// tr->SetPosition(pos);
-			//dirR = true;
-		}
+			velocity.x -= 0.03f;
 
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x += 0.03f;
 
-		// 이동체크
-		{
-			// pos = tr->GetPosition();
-			// tr->SetPosition(pos);
-		}
+		if (velocity.x > 1.8f)
+			velocity.x = 1.8f;
+
+		if (velocity.x < -1.8f)
+			velocity.x = -1.8f;
+
+		mRigidbody->SetVelocity(velocity);
 
 		if (mRigidbody->GetGround() == true)
 		{
-			mRigidbody->SetVelocity(Vector2::Zero);
-			mRigidbody->SetGround(true);
+			// mRigidbody->SetVelocity(Vector2::Zero);
+			// mRigidbody->SetGround(true);
 			pState = PlayerState::Idle;
 			if (dirR == 0)
 			{
@@ -602,9 +648,57 @@ namespace dh
 		}
 	}
 
-	void CreateDevide()
+	void PlayerBossScript::CreateBullet()
 	{
-		GameObject* bullet = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.00001f), eLayerType::PlayerBullet);
+		// xbulletCoolDown = true;
 
+		Vector3 posBullet = tr->GetPosition();
+
+		// int a = rand() % 101;
+
+		GameObject* pBullet
+			= object::Instantiate<GameObject>(Vector3(posBullet.x + 0.5f, posBullet.y, 1.0004f), eLayerType::PlayerBullet);
+
+		SetBullet(pBullet);
+
+		pBullet->SetName(L"playerBullet");
+
+
+		MeshRenderer* mrBullet = pBullet->AddComponent<MeshRenderer>();
+		mrBullet->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		mrBullet->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+		pBullet->AddComponent<PlayerBullet>();
+
+		// pBullet->GetComponent<Transform>()->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+
+		// Animator* bulletAt = pBullet->AddComponent<Animator>();
+
+	}
+	void PlayerBossScript::CreateBulletL()
+	{
+		/*
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector3 pos = tr->GetPosition();
+
+		GameObject* Devide
+			= object::Instantiate<GameObject>(Vector3(pos.x + 0.5f, pos.y + 0.2f, 1.0004f), eLayerType::Skill);
+
+		SetDevide(Devide);
+
+		Devide->SetName(L"Devide");
+
+
+		MeshRenderer* mr = Devide->AddComponent<MeshRenderer>();
+		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+
+		Devide->GetComponent<Transform>()->SetScale(Vector3(3.0f, 3.0f, 1.0005f));
+
+		Animator* at = Devide->AddComponent<Animator>();
+		Devide->AddComponent<SkillScript>();
+
+		SkillScript* ss = Devide->GetComponent<SkillScript>();
+		ss->SetDir(true);
+		*/
 	}
 }

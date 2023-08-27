@@ -98,6 +98,7 @@ namespace dh
 
 		tr->SetPosition(pos);
 		//mForce.Clear();
+
 	}
 
 	void Rigidbody::LateUpdate()

@@ -46,6 +46,8 @@ namespace dh
 
 		CagneyState mCurState;
 		float patternTime;
+		
+		float mHp;
 
 	private:
 		float enterWaitTimer;

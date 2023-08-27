@@ -1,6 +1,7 @@
 #include "dhGroundScript.h"
 #include "dhCollider2D.h"
 #include "dhGameObject.h"
+#include "dhObject.h"
 
 namespace dh
 {
@@ -10,5 +11,13 @@ namespace dh
 	}
 	void GroundScript::Update()
 	{
+	}
+	void GroundScript::OnCollisionEnter(Collider2D* other)
+	{
+
+		if (other->GetOwner()->GetName() == L"playerBullet")
+		{
+			object::Destroy(other->GetOwner());
+		}
 	}
 }

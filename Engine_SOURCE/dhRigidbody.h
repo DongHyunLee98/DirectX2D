@@ -26,6 +26,7 @@ namespace dh
 		// void SetFriction(float mfriction) { mFriction = mfriction; }
 		// float GetFriction() { return mFriction; }
 
+
 	private:
 		float mMass;
 		Vector2 mForce;

@@ -4,7 +4,9 @@
 #include "dhGameObject.h"
 #include "dhTime.h"
 #include "dhInput.h"
+#include "dhObject.h"
 #include "dhResources.h"
+
 
 namespace dh
 {
@@ -12,6 +14,7 @@ namespace dh
 		: enterWaitTimer(0.0f)
 		, enterWaitSwitch(true)
 		, enterIdleSwitch(false)
+		, mHp(100.0f)
 	{
 	}
 	CagneyBossScript::~CagneyBossScript()
@@ -78,6 +81,10 @@ namespace dh
 	}
 	void CagneyBossScript::OnCollisionEnter(Collider2D* other)
 	{
+		if (other->GetOwner()->GetName() == L"playerBullet")
+		{
+			mHp -= 1.0f;
+		}
 	}
 	void CagneyBossScript::OnCollisionStay(Collider2D* other)
 	{
@@ -116,7 +123,11 @@ namespace dh
 	}
 	void CagneyBossScript::Idle()
 	{
-		
+
+		if (mHp <= 98.0f)
+		{
+			int a = 0;
+		}
 	}
 	void CagneyBossScript::HeadMiddle()
 	{

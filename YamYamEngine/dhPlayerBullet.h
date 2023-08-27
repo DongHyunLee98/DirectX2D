@@ -1,4 +1,6 @@
 #pragma once
+#include <dhScript.h>
+#include <dhAnimation.h>
 #include "dhPlayerBossScript.h"
 
 namespace dh
@@ -10,25 +12,42 @@ namespace dh
 		PlayerBullet();
 		~PlayerBullet();
 
-		virtual void Initialize();
-		virtual void Update();
+		//enum class bulletState
+		//{
+		//	Bullet,
+		//	LeftBullet,
+		//};
 
-		Transform* GetTransform() { return mTrans; }
-		void SetTransform(Transform* trans) { mTrans = trans; }
-		void SetPosition(Vector3 _pos) { pos = _pos; }
+		virtual void Initialize() override;
+		virtual void Update() override;
+
+		// void Complete();
+		void SetDir(bool dir) { dirR = dir; }
+
+		virtual void OnCollisionEnter(Collider2D* other) override;
+		virtual void OnCollisionStay(Collider2D* other) override;
+		virtual void OnCollisionExit(Collider2D* other) override;
+
+		// Transform* GetTransform() { return mTrans; }
+		// void SetTransform(Transform* trans) { mTrans = trans; }
+		// void SetPosition(Vector3 _pos) { pos = _pos; }
 
 	public:
 		Vector2 mDir;
 		Vector2 mDestPos;
-		Vector3 pos;
 		Transform*mTrans;
+		Collider2D* mColl;
 		Vector3 playerPos;
+		Vector3 mPos;
+		Animator* mAnim;
 
 	private:
 		float mSpeed;
-		float mAliveTime;
+		bool dirR;
 		PlayerBossScript* mPBS;
 		
+	private:
+		//bulletState mBulletState;
 	};
 	
 }

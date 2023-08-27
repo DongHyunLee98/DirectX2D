@@ -30,6 +30,7 @@ namespace dh::enums
 		Monster,
 		PlayerBullet,
 		MonsterBullet,
+		Wall,
 		MapObject,
 		Light,
 		Camera,

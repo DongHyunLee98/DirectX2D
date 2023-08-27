@@ -56,7 +56,10 @@ namespace dh
 
 		Vector3 GetPosition() { return pos; }
 
-		void CreateDevide();
+		void CreateBullet();
+		void CreateBulletL();
+		void SetBullet(GameObject* bt) { mBullet = bt; }
+		void SetBulletScript(class PlayerBullet* bulletScript) { mPlayerBullet = bulletScript; }
 
 	private:
 		Animator* at;
@@ -76,10 +79,18 @@ namespace dh
 		float jumpTime;
 		
 		float attackTime;
+		float mBulletTime;
+		bool bulletCoolDown;
+		float mBulletAttackCool;
 
 		float dashTime;
 
 		Vector3 bulletPos;
+		GameObject* mBullet;
+		class PlayerBullet* mPlayerBullet;
+
+		float getVelocityCount;
+		bool VelocityGetSwitch;
 
 	private:
 		void Idle();

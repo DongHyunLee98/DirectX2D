@@ -563,6 +563,14 @@ namespace renderer
 			material->SetTexture(texture);
 			// material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"HP3_Material", material);
+
+			// ÇÃ·§Æû
+			texture = Resources::Load<Texture>(L"PlatformOne", L"..\\Resources\\Texture\\CagneyCarnation\\Platform\\Platform_A_01.png");
+			material = std::make_shared<Material>();
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert(L"PlatformOne_Material", material);
 		}
 
 		// ½Â¸®È­¸é

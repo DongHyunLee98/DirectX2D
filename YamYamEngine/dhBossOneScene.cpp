@@ -44,6 +44,9 @@ namespace dh
 	void BossOneScene::Initialize()
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
+		CollisionManager::SetLayer(eLayerType::PlayerBullet, eLayerType::Monster, true);
+		CollisionManager::SetLayer(eLayerType::PlayerBullet, eLayerType::Wall, true);
+
 		// CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 
 		//std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
@@ -119,6 +122,52 @@ namespace dh
 			
 		}
 
+		// Platform1 Propeller
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-2.99f, -0.48f, 1.002f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Propeller");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+
+			Animator* mPlat1Anim = platform1->AddComponent<Animator>();
+			std::shared_ptr<Texture> animPlat1 = Resources::Load<Texture>(L"animPlatform", L"..\\Resources\\Texture\\CagneyCarnation\\Platform\\PropellerAnim.png");
+			mPlat1Anim->Create(L"animPlatform", animPlat1, Vector2(0.0f, 0.0f), Vector2(117.0f, 39.0f), 9, 0.08f);
+			mPlat1Anim->PlayAnimation(L"animPlatform", true);
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.5f, 1.0f, 1.0f));
+		}
+		// platform1 Ground
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-3.0f, -0.25f, 1.001f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Texture");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"PlatformOne_Material"));
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+		}
+		// platform1 Collider
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-3.0f, -0.02f, 1.003f), eLayerType::Ground);
+			platform1->SetName(L"Platform1");
+			platform1->AddComponent<GroundScript>();
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+
+			Collider2D* platform1Coll = platform1->GetComponent<Collider2D>();
+			platform1Coll->SetSize(Vector2(0.8f, 0.2f));
+			platform1Coll->SetCenter(Vector2(0.0f, 0.0f));
+		}
+
 		// Ground
 		{
 			GameObject* ground
@@ -132,6 +181,16 @@ namespace dh
 			//Collider2D* cd = ground->AddComponent<Collider2D>();
 			//cd->SetSize(Vector2(1.0f, 1.0f));
 		}
+		// BulletDestroyWall
+		{
+			GameObject* bulletDestroyWall = object::Instantiate<GameObject>(Vector3(4.0f, 0.0f, 1.001f), eLayerType::Wall);
+			bulletDestroyWall->SetName(L"bulletDestroy");
+			bulletDestroyWall->AddComponent<GroundScript>();
+
+			Transform* bulletDestroyWallTr = bulletDestroyWall->GetComponent<Transform>();
+			bulletDestroyWallTr->SetScale(Vector3(0.3f, 4.0f, 1.0f));
+		}
+	
 		// HP
 		{
 			GameObject* hpBar

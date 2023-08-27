@@ -1,52 +1,60 @@
 #include "dhPlayerBullet.h"
 #include "dhTime.h"
+#include "dhInput.h"
 #include "dhTransform.h"
 #include "dhCollider2D.h"
 #include "dhGameObject.h"
 #include "dhObject.h"
 #include "dhAnimator.h"
 #include "dhPlayerBossScript.h"
+#include "dhResources.h"
+
+#include "dhCameraScript.h"
 
 namespace dh
 {
 	
 	PlayerBullet::PlayerBullet()
-		: mSpeed(2.0f)
-		, mAliveTime(5.0f)
+		: mSpeed(0.0f)
 	{
 	}
 	PlayerBullet::~PlayerBullet()
 	{
 	}
+
 	void PlayerBullet::Initialize()
 	{
-		Collider2D* mColl = this->GetOwner()->AddComponent<Collider2D>();
-		mColl->SetSize(Vector2(0.5f, 0.5f));
-		mTrans = GetOwner()->GetComponent<Transform>();
-		
+		mColl = GetOwner()->AddComponent<Collider2D>();
+		mColl->SetSize(Vector2(0.4f, 0.2f));
+		mColl->SetCenter(Vector2(0.1f, 0.0f));
 
-		// PlayerBossScript* playerObj = GetOwner()->AddComponent<PlayerBossScript>();
-		// pos = playerObj->GetPosition();
-		// player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
-		// this->GetOwner()->SetState(eState::Active);
+		mTrans = GetOwner()->GetComponent<Transform>();
+
+		mAnim = GetOwner()->AddComponent<Animator>();
+		std::shared_ptr<Texture> animBullet = Resources::Load<Texture>(L"animBulletName", L"..\\Resources\\Texture\\Bullet\\BulletOriginalAnim.png");
+		mAnim->Create(L"animBulletName", animBullet, Vector2(0.0f, 0.0f), Vector2(124.0f, 44.0f), 8, 0.08f);
+		mAnim->PlayAnimation(L"animBulletName", false);
+
+		mPos = mTrans->GetPosition();
+
 	}
 	void PlayerBullet::Update()
 	{
-		// mAliveTime -= Time::DeltaTime();
-		//if (mAliveTime <= 0.0f)
-		//{
-		//	
-		//}
-		// pos = playerPos;
-		// playerPos = playerObj->GetPosition();
-		pos.x += 10.0f * Time::DeltaTime();
-		mTrans->SetPosition(pos);
-	
-		//else if (mDir = false)
-		//{
-		//	pos.x -= 100.0f * Time::DeltaTime();
-		//}
-		
+		mPos.x += 4.0f * Time::DeltaTime();
+		mTrans->SetPosition(mPos);
+
 	}
-	
+
+	void PlayerBullet::OnCollisionEnter(Collider2D* other)
+	{
+		// object::Destroy(this->GetOwner());
+	}
+
+	void PlayerBullet::OnCollisionStay(Collider2D* other)
+	{
+	}
+
+	void PlayerBullet::OnCollisionExit(Collider2D* other)
+	{
+	}
 }
