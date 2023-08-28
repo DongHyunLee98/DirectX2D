@@ -15,7 +15,9 @@ namespace dh
 			HeadLow,
 			HeadMiddle,
 			Seed,
-			TwoPhase,
+			TwoPhaseEnter1,
+			TwoPhaseEnter2,
+			TwoPhaseIdle,
 			UpSeed,
 			Dead,
 		};
@@ -37,6 +39,10 @@ namespace dh
 		void ChangeState(CagneyState state) { mCurState = state; }
 		void SetAnimator(Animator* at) { mAnim = at; }
 
+		void CreateVine1();
+		void CreateVine();
+		void KnockOut();
+
 	private:
 		Animator* mAnim;
 		Transform* mTrans;
@@ -54,6 +60,19 @@ namespace dh
 		bool enterWaitSwitch;
 		bool enterIdleSwitch;
 
+		float twoPhaseTime;
+		bool twoPhaseSwitch;
+
+		float patternCoolTime;
+		bool patternCoolSwitch;
+
+		float vineCreateTime;
+		bool vineCreateSwitch;
+
+		bool KnockOutSwitch;
+		float KnockOutTimer;
+		GameObject* mKnockOutObject;
+
 	private:
 		void EnterWait();
 		void Enter();
@@ -61,7 +80,9 @@ namespace dh
 		void HeadMiddle();
 		void HeadLow();
 		void Seed();
-		void TwoPhase();
+		void TwoPhaseEnter1();
+		void TwoPhaseEnter2();
+		void TwoPhaseIdle();
 		void UpSeed();
 		void Dead();
 	};

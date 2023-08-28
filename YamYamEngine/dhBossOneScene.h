@@ -17,9 +17,12 @@ namespace dh
 
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
+
 	private:
 		GameObject* EnterSpotObj;
 		float EnterCheckTime;
 		bool EnterCheck;
+		bool ReadWallopSwitch;
+		float ReadWallopTime;
 	};
 }

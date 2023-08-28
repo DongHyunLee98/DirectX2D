@@ -106,6 +106,7 @@ namespace dh
 		// 실행
 		at->PlayAnimation(L"Idle_Enter_R", true);
 		// 그외
+		bulletCoolDown = false;
 	}
 
 	void PlayerBossScript::Update()
@@ -122,18 +123,18 @@ namespace dh
 
 		pos = tr->GetPosition();
 
-		if (mBullet != nullptr)
-		{
-			mBulletTime += 1.0f * Time::DeltaTime();
+		//if (mBullet != nullptr)
+		//{
+		//	mBulletTime += 1.0f * Time::DeltaTime();
 
-			if (mBulletTime >= 0.5f)
-			{
-				mBulletTime = 0.0f;
-				// object::Destroy(mBullet);
-				SetBullet(nullptr);
-				SetBulletScript(nullptr);
-			}
-		}
+		//	if (mBulletTime >= 0.5f)
+		//	{
+		//		mBulletTime = 0.0f;
+		//		// object::Destroy(mBullet);
+		//		// SetBullet(nullptr);
+		//		// SetBulletScript(nullptr);
+		//	}
+		//}
 
 		switch (pState)
 		{
@@ -173,7 +174,7 @@ namespace dh
 			break;
 		}
 
-		if (pState == PlayerState::Shoot)
+		if (pState == PlayerState::Shoot || pState == PlayerState::MovingShoot)
 		{
 			if (bulletCoolDown == false)
 			{
@@ -182,8 +183,27 @@ namespace dh
 			}
 			if (bulletCoolDown == true)
 			{
-				mBulletAttackCool += 2.0f * Time::DeltaTime();
+				mBulletAttackCool += 3.5f * Time::DeltaTime();
 				
+				if (mBulletAttackCool >= 1.0f)
+				{
+					bulletCoolDown = false;
+					mBulletAttackCool = 0.0f;
+				}
+			}
+		}
+
+		if (pState == PlayerState::Jump && Input::GetKey(eKeyCode::X))
+		{
+			if (bulletCoolDown == false)
+			{
+				CreateBullet();
+				bulletCoolDown = true;
+			}
+			if (bulletCoolDown == true)
+			{
+				mBulletAttackCool += 3.5f * Time::DeltaTime();
+
 				if (mBulletAttackCool >= 0.5f)
 				{
 					bulletCoolDown = false;
@@ -191,7 +211,7 @@ namespace dh
 				}
 			}
 		}
-		
+
 		if (VelocityGetSwitch == true)
 		{
 			getVelocityCount += 2.0f * Time::DeltaTime();
@@ -287,14 +307,13 @@ namespace dh
 		// Attack
 		if (Input::GetKey(eKeyCode::X) && dirR == true)
 		{
+			bulletCoolDown == false;
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_R", true);
 		}
 		else if (Input::GetKey(eKeyCode::X) && dirR == false)
 		{
-			if (mBullet == nullptr)
-				CreateBullet();
-
+			bulletCoolDown == false;
 			pState = PlayerState::Shoot;
 			at->PlayAnimation(L"Idle_Shoot_L", true);
 		}
@@ -333,6 +352,7 @@ namespace dh
 		{
 			// pos.x -= 2.0f * Time::DeltaTime();
 			// tr->SetPosition(pos);
+			bulletCoolDown == false;
 			pState = PlayerState::MovingShoot;
 			at->PlayAnimation(L"Run_Shooting_R", true);
 		}
@@ -340,6 +360,7 @@ namespace dh
 		{
 			// pos.x -= 2.0f * Time::DeltaTime();
 			// tr->SetPosition(pos);
+			bulletCoolDown == false;
 			pState = PlayerState::MovingShoot;
 			at->PlayAnimation(L"Run_Shooting_L", true);
 		}

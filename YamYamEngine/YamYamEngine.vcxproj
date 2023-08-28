@@ -159,6 +159,8 @@
     <ClInclude Include="dhPlayerBossScript.h" />
     <ClInclude Include="dhPlayerBullet.h" />
     <ClInclude Include="dhPlayerWorldScript.h" />
+    <ClInclude Include="dhvineMainScript.h" />
+    <ClInclude Include="dhVineOneScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LoadScenes.h" />
     <ClInclude Include="dhBossOneScene.h" />
@@ -187,6 +189,8 @@
     <ClCompile Include="dhPlayerBullet.cpp" />
     <ClCompile Include="dhPlayerScript.cpp" />
     <ClCompile Include="dhPlayerWorldScript.cpp" />
+    <ClCompile Include="dhvineMainScript.cpp" />
+    <ClCompile Include="dhVineOneScript.cpp" />
     <ClCompile Include="YamYamEngine.cpp" />
     <ClCompile Include="dhStartScene.cpp" />
     <ClCompile Include="dhTitleScene.cpp" />

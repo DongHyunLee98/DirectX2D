@@ -23,7 +23,7 @@ float4 main(VSOut In) : SV_TARGET
     // 1200 1032 // 120 130
     // 1080 -> 540
     // -540 + 1200 
-    color = albedoTexture.Sample(anisotropicSampler, In.UV);
+    color = albedoTexture.Sample(pointSampler, In.UV);
     
     if (animationType == 1)
     {
@@ -40,7 +40,8 @@ float4 main(VSOut In) : SV_TARGET
         color = atlasTexture.Sample(anisotropicSampler, UV); // In.UV로 기존들어오는것 확인가능
     }
     
-    float4 lightColor = float4(0.4f, 0.4f, 0.4f, 1.0f);
+    // float4 lightColor = float4(0.3f, 0.3f, 0.3f, 1.0f);
+    float4 lightColor = float4(1.2f, 1.2f, 1.2f, 1.0f);
     
     for (int i = 0; i < 2; i++)
     {

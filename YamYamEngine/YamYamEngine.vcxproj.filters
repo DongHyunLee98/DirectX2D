@@ -47,9 +47,17 @@
       <Filter>Contents\Script</Filter>
     </ClCompile>
     <ClCompile Include="dhCagneyBossScript.cpp">
-      <Filter>Contents\Script\Boss</Filter>
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
     </ClCompile>
-    <ClCompile Include="dhPlayerBullet.cpp" />
+    <ClCompile Include="dhPlayerBullet.cpp">
+      <Filter>Contents\Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="dhVineOneScript.cpp">
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
+    </ClCompile>
+    <ClCompile Include="dhvineMainScript.cpp">
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -99,9 +107,17 @@
       <Filter>Contents\Script</Filter>
     </ClInclude>
     <ClInclude Include="dhCagneyBossScript.h">
-      <Filter>Contents\Script\Boss</Filter>
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
     </ClInclude>
-    <ClInclude Include="dhPlayerBullet.h" />
+    <ClInclude Include="dhPlayerBullet.h">
+      <Filter>Contents\Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="dhVineOneScript.h">
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
+    </ClInclude>
+    <ClInclude Include="dhvineMainScript.h">
+      <Filter>Contents\Script\Boss\CargneyCarnation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -121,6 +137,9 @@
     </Filter>
     <Filter Include="Contents\Script\Boss">
       <UniqueIdentifier>{35165448-5380-40f4-a5ba-2189039b0c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Boss\CargneyCarnation">
+      <UniqueIdentifier>{99764f20-c0f6-4dde-90ae-1645a7b98841}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

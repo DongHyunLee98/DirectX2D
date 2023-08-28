@@ -36,6 +36,8 @@ namespace dh
 	BossOneScene::BossOneScene()
 		: EnterCheckTime(0.0f)
 		, EnterCheck(false)
+		, ReadWallopSwitch(false)
+		, ReadWallopTime(0.0f)
 	{
 	}
 	BossOneScene::~BossOneScene()
@@ -77,7 +79,7 @@ namespace dh
 		// Player
 		{
 			
-			Player* player = object::Instantiate<Player>(Vector3(-2.5f, 6.0f, 1.0001f), eLayerType::Player);
+			Player* player = object::Instantiate<Player>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Player_Boss");
 			MeshRenderer* playerMr = player->AddComponent<MeshRenderer>();
@@ -95,6 +97,7 @@ namespace dh
 			playerCd->SetSize(Vector2(0.4f, 0.5f));
 			playerCd->SetCenter(Vector2(0.0f, 0.0f));
 			Transform* playerTr = pBossScript->GetTransform();
+			playerTr->SetPosition(Vector3(-2.5f, 8.0f, 1.0001f));
 			playerTr->SetScale(Vector3(1.3f, 1.3f, 1.0f));
 			
 			}
@@ -122,10 +125,11 @@ namespace dh
 			
 		}
 
+
 		// Platform1 Propeller
 		{
 			GameObject* platform1
-				= object::Instantiate<GameObject>(Vector3(-2.99f, -0.48f, 1.002f), eLayerType::BackGround);
+				= object::Instantiate<GameObject>(Vector3(-3.21f, -0.48f, 1.03f), eLayerType::BackGround);
 			platform1->SetName(L"Platform1Propeller");
 
 			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
@@ -143,7 +147,7 @@ namespace dh
 		// platform1 Ground
 		{
 			GameObject* platform1
-				= object::Instantiate<GameObject>(Vector3(-3.0f, -0.25f, 1.001f), eLayerType::BackGround);
+				= object::Instantiate<GameObject>(Vector3(-3.25f, -0.25f, 1.02f), eLayerType::BackGround);
 			platform1->SetName(L"Platform1Texture");
 
 			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
@@ -156,7 +160,7 @@ namespace dh
 		// platform1 Collider
 		{
 			GameObject* platform1
-				= object::Instantiate<GameObject>(Vector3(-3.0f, -0.02f, 1.003f), eLayerType::Ground);
+				= object::Instantiate<GameObject>(Vector3(-3.25f, -0.02f, 1.01f), eLayerType::Ground);
 			platform1->SetName(L"Platform1");
 			platform1->AddComponent<GroundScript>();
 
@@ -168,10 +172,104 @@ namespace dh
 			platform1Coll->SetCenter(Vector2(0.0f, 0.0f));
 		}
 
+		// Platform2 Propeller
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-1.6f, -0.48f, 1.03f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Propeller");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+
+			Animator* mPlat1Anim = platform1->AddComponent<Animator>();
+			std::shared_ptr<Texture> animPlat1 = Resources::Load<Texture>(L"animPlatform", L"..\\Resources\\Texture\\CagneyCarnation\\Platform\\PropellerAnim.png");
+			mPlat1Anim->Create(L"animPlatform", animPlat1, Vector2(0.0f, 0.0f), Vector2(117.0f, 39.0f), 9, 0.08f);
+			mPlat1Anim->PlayAnimation(L"animPlatform", true);
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.5f, 1.0f, 1.0f));
+		}
+		// platform2 Ground
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-1.63f, -0.25f, 1.02f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Texture");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"PlatformOne_Material"));
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+		}
+		// platform2 Collider
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-1.65f, -0.02f, 1.01f), eLayerType::Ground);
+			platform1->SetName(L"Platform1");
+			platform1->AddComponent<GroundScript>();
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+
+			Collider2D* platform1Coll = platform1->GetComponent<Collider2D>();
+			platform1Coll->SetSize(Vector2(0.8f, 0.2f));
+			platform1Coll->SetCenter(Vector2(0.0f, 0.0f));
+		}
+
+		// Platform3 Propeller
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-0.03f, -0.48f, 1.03f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Propeller");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+
+			Animator* mPlat1Anim = platform1->AddComponent<Animator>();
+			std::shared_ptr<Texture> animPlat1 = Resources::Load<Texture>(L"animPlatform", L"..\\Resources\\Texture\\CagneyCarnation\\Platform\\PropellerAnim.png");
+			mPlat1Anim->Create(L"animPlatform", animPlat1, Vector2(0.0f, 0.0f), Vector2(117.0f, 39.0f), 9, 0.08f);
+			mPlat1Anim->PlayAnimation(L"animPlatform", true);
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.5f, 1.0f, 1.0f));
+		}
+		// platform3 Ground
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-0.05f, -0.25f, 1.02f), eLayerType::BackGround);
+			platform1->SetName(L"Platform1Texture");
+
+			MeshRenderer* platformMr1 = platform1->AddComponent<MeshRenderer>();
+			platformMr1->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			platformMr1->SetMaterial(Resources::Find<Material>(L"PlatformOne_Material"));
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+		}
+		// platform3 Collider
+		{
+			GameObject* platform1
+				= object::Instantiate<GameObject>(Vector3(-0.05f, -0.02f, 1.01f), eLayerType::Ground);
+			platform1->SetName(L"Platform1");
+			platform1->AddComponent<GroundScript>();
+
+			Transform* platform1Tr = platform1->GetComponent<Transform>();
+			platform1Tr->SetScale(Vector3(1.0f, 0.5f, 1.0f));
+
+			Collider2D* platform1Coll = platform1->GetComponent<Collider2D>();
+			platform1Coll->SetSize(Vector2(0.8f, 0.2f));
+			platform1Coll->SetCenter(Vector2(0.0f, 0.0f));
+		}
+
+
+
 		// Ground
 		{
 			GameObject* ground
-				= object::Instantiate<GameObject>(Vector3(0.0f, -1.5f, 1.001f), eLayerType::Ground);
+				= object::Instantiate<GameObject>(Vector3(0.0f, -1.6f, 1.001f), eLayerType::Ground);
 			ground->SetName(L"Ground");
 			ground->AddComponent<GroundScript>();
 
@@ -183,12 +281,12 @@ namespace dh
 		}
 		// BulletDestroyWall
 		{
-			GameObject* bulletDestroyWall = object::Instantiate<GameObject>(Vector3(4.0f, 0.0f, 1.001f), eLayerType::Wall);
+			GameObject* bulletDestroyWall = object::Instantiate<GameObject>(Vector3(2.0f, 0.0f, 1.001f), eLayerType::Wall);
 			bulletDestroyWall->SetName(L"bulletDestroy");
 			bulletDestroyWall->AddComponent<GroundScript>();
 
 			Transform* bulletDestroyWallTr = bulletDestroyWall->GetComponent<Transform>();
-			bulletDestroyWallTr->SetScale(Vector3(0.3f, 4.0f, 1.0f));
+			bulletDestroyWallTr->SetScale(Vector3(0.1f, 3.5f, 1.0f));
 		}
 	
 		// HP
@@ -218,8 +316,7 @@ namespace dh
 			// as->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
 			// as->Play();
 		}
-		
-		// BG
+		// BG Flower
 		{
 			GameObject* FlowerFrontBG
 				= object::Instantiate<GameObject>(Vector3(0.0f, -1.9f, 1.00002f), eLayerType::BackGround);
@@ -227,6 +324,15 @@ namespace dh
 			FlowerFrontMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			FlowerFrontMr->SetMaterial(Resources::Find<Material>(L"FlowerFront_Material"));
 			FlowerFrontBG->GetComponent<Transform>()->SetScale(Vector3(10.0f, 2.0f, 1.0f));
+		}
+		// BG Bush
+		{
+			GameObject* BushFrontBG
+				= object::Instantiate<GameObject>(Vector3(2.5f, -1.7f, 1.00003f), eLayerType::BackGround);
+			MeshRenderer* BushFrontMr = BushFrontBG->AddComponent<MeshRenderer>();
+			BushFrontMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			BushFrontMr->SetMaterial(Resources::Find<Material>(L"BushFront_Material"));
+			BushFrontBG->GetComponent<Transform>()->SetScale(Vector3(4.0f, 1.7f, 1.0f));
 		}
 		
 		// Enter Spot Object
@@ -278,12 +384,12 @@ namespace dh
 		}
 		// Light (test), Direct
 		{
-			GameObject* light = new GameObject();
-			light->SetName(L"Light");
-			AddGameObject(eLayerType::Light, light);
-			Light* lightComp = light->AddComponent<Light>();
-			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
+			// GameObject* light = new GameObject();
+			// light->SetName(L"Light");
+			// AddGameObject(eLayerType::Light, light);
+			// Light* lightComp = light->AddComponent<Light>();
+			// lightComp->SetType(eLightType::Directional);
+			// lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
 		}
 	}
 
@@ -293,12 +399,24 @@ namespace dh
 		{
 			SceneManager::LoadScene(L"WinScene");
 		}
+		
+		// Enter Spot
 		if(EnterCheck == false)
 			EnterCheckTime += 1.2f * Time::DeltaTime();
 		if (EnterCheckTime > 4.0f)
 		{
 			EnterCheck = true;
 			object::Destroy(EnterSpotObj);
+		}
+
+		// WallOp
+		if (ReadWallopSwitch == false)
+		{
+			// ReadWallopTime += 1.0f * Time::DeltaTime();
+		}
+		if (ReadWallopTime >= 15.0f)
+		{
+			// ReadWallopSwitch = true;
 		}
 
 		Scene::Update();

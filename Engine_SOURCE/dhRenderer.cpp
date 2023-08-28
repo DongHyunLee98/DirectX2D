@@ -540,6 +540,14 @@ namespace renderer
 			material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"FlowerFront_Material", material);
 
+			// 보스앞풀
+			texture = Resources::Load<Texture>(L"BushFront", L"..\\Resources\\Texture\\bushFront.png");
+			material = std::make_shared<Material>();
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert(L"BushFront_Material", material);
+
 			// 보스
 			texture = Resources::Load<Texture>(L"FlowerBoss", L"..\\Resources\\Texture\\FlowerBoss.png");
 			material = std::make_shared<Material>();

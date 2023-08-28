@@ -32,6 +32,9 @@ namespace dh
 		// void SetTransform(Transform* trans) { mTrans = trans; }
 		// void SetPosition(Vector3 _pos) { pos = _pos; }
 
+		void SetBullet(GameObject* bt) { mBullet = bt; }
+		void SetBulletScript(class PlayerBullet* bulletScript) { mPlayerBullet = bulletScript; }
+
 	public:
 		Vector2 mDir;
 		Vector2 mDestPos;
@@ -45,6 +48,9 @@ namespace dh
 		float mSpeed;
 		bool dirR;
 		PlayerBossScript* mPBS;
+
+		GameObject* mBullet;
+		class PlayerBullet* mPlayerBullet;
 		
 	private:
 		//bulletState mBulletState;

@@ -40,14 +40,29 @@ namespace dh
 	}
 	void PlayerBullet::Update()
 	{
-		mPos.x += 4.0f * Time::DeltaTime();
+		if (mBullet != nullptr)
+		{
+			mBullet = this->GetOwner();
+		}
+		if (mPlayerBullet != nullptr)
+		{
+			mPlayerBullet = this->GetOwner()->AddComponent< PlayerBullet>();
+		}
+
+		mPos.x += 4.5f * Time::DeltaTime();
 		mTrans->SetPosition(mPos);
+
 
 	}
 
 	void PlayerBullet::OnCollisionEnter(Collider2D* other)
 	{
-		// object::Destroy(this->GetOwner());
+		if (other->GetOwner()->GetName() == L"bulletDestroy")
+		{
+			SetBullet(nullptr);
+			SetBulletScript(nullptr);
+			// object::Destroy(mBullet);
+		}
 	}
 
 	void PlayerBullet::OnCollisionStay(Collider2D* other)
