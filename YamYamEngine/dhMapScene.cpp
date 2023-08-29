@@ -55,7 +55,7 @@ namespace dh
 			GameObject* mainBG
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.9999f), eLayerType::BackGround);
 			mainBG->SetName(L"world1_large_island_main");
-			// AddGameObject(eLayerType::Player, player); Instatiate¸¦ ÀÌ¿ëÇØ ±¸Çö
+			// AddGameObject(eLayerType::Player, player); Instatiateë¥¼ ì´ìš©í•´ êµ¬í˜„
 			MeshRenderer* mainBGMr = mainBG->AddComponent<MeshRenderer>();
 			mainBGMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mainBGMr->SetMaterial(Resources::Find<Material>(L"world1_large_island_main_Material"));
@@ -68,7 +68,7 @@ namespace dh
 
 		// Player
 		{
-			// GameObject* player = new GameObject(); Instatiate¸¦ ÀÌ¿ëÇØ ±¸Çö
+			// GameObject* player = new GameObject(); Instatiateë¥¼ ì´ìš©í•´ êµ¬í˜„
 			GameObject* player
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
 			player->SetName(L"Cuphead_Overload");
@@ -89,7 +89,7 @@ namespace dh
 			Collider2D* cd = player->AddComponent<Collider2D>();
 			cd->SetSize(Vector2(0.5f, 0.5f));
 			// player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.00001f));
-			// AddGameObject(eLayerType::Player, player); Instatiate¸¦ ÀÌ¿ëÇØ ±¸Çö
+			// AddGameObject(eLayerType::Player, player); Instatiateë¥¼ ì´ìš©í•´ êµ¬í˜„
 
 			// player->AddComponent<Collider2D>();
 
@@ -99,7 +99,7 @@ namespace dh
 			//std::vector<Collider2D*> comps
 			//	= player->GetComponents<Collider2D>();
 			//cd->SetCenter(Vector2(0.5f, 0.0f));
-			// Instatiate¸¦ ÀÌ¿ëÇØ ±¸Çö
+			// Instatiateë¥¼ ì´ìš©í•´ êµ¬í˜„
 			//player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0001f));
 			// player->AddComponent<CameraScript>();
 
@@ -118,7 +118,7 @@ namespace dh
 			// const float pi = 3.141592f;
 			// float degree = pi / 8.0f;
 			//
-			// // 7/13ÀÏ RotateÃ¼Å©, Ãæµ¹Äİ¶óÀÌ´õ È¸ÀüÇÑ°É È®ÀÎ
+			// // 7/13ì¼ Rotateì²´í¬, ì¶©ëŒì½œë¼ì´ë” íšŒì „í•œê±¸ í™•ì¸
 			// player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 1.0001f));
 			// player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 		}
@@ -128,7 +128,7 @@ namespace dh
 		{
 		}
 
-		// 7/12 Collider ÀÛ¾÷È®ÀÎ ÁÖ¼®Ã³¸®
+		// 7/12 Collider ì‘ì—…í™•ì¸ ì£¼ì„ì²˜ë¦¬
 		//{
 		//	GameObject* player = new GameObject();
 		//	player->SetName(L"Smile");
@@ -177,12 +177,12 @@ namespace dh
 
 		// Light (test), Direct
 		{
-			GameObject* light = new GameObject();
-			light->SetName(L"Smile");
-			AddGameObject(eLayerType::Light, light);
-			Light* lightComp = light->AddComponent<Light>();
-			lightComp->SetType(eLightType::Directional);
-			lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
+			// GameObject* light = new GameObject();
+			// light->SetName(L"Smile");
+			// AddGameObject(eLayerType::Light, light);
+			// Light* lightComp = light->AddComponent<Light>();
+			// lightComp->SetType(eLightType::Directional);
+			// lightComp->SetColor(Vector4(0.8f, 0.8f, 0.8f, 1.0f));
 		}
 		// Light Point
 		//{
@@ -204,7 +204,7 @@ namespace dh
 			cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
 			camera->AddComponent<CameraScript>();
-			// camera.SetTarget(player); // ³»ºÎ¿¡ ¸â¹öº¯¼ö¿¡ ¹Ş¾Æ¼­ »ç¿ë (Æ÷Áö¼ÇÀ¸·Î)
+			// camera.SetTarget(player); // ë‚´ë¶€ì— ë©¤ë²„ë³€ìˆ˜ì— ë°›ì•„ì„œ ì‚¬ìš© (í¬ì§€ì…˜ìœ¼ë¡œ)
 			renderer::cameras.push_back(cameraComp);
 			renderer::mainCamera = cameraComp;
 		}
@@ -255,7 +255,7 @@ namespace dh
 
 	void MapScene::LateUpdate()
 	{
-		// // ¸¶¿ì½º ÁÂÇ¥°è
+		// // ë§ˆìš°ìŠ¤ ì¢Œí‘œê³„
 		// Vector3 pos(800, 450, 0.0f);
 		// Vector3 pos2(800, 450, 1000.0f);
 		// Viewport viewport;
@@ -266,7 +266,7 @@ namespace dh
 		// viewport.minDepth = 0.0f;
 		// viewport.maxDepth = 1.0f;
 		// 
-		// // Äİ¶óÀÌ´õ Ãæµ¹Ã¼ ·»´õ¸µÇÒ¶§ Ä«¸Ş¶ó¿¡ ¸¸µç GetSet GPUÇÁ·ÎÁ§¼Ç¸ÅÆ®¸¯½º »ç¿ë
+		// // ì½œë¼ì´ë” ì¶©ëŒì²´ ë Œë”ë§í• ë•Œ ì¹´ë©”ë¼ì— ë§Œë“  GetSet GPUí”„ë¡œì ì…˜ë§¤íŠ¸ë¦­ìŠ¤ ì‚¬ìš©
 		// pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 		// pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
