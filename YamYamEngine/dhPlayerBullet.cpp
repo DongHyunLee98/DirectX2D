@@ -59,8 +59,8 @@ namespace dh
 	{
 		if (other->GetOwner()->GetName() == L"bulletDestroy")
 		{
-			SetBullet(nullptr);
-			SetBulletScript(nullptr);
+			// SetBullet(nullptr);
+			// SetBulletScript(nullptr);
 			// object::Destroy(mBullet);
 		}
 	}

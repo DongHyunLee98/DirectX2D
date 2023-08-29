@@ -17,11 +17,7 @@ namespace dh
 
 		if (other->GetOwner()->GetName() == L"playerBullet")
 		{
-			// object::Destroy(other->GetOwner());
+			object::Destroy(other->GetOwner());
 		}
-	}
-	void GroundScript::OnCollisionExit(Collider2D* other)
-	{
-		object::Destroy(other->GetOwner());
 	}
 }

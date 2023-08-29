@@ -97,7 +97,7 @@ namespace dh
 			playerCd->SetSize(Vector2(0.4f, 0.5f));
 			playerCd->SetCenter(Vector2(0.0f, 0.0f));
 			Transform* playerTr = pBossScript->GetTransform();
-			playerTr->SetPosition(Vector3(-2.5f, 8.0f, 1.0001f));
+			playerTr->SetPosition(Vector3(-2.5f, 16.0f, 1.0001f));
 			playerTr->SetScale(Vector3(1.3f, 1.3f, 1.0f));
 			
 			}
