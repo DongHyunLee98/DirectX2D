@@ -35,8 +35,9 @@ namespace dh
 		SceneManager::CreateScene<StartScene>(L"StartScene");
 		SceneManager::CreateScene<LogoScene>(L"LogoScene");
 		
-		SceneManager::CreateScene<MapScene>(L"MapScene"); 
+		// SceneManager::CreateScene<MapScene>(L"MapScene"); 
 		SceneManager::CreateScene<BossOneScene>(L"BossOneScene");
+		SceneManager::CreateScene<MapScene>(L"MapScene"); 
 
 		//SceneManager::CreateScene<LogoScene>(L"LogoScene");
 	}
